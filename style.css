@@ -1,0 +1,19 @@
+body{
+	margin: 1% 5%;
+}
+table{
+	border:solid 1px black;
+}
+td{
+	border:solid 1px black;
+	width: 27%;
+	text-align: left;
+	vertical-align: top;
+}
+
+tr:nth-child(1) td{
+	text-align: center;
+}
+tr td:nth-child(1), tr td:nth-child(2), tr td:nth-child(4), tr td:nth-child(7){
+	width: 5%;
+}
