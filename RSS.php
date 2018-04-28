@@ -1,25 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="50; URL=RSS.php">
-	<title>RSS TEST</title>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body >
-	        <?php 
-	        //API SimpleHTMLDom
-	        include_once 'simpleHtmlDom/simple_html_dom.php';
+<?php 
+//API SimpleHTMLDom
+include_once 'simpleHtmlDom/simple_html_dom.php';
+
+include 'header.php';
 
 //Instanciation de la BDD
-	        try {
-		        $db = new PDO('mysql:dbname=test_rss;host=localhost','root', '');
-		        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	        }
-			catch (PDOException $e)
-			{
-				die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
-			}
+try {
+    $db = new PDO('mysql:dbname=test_rss;host=localhost','root', '');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch (PDOException $e)
+{
+	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
+}
 
 //ANALYSE DES ARTICLES DE MEDIAS
 
@@ -30,6 +23,9 @@ function rssToDB($url, $className)
 	        //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN 
 	        	//Charge le fichier xml
                 $xml = simplexml_load_file($url);
+                if ($xml == false) {
+                	return false;
+                }
                 //Affectation des données issues du fichier xml
                 $titleMediaRSS =  strip_tags($xml->channel->title);
                 $descriptionRSS = strip_tags($xml->channel->item->description);
@@ -83,36 +79,6 @@ rssToDB('http://www.dhnet.be/rss/section/actu.xml', 'div.article-text');
 rssToDB('http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=df156511-c24f-4f21-81c3-a5d439a9cf4b', 'article');
 rssToDB('http://www.lalibre.be/rss/section/actu/politique-belge.xml', 'div.article-text');
 
+include 'viewRSS.php';
 
-//SELECT FROM DB - AFFICHAGE DES DONNEES
-echo  "<p>ARTICLE ISSU DE LA BDD</p>";
-$sqlSELECT = "SELECT * FROM media";
-echo (!empty($alreadyInDB)) ? $alreadyInDB .'<br><br>' : null;
-foreach ($db->query($sqlSELECT) as $row) {
-	?><table>
-		<tr>
-			<td>ID</td>
-			<td>Titre</td>
-			<td>Description</td>
-			<td>Date</td>
-			<td>Lien</td>
-			<td>Article</td>
-			<td>Categorie</td>
-		</tr>
-		<tr>
-			<td><?php   echo $row['idMedia'] ?></td>
-			<td><?php 	echo $row['titre']; ?></td>
-			<td><?php 	echo $row['description']; ?></td>
-			<td><?php 	echo $row['date']; ?></td>
-			<td><?php 	echo $row['lien']; ?></td>
-			<td><?php 	echo $row['article']; ?></td>
-			<td><?php 	echo $row['categorie']; ?></td>
-		</tr>
-	</table><?php 
-	
-}
-?>
-
-</script>
-</body>
-</html>
+include 'footer.php';
