@@ -53,23 +53,23 @@ function rssToDB($url, $className)
 				}
 				$article = strip_tags($content['article']);
 				$categorie = strip_tags($content['categorie']);
-                echo "
+             //    echo "
             
-            	<p>RSS</p>
+            	// <p>RSS</p>
 
-                <h1> $titleMediaRSS </h1>
-                <p> $descriptionRSS </p>
-                <a> $linkFormatRSS </a>
-                <h5 style='float:right;'> $datePublicationRSS </h5><br><br><br><hr><br>
+             //    <h1> $titleMediaRSS </h1>
+             //    <p> $descriptionRSS </p>
+             //    <a> $linkFormatRSS </a>
+             //    <h5 style='float:right;'> $datePublicationRSS </h5><br><br><br><br>
 
-                <p>ARTICLE ASPIRé</p>
+             //    <p>ARTICLE ASPIRé</p>
 
-                <p> $article </p>
-                <p> $categorie </p>
-                <br><br><br><hr><br>";
+             //    <p> $article </p>
+             //    <p> $categorie </p>
+             //    <br><br><br><hr><br>";
 
 //VERIFICATION SI PAS DEJA EN BDD
-				$sqlVERIFICATIONtitre = $db->prepare("SELECT description FROM media WHERE description= ?");
+				$sqlVERIFICATIONtitre = $db->prepare("SELECT description FROM media");
 				$sqlVERIFICATIONtitre->execute([$descriptionRSS]);
 				$sqlVERIFICATION = $sqlVERIFICATIONtitre->fetch(PDO::FETCH_ASSOC);
 
@@ -94,6 +94,8 @@ function rssToDB($url, $className)
 
 rssToDB('http://www.lesoir.be/rss/31867/cible_principale', 'article');
 rssToDB('http://www.dhnet.be/rss/section/actu.xml', 'div.article-text');
+rssToDB('http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=df156511-c24f-4f21-81c3-a5d439a9cf4b', 'article');
+rssToDB('http://www.lalibre.be/rss/section/actu/politique-belge.xml', 'div.article-text');
 
 
 //SELECT FROM DB - AFFICHAGE DES DONNEES
