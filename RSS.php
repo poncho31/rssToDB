@@ -53,20 +53,6 @@ function rssToDB($url, $className)
 				}
 				$article = strip_tags($content['article']);
 				$categorie = strip_tags($content['categorie']);
-             //    echo "
-            
-            	// <p>RSS</p>
-
-             //    <h1> $titleMediaRSS </h1>
-             //    <p> $descriptionRSS </p>
-             //    <a> $linkFormatRSS </a>
-             //    <h5 style='float:right;'> $datePublicationRSS </h5><br><br><br><br>
-
-             //    <p>ARTICLE ASPIRé</p>
-
-             //    <p> $article </p>
-             //    <p> $categorie </p>
-             //    <br><br><br><hr><br>";
 
 //VERIFICATION SI PAS DEJA EN BDD
 				$sqlVERIFICATIONtitre = $db->prepare("SELECT description FROM media");
