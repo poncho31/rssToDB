@@ -32,7 +32,7 @@ function rssToDB($url, $className)
 	    }
 	    //Si le dernier article posté est dans la BDD
 	    if (false) {}
-
+	    $alreadyInDB;
 	    $deja = 1;
 		$nbrArticle = 1;
 	    foreach ($xml as $attributes) {
