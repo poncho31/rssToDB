@@ -135,7 +135,7 @@ try {
 }
 
 
-// rssToDB('http://www.lesoir.be/rss/31867/cible_principale', 'article');
+rssToDB('http://www.lesoir.be/rss/31867/cible_principale', 'article');
 rssToDB('http://www.dhnet.be/rss/section/actu.xml', 'div.article-text');
 // rssToDB('http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=df156511-c24f-4f21-81c3-a5d439a9cf4b', 'article');
 // rssToDB('http://www.lalibre.be/rss/section/actu/politique-belge.xml', 'div.article-text');
