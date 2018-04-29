@@ -45,35 +45,37 @@ try {
         //Affectation des données issues du fichier xml
         foreach ($xml as $attributes) {
         	foreach ($attributes->item as $key) {
-        		echo strip_tags($attributes->title);
-				echo strip_tags($key->title);
-				$descriptionArticleRSS = strip_tags($key->description);
-				echo strip_tags($key->pubDate);
-				echo strip_tags($key->link);
-				echo strip_tags($key->category);
-				echo '<br><br>';
-				var_dump(htmlentities($key->title));
-				var_dump(htmlentities($key->description));
-				echo '<br><br>';
 
-				$sqlINSERT = "
-				INSERT INTO media (nom, titre, description, date, lien, categorie)
-				VALUES
-				(
-				'". strip_tags($attributes->title)."',
-				'". htmlspecialchars($key->title)."',
-				'". htmlspecialchars($key->description)."',
-				'". strip_tags($key->pubDate)."',
-				'". strip_tags($key->link)."',
-				'". strip_tags($key->category)."'
-				)";
+        		$titleMediaRSS =  strip_tags($attributes->title);
+				$titleArticleRSS =  strip_tags($key->title);
+				$descriptionArticleRSS =  strip_tags($key->description);
+				$publicationDateArticleRSS =  strip_tags($key->pubDate);
+				$linkArticleRSS =  strip_tags($key->link);
+				$categoryArticleRSS =  strip_tags($key->category);
+
+				$sqlINSERT = "INSERT INTO media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
+				$stmt = $db->prepare($sqlINSERT);
+				$stmt->bindvalue(':nom', $titleMediaRSS);
+				$stmt->bindvalue(':titre', $titleArticleRSS);
+				$stmt->bindvalue(':description', $descriptionArticleRSS);
+				$stmt->bindvalue(':date', $publicationDateArticleRSS);
+				$stmt->bindvalue(':lien', $linkArticleRSS);
+				$stmt->bindvalue(':categorie', $categoryArticleRSS);
+				$stmt->execute();
+		
+		// $key->title
+		// $key->description
+		// $key->pubDate
+		// $key->link
+		// $key->category
+
 		// echo "
 		// '".strip_tags($key->title)."', 
   //       '".strip_tags($key->description=htmlspecialchars(trim($key->description)))."', 
   //       '".strip_tags($key->link)."', 
   //       '".strip_tags($key->pubdate)."')"; 
 
-				$db->exec($sqlINSERT);
+				// $db->exec($sqlINSERT);
         	}
         }
 }
