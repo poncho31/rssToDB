@@ -1,9 +1,8 @@
-
+<hr>
 <?php
 //SELECT FROM DB - AFFICHAGE DES DONNEES
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
 $sqlSELECT = "SELECT * FROM media";
-echo (!empty($alreadyInDB)) ? $alreadyInDB .'<br><br>' : null;
 foreach ($db->query($sqlSELECT) as $row) {
 	?>
 	<table>
