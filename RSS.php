@@ -15,64 +15,92 @@ catch (PDOException $e)
 	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 }
 
-//ANALYSE DES ARTICLES DE MEDIAS
 
-function rssToDB($url, $className)
+//VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
+function rssToDB($feeds)
 {
 	try {
 		
 		$db = new PDO('mysql:dbname=rss;host=localhost','root', '');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		//VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN 
+		 
 		//Charge le fichier xml
-	    $xml = simplexml_load_file($url);
-	    if ($xml == false) {
-	    	echo 'XML non chargé : <br><li style="margin-left: 50px;">'.$url.'</li><br><br>';
-	    	return false;
-	    }
-	    //Si le dernier article posté est dans la BDD
-	    if (false) {}
-	    $alreadyInDB;
-	    $deja = 1;
-		$nbrArticle = 1;
-	    foreach ($xml as $attributes) {
-		    foreach ($attributes->item as $key) {
-		       	//VARIABLES : affectation des données issues du fichier xml + vérification
-		       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
-				$titleArticleRSS =  (isset($key->title)) ?strip_tags($key->title) : null;
-				$descriptionArticleRSS =  (isset($key->description)) ? strip_tags($key->description) : null;
-				$publicationDateArticleRSS =  (isset($key->pubDate)) ? strip_tags($key->pubDate) : null;
-				$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
-				$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
+		foreach ($feeds as $feed) {
 
-				//BDD : vérification si pas déjà en bdd
-				$sql = "SELECT description FROM media WHERE description = :description";
-				$stmt = $db->prepare($sql);
-				$stmt->execute(array(':description'=>$descriptionArticleRSS));
-				$sqlVERIFICATION = $stmt->fetch();
+			$xml = simplexml_load_file($feed);
 
-				if (!$sqlVERIFICATION) {
-					//Insertion en bdd
-					$sqlINSERT = "INSERT INTO media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
-					$stmt = $db->prepare($sqlINSERT);
-					$stmt->bindvalue(':nom', $titleMediaRSS);
-					$stmt->bindvalue(':titre', $titleArticleRSS);
-					$stmt->bindvalue(':description', $descriptionArticleRSS);
-					$stmt->bindvalue(':date', $publicationDateArticleRSS);
-					$stmt->bindvalue(':lien', $linkArticleRSS);
-					$stmt->bindvalue(':categorie', $categoryArticleRSS);
-					$stmt->execute();
+			//SI XML FALSE
+		    if ($xml == false) {
 
-					
-				}
-				else{
-					$alreadyInDB = 'Déjà en base de données ('.$deja.'/'.$nbrArticle.') : ' . date(DATE_RFC2822);
-					$deja++;
-				}
-				$nbrArticle++;
+		    	libxml_use_internal_errors(true);
+		    	$xml = simplexml_load_string($feed);
+
+		    	if ($xml == false) {
+		    		$errors = libxml_get_errors();
+		    		echo 'XML non chargé : <br>
+		    			<li>'.$feed.'</li>
+		    			<li>Errors type : '.var_export($errors, true).'</li><br><br>';
+		    	}
 		    }
-	    }
-	    echo $alreadyInDB . '<br><br>';
+
+		    //SI XML TRUE
+		    else{
+				$className; $alreadyInDB; $deja = 1; $nbrArticle = 1;
+				// //Attribue pour chaque article sa class/div/id pour récupérer le contenu html
+				// if(stristr($feed, 'lesoir.be') || stristr($feed, 'lavenir.net')){
+				// 	$className = 'article';
+				// }
+				// elseif(stristr($feed, 'dhnet.be') || stristr($feed, 'lalibre.be')){
+				// 	$className = 'div.article-text';
+				// }
+				// else{
+				// 	echo $feed . ' : feed non chargé<br><br>';
+			 //    	$feed = false;
+				// }
+
+			    //Si le dernier article posté est dans la BDD
+			    if (false) {}
+
+			    foreach ($xml as $attributes) {
+				    foreach ($attributes->item as $key) {
+				       	//VARIABLES : affectation des données issues du fichier xml + vérification
+				       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
+						$titleArticleRSS =  (isset($key->title)) ?strip_tags($key->title) : null;
+						$descriptionArticleRSS =  (isset($key->description)) ? strip_tags($key->description) : null;
+						$publicationDateArticleRSS =  (isset($key->pubDate)) ? strip_tags($key->pubDate) : null;
+						$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
+						$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
+
+						//BDD : vérification si pas déjà en bdd
+						$sql = "SELECT description FROM media WHERE description = :description";
+						$stmt = $db->prepare($sql);
+						$stmt->execute(array(':description'=>$descriptionArticleRSS));
+						$sqlVERIFICATION = $stmt->fetch();
+
+						if (!$sqlVERIFICATION) {
+							//Insertion en bdd
+							$sqlINSERT = "INSERT INTO media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
+							$stmt = $db->prepare($sqlINSERT);
+							$stmt->bindvalue(':nom', $titleMediaRSS);
+							$stmt->bindvalue(':titre', $titleArticleRSS);
+							$stmt->bindvalue(':description', $descriptionArticleRSS);
+							$stmt->bindvalue(':date', $publicationDateArticleRSS);
+							$stmt->bindvalue(':lien', $linkArticleRSS);
+							$stmt->bindvalue(':categorie', $categoryArticleRSS);
+							$stmt->execute();
+
+							
+						}
+						else{
+							$alreadyInDB = 'Déjà en base de données ('.$deja.'/'.$nbrArticle.')  => '. $titleMediaRSS . ' / ' . date(DATE_RFC2822);
+							$deja++;
+						}
+						$nbrArticle++;
+				    }
+			    }
+		    	echo isset($alreadyInDB) ? $alreadyInDB. '<br><br>' : null;
+		    }
+		}
 	}
 	
 	catch (Exception $e) {
@@ -100,19 +128,16 @@ function rssToDB($url, $className)
 		// }
 //--------------end function			
 }
-
-
-rssToDB('http://www.lesoir.be/rss/31867/cible_principale', 'article');
-rssToDB('http://www.dhnet.be/rss/section/actu.xml', 'div.article-text');
-rssToDB('http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=df156511-c24f-4f21-81c3-a5d439a9cf4b', 'article');
-rssToDB('http://www.lalibre.be/rss/section/actu/politique-belge.xml', 'div.article-text');
 $feeds = 
 [
+'http://www.lalibre.be/rss/section/actu/politique-belge.xml',
 'http://www.lesoir.be/rss/31867/cible_principale',
-'http://www.dhnet.be/rss/section/actu.xml',
 'http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=df156511-c24f-4f21-81c3-a5d439a9cf4b',
-'http://www.lalibre.be/rss/section/actu/politique-belge.xml'
+'http://www.dhnet.be/rss/section/actu.xml'
 ];
+
+rssToDB($feeds);
+
 
 // $feeds = array('https://www.ictu.nl/rss.xml', 'http://www.vng.nl/smartsite.dws?id=97817');
 // foreach( $feeds as $feed ) {

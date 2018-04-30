@@ -17,3 +17,6 @@ tr:nth-child(1) td{
 tr td:nth-child(1), tr td:nth-child(2), tr td:nth-child(4), tr td:nth-child(7){
 	width: 5%;
 }
+li{
+	margin-left: 50px;
+}
