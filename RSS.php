@@ -28,7 +28,6 @@ function rssToDB($feeds)
 		foreach ($feeds as $feed) {
 			//Charge le fichier xml
 			$xml = simplexml_load_file($feed);
-
 			//SI XML FALSE
 		    if ($xml == false) {
 		    	$xml = new DOMDocument;
@@ -138,7 +137,10 @@ $feeds =
 'http://www.lesoir.be/rss/31867/cible_principale',
 'http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=51c3fb4c-e7ee-451a-8add-b13a2114c104',
 'http://www.dhnet.be/rss/section/actu.xml',
-'http://feeds.feedburner.com/rtlinfo/belgique'
+'http://www.dhnet.be/rss.xml',
+'http://feeds.feedburner.com/rtlinfo/belgique',
+'https://www.lecho.be/rss/politique_belgique.xml',
+'https://www.levif.be/actualite/feed.rss'
 ];
 
 rssToDB($feeds);
