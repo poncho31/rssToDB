@@ -140,7 +140,8 @@ $feeds =
 'http://www.dhnet.be/rss.xml',
 'http://feeds.feedburner.com/rtlinfo/belgique',
 'https://www.lecho.be/rss/politique_belgique.xml',
-'https://www.levif.be/actualite/feed.rss'
+'https://www.levif.be/actualite/feed.rss',
+'http://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-accueil.xml'
 ];
 
 rssToDB($feeds);
