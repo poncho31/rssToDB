@@ -135,13 +135,14 @@ $feeds =
 [
 'http://www.lalibre.be/rss/section/actu/politique-belge.xml',
 'http://www.lesoir.be/rss/31867/cible_principale',
-'http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=51c3fb4c-e7ee-451a-8add-b13a2114c104',
 'http://www.dhnet.be/rss/section/actu.xml',
 'http://www.dhnet.be/rss.xml',
 'http://feeds.feedburner.com/rtlinfo/belgique',
 'https://www.lecho.be/rss/politique_belgique.xml',
 'https://www.levif.be/actualite/feed.rss',
-'http://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-accueil.xml'
+'http://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-accueil.xml',
+'http://www.sudinfo.be/rss/2023/cible_principale_gratuit',
+'http://feeds.feedburner.com/Rtlinfo/VotreRegion'
 ];
 
 rssToDB($feeds);
