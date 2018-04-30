@@ -24,22 +24,26 @@ function rssToDB($feeds)
 		$db = new PDO('mysql:dbname=rss;host=localhost','root', '');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		 
-		//Charge le fichier xml
+		//Parcours le tableau de FEEDS
 		foreach ($feeds as $feed) {
-
+			//Charge le fichier xml
 			$xml = simplexml_load_file($feed);
 
 			//SI XML FALSE
 		    if ($xml == false) {
+		    	$xml = new DOMDocument;
+				$xmlStr = $xml->load($feed);
 
 		    	libxml_use_internal_errors(true);
-		    	$xml = simplexml_load_string($feed);
+		    	$xml = simplexml_load_string($xmlStr, 'SimpleXMLElement');
+
 
 		    	if ($xml == false) {
 		    		$errors = libxml_get_errors();
 		    		echo 'XML non chargé : <br>
 		    			<li>'.$feed.'</li>
-		    			<li>Errors type : '.var_export($errors, true).'</li><br><br>';
+		    			<li>Errors type : '.var_export($errors, true).'</li>
+		    			<br><br>';
 		    	}
 		    }
 
@@ -72,9 +76,9 @@ function rssToDB($feeds)
 						$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
 
 						//BDD : vérification si pas déjà en bdd
-						$sql = "SELECT description FROM media WHERE description = :description";
+						$sql = "SELECT lien FROM media WHERE lien = :lien";
 						$stmt = $db->prepare($sql);
-						$stmt->execute(array(':description'=>$descriptionArticleRSS));
+						$stmt->execute(array(':lien'=>$linkArticleRSS));
 						$sqlVERIFICATION = $stmt->fetch();
 
 						if (!$sqlVERIFICATION) {
@@ -132,8 +136,9 @@ $feeds =
 [
 'http://www.lalibre.be/rss/section/actu/politique-belge.xml',
 'http://www.lesoir.be/rss/31867/cible_principale',
-'http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=df156511-c24f-4f21-81c3-a5d439a9cf4b',
-'http://www.dhnet.be/rss/section/actu.xml'
+'http://www.lavenir.net/rss.aspx?foto=1&intro=1&section=info&info=51c3fb4c-e7ee-451a-8add-b13a2114c104',
+'http://www.dhnet.be/rss/section/actu.xml',
+'http://feeds.feedburner.com/rtlinfo/belgique'
 ];
 
 rssToDB($feeds);
