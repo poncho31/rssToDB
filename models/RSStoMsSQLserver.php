@@ -22,10 +22,10 @@ function rssToDB($feeds)
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $db->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
     	$alreadyInDB = '<table id="already"><tr><td>Média</td><td>Nouveaux articles</td><td>Date</td></tr>';
-		 
+		$newArticle = 0;
 		//Parcours le tableau de FEEDS
 		foreach ($feeds as $feed) {
-			$siPasNouveau = 1; $notGoingTo = true;
+			$notNewArticle = 1; $goingToDB = true;
 			//Charge le fichier xml
 			$xml = simplexml_load_file($feed);
 			//SI XML FALSE
@@ -48,14 +48,13 @@ function rssToDB($feeds)
 
 		    //SI XML TRUE
 		    else{
-				$className; $alreadyInDB; $nouveau = 0; $nbrArticle = 1;
 
 			    //Si le dernier article posté est dans la BDD
 			    if (false) {}
 
 			    foreach ($xml as $attributes) {
 				    foreach ($attributes->item as $key) {
-				    	if ($notGoingTo == true) {
+				    	if ($goingToDB == true) {
 					       	//VARIABLES : affectation des données issues du fichier xml + vérification
 					       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
 							$titleArticleRSS =  (isset($key->title)) ?strip_tags($key->title) : null;
@@ -68,14 +67,14 @@ function rssToDB($feeds)
 							$sql = "SELECT lien FROM $dbo.media WHERE lien = :lien";
 							$stmt = $db->prepare($sql);
 							$stmt->execute(array(':lien'=>$linkArticleRSS));
-							$sqlVERIFICATION = $stmt->fetch();
+							$sameLinkArticle = $stmt->fetch();
 				    	}
 				    	else{
-				    		$sqlVERIFICATION = true;
+				    		$sameLinkArticle = true;
 				    	}
 
 
-						if (!$sqlVERIFICATION) {
+						if (!$sameLinkArticle) {
 							//Insertion en bdd
 							$sqlINSERT = "INSERT INTO $dbo.media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
 							$stmt = $db->prepare($sqlINSERT);
@@ -86,27 +85,28 @@ function rssToDB($feeds)
 							$stmt->bindvalue(':lien', $linkArticleRSS);
 							$stmt->bindvalue(':categorie', $categoryArticleRSS);
 							$stmt->execute();
-							$nouveau++;
+							$newArticle++;
 							
 						}
 						else{
 							
-							if ($siPasNouveau < 4) {
-								$siPasNouveau++;
+							if ($notNewArticle < 2) {
+								$notNewArticle++;
 							}
 							else{
-								$notGoingTo = false;
+								$goingToDB = false;
+								break;
 							}
-						}
-
-							
+						}	
 					}
-					$nbrArticle++;
+					if ($goingToDB == false) {
+						break;
+					}
 				}
 			}
-		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$nouveau. '</td><td>'. date(DATE_RFC2822) ."</tr>";	
+		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";	
 		}
-		// $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$nouveau.'</td><td>'. date(DATE_RFC2822) ."</tr>";
+		// $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle.'</td><td>'. date(DATE_RFC2822) ."</tr>";
 		$alreadyInDB .='</table>';
 		echo isset($alreadyInDB) ? $alreadyInDB : null;
 	}
@@ -147,6 +147,9 @@ function rssToDB($feeds)
 		// }
 //--------------end function	
 }
+
+		
+
 $feeds = 
 [
 'http://www.lalibre.be/rss/section/actu/politique-belge.xml',
@@ -162,28 +165,6 @@ $feeds =
 ];
 
 rssToDB($feeds);
-
-
-// $feeds = array('https://www.ictu.nl/rss.xml', 'http://www.vng.nl/smartsite.dws?id=97817');
-// foreach( $feeds as $feed ) {
-//     $xml = simplexml_load_file($feed);
-
-//     foreach($xml->channel->item as $item)
-//     {
-//     $date_format = "j-n-Y"; // 7-7-2008
-//     echo date($date_format,strtotime($item->pubDate));  
-//              echo '<a href="'.$item->link.'" target="_blank">'.$item->title.'</a>';
-//              echo '<div>' . $item->description . '</div>';
-
-//     mysql_query("INSERT INTO rss_feeds (id, title, description, link, pubdate) 
-//     VALUES (
-//         '', 
-//         '".mysql_real_escape_string($item->title)."', 
-//         '".mysql_real_escape_string($item->description=htmlspecialchars(trim($item->description)))."', 
-//         '".mysql_real_escape_string($item->link)."', 
-//         '".mysql_real_escape_string($item->pubdate)."')");       
-//     }
-// }
 
 
 include '../view/viewRSS.php';
