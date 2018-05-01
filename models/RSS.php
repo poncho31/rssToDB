@@ -1,29 +1,22 @@
 <?php 
 //API SimpleHTMLDom
-// include_once 'simpleHtmlDom/simple_html_dom.php';
+// include_once '../API/simpleHtmlDom/simple_html_dom.php';
 
-include 'header.php';
-// print_r(PDO::getAvailableDrivers());
-//Instanciation de la BDD
+include '../view/header.php';
 
-try {
-    $db = new PDO('sqlsrv:Server=GREENLINE;Database=rss','greenline', 'test1234=');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch (PDOException $e)
-{
-	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
-}
+
+
+
 
 
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
 function rssToDB($feeds)
 {
 	try {
+		//Instanciation de la BDD
+		$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
-    $db = new PDO('sqlsrv:Server=GREENLINE;Database=rss','greenline', 'test1234=');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		 
 		//Parcours le tableau de FEEDS
 		foreach ($feeds as $feed) {
 			//Charge le fichier xml
@@ -35,8 +28,6 @@ function rssToDB($feeds)
 
 		    	libxml_use_internal_errors(true);
 		    	$xml = simplexml_load_string($xmlStr, 'SimpleXMLElement');
-
-
 		    	if ($xml == false) {
 		    		$errors = libxml_get_errors();
 		    		echo 'XML non chargé : <br>
@@ -68,21 +59,21 @@ function rssToDB($feeds)
 				    foreach ($attributes->item as $key) {
 				       	//VARIABLES : affectation des données issues du fichier xml + vérification
 				       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
-						$titleArticleRSS =  (isset($key->title)) ?strip_tags($key->title) : null;
+						$titleArticleRSS =  (isset($key->title)) ? strip_tags($key->title) : null;
 						$descriptionArticleRSS =  (isset($key->description)) ? strip_tags($key->description) : null;
 						$publicationDateArticleRSS =  (isset($key->pubDate)) ? strip_tags($key->pubDate) : null;
 						$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
 						$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
 
 						//BDD : vérification si pas déjà en bdd
-						$sql = "SELECT lien FROM rss.media WHERE lien = :lien";
+						$sql = "SELECT lien FROM media WHERE lien = :lien";
 						$stmt = $db->prepare($sql);
 						$stmt->execute(array(':lien'=>$linkArticleRSS));
 						$sqlVERIFICATION = $stmt->fetch();
 
 						if (!$sqlVERIFICATION) {
 							//Insertion en bdd
-							$sqlINSERT = "INSERT INTO rss.media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
+							$sqlINSERT = "INSERT INTO media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
 							$stmt = $db->prepare($sqlINSERT);
 							$stmt->bindvalue(':nom', $titleMediaRSS);
 							$stmt->bindvalue(':titre', $titleArticleRSS);
@@ -170,6 +161,6 @@ rssToDB($feeds);
 // }
 
 
-include 'viewRSS.php';
+include '../view/viewRSS.php';
 
-include 'footer.php';
+include '../view/footer.php';
