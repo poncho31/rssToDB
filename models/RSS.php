@@ -63,7 +63,7 @@ function rssToDB($feeds)
 							$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
 
 							//BDD : vérification si pas déjà en bdd
-							$sql = "SELECT lien FROM $dbo.media WHERE lien = :lien";
+							$sql = "SELECT lien FROM media WHERE lien = :lien";
 							$stmt = $db->prepare($sql);
 							$stmt->execute(array(':lien'=>$linkArticleRSS));
 							$sqlVERIFICATION = $stmt->fetch();
@@ -75,7 +75,7 @@ function rssToDB($feeds)
 
 						if (!$sqlVERIFICATION) {
 							//Insertion en bdd
-							$sqlINSERT = "INSERT INTO $dbo.media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
+							$sqlINSERT = "INSERT INTO media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
 							$stmt = $db->prepare($sqlINSERT);
 							$stmt->bindvalue(':nom', $titleMediaRSS);
 							$stmt->bindvalue(':titre', $titleArticleRSS);
