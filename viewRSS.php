@@ -1,5 +1,14 @@
 <hr>
 <?php
+//Instanciation de la BDD
+try {
+    $db = new PDO("mysql:host=localhost;dbname=rss;charset=utf8","root", "");
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+catch (PDOException $e)
+{
+	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
+}
+
 //SELECT FROM DB - AFFICHAGE DES DONNEES
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
 $sqlSELECT = "SELECT * FROM media";
