@@ -7,7 +7,7 @@ include 'header.php';
 //Instanciation de la BDD
 
 try {
-    $db = new PDO('mysql:dbname=rss;host=localhost','root', '');
+    $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch (PDOException $e)
@@ -67,12 +67,12 @@ function rssToDB($feeds)
 			    foreach ($xml as $attributes) {
 				    foreach ($attributes->item as $key) {
 				       	//VARIABLES : affectation des données issues du fichier xml + vérification
-				       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
-						$titleArticleRSS =  (isset($key->title)) ?strip_tags($key->title) : null;
-						$descriptionArticleRSS =  (isset($key->description)) ? strip_tags($key->description) : null;
-						$publicationDateArticleRSS =  (isset($key->pubDate)) ? strip_tags($key->pubDate) : null;
-						$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
-						$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
+				       	$titleMediaRSS =  (isset($attributes->title)) ? htmlentities(strip_tags($attributes->title), ENT_QUOTES, 'UTF-8') : null;
+						$titleArticleRSS =  (isset($key->title)) ? htmlentities(strip_tags($key->title), ENT_QUOTES, 'UTF-8') : null;
+						$descriptionArticleRSS =  (isset($key->description)) ? htmlentities(strip_tags($key->description), ENT_QUOTES, 'UTF-8') : null;
+						$publicationDateArticleRSS =  (isset($key->pubDate)) ? htmlentities(strip_tags($key->pubDate), ENT_QUOTES, 'UTF-8') : null;
+						$linkArticleRSS =  (isset($key->link)) ? htmlentities(strip_tags($key->link), ENT_QUOTES, 'UTF-8') : null;
+						$categoryArticleRSS =  (isset($key->category)) ? htmlentities(strip_tags($key->category), ENT_QUOTES, 'UTF-8') : null;
 
 						//BDD : vérification si pas déjà en bdd
 						$sql = "SELECT lien FROM media WHERE lien = :lien";
