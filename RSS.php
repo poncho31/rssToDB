@@ -7,7 +7,7 @@ include 'header.php';
 //Instanciation de la BDD
 
 try {
-    $db = new PDO('mysql:dbname=rss;host=localhost','root', '');
+    $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch (PDOException $e)
@@ -21,7 +21,7 @@ function rssToDB($feeds)
 {
 	try {
 		
-		$db = new PDO('mysql:dbname=rss;host=localhost','root', '');
+		$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		 
 		//Parcours le tableau de FEEDS
