@@ -6,7 +6,7 @@ include 'header.php';
 
 //Instanciation de la BDD
 try {
-    $db = new PDO('mysql:dbname=test_rss;host=localhost','root', '');
+    $db = new PDO('mysql:dbname=rss;host=localhost','root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch (PDOException $e)
