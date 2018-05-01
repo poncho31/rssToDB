@@ -4,8 +4,8 @@
 
 include 'header.php';
 
-//Instanciation de la BDD
 
+<<<<<<< HEAD
 try {
     $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -14,16 +14,24 @@ catch (PDOException $e)
 {
 	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 }
+=======
+
+
+>>>>>>> a2a05788c9c4bfbfadaf01bc770740b76a387a8e
 
 
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
 function rssToDB($feeds)
 {
 	try {
+<<<<<<< HEAD
 		
+=======
+		//Instanciation de la BDD
+>>>>>>> a2a05788c9c4bfbfadaf01bc770740b76a387a8e
 		$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		 
+		
 		//Parcours le tableau de FEEDS
 		foreach ($feeds as $feed) {
 			//Charge le fichier xml
@@ -35,8 +43,6 @@ function rssToDB($feeds)
 
 		    	libxml_use_internal_errors(true);
 		    	$xml = simplexml_load_string($xmlStr, 'SimpleXMLElement');
-
-
 		    	if ($xml == false) {
 		    		$errors = libxml_get_errors();
 		    		echo 'XML non chargé : <br>
@@ -68,7 +74,7 @@ function rssToDB($feeds)
 				    foreach ($attributes->item as $key) {
 				       	//VARIABLES : affectation des données issues du fichier xml + vérification
 				       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
-						$titleArticleRSS =  (isset($key->title)) ?strip_tags($key->title) : null;
+						$titleArticleRSS =  (isset($key->title)) ? strip_tags($key->title) : null;
 						$descriptionArticleRSS =  (isset($key->description)) ? strip_tags($key->description) : null;
 						$publicationDateArticleRSS =  (isset($key->pubDate)) ? strip_tags($key->pubDate) : null;
 						$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
