@@ -11,7 +11,7 @@ catch (PDOException $e)
 	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 }
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
-$sqlSELECT = "SELECT * FROM media";
+$sqlSELECT = "SELECT * FROM media order by idMedia DESC";
 foreach ($db->query($sqlSELECT) as $row) {
 	?>
 	<table>

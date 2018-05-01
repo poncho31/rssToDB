@@ -4,21 +4,26 @@
 
 include '../view/header.php';
 
-
-
-
-
+?>
+<section>
+	<h1>MySQL</h1>
+	<hr>
+</section>
+<?php
 
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
 function rssToDB($feeds)
 {
 	try {
+		include 'serverName.php';
 		//Instanciation de la BDD
 		$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		
+    	$alreadyInDB = '<table id="already"><tr><td>Média</td><td>Nouveaux articles</td><td>Date</td></tr>';
+		 
 		//Parcours le tableau de FEEDS
 		foreach ($feeds as $feed) {
+			$siPasNouveau = 1; $notGoingTo = true;
 			//Charge le fichier xml
 			$xml = simplexml_load_file($feed);
 			//SI XML FALSE
@@ -28,6 +33,8 @@ function rssToDB($feeds)
 
 		    	libxml_use_internal_errors(true);
 		    	$xml = simplexml_load_string($xmlStr, 'SimpleXMLElement');
+
+
 		    	if ($xml == false) {
 		    		$errors = libxml_get_errors();
 		    		echo 'XML non chargé : <br>
@@ -39,41 +46,36 @@ function rssToDB($feeds)
 
 		    //SI XML TRUE
 		    else{
-				$className; $alreadyInDB; $deja = 1; $nbrArticle = 1;
-				// //Attribue pour chaque article sa class/div/id pour récupérer le contenu html
-				// if(stristr($feed, 'lesoir.be') || stristr($feed, 'lavenir.net')){
-				// 	$className = 'article';
-				// }
-				// elseif(stristr($feed, 'dhnet.be') || stristr($feed, 'lalibre.be')){
-				// 	$className = 'div.article-text';
-				// }
-				// else{
-				// 	echo $feed . ' : feed non chargé<br><br>';
-			 //    	$feed = false;
-				// }
+				$className; $alreadyInDB; $nouveau = 0; $nbrArticle = 1;
 
 			    //Si le dernier article posté est dans la BDD
 			    if (false) {}
 
 			    foreach ($xml as $attributes) {
 				    foreach ($attributes->item as $key) {
-				       	//VARIABLES : affectation des données issues du fichier xml + vérification
-				       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
-						$titleArticleRSS =  (isset($key->title)) ? strip_tags($key->title) : null;
-						$descriptionArticleRSS =  (isset($key->description)) ? strip_tags($key->description) : null;
-						$publicationDateArticleRSS =  (isset($key->pubDate)) ? strip_tags($key->pubDate) : null;
-						$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
-						$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
+				    	if ($notGoingTo == true) {
+					       	//VARIABLES : affectation des données issues du fichier xml + vérification
+					       	$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
+							$titleArticleRSS =  (isset($key->title)) ?strip_tags($key->title) : null;
+							$descriptionArticleRSS =  (isset($key->description)) ? strip_tags($key->description) : null;
+							$publicationDateArticleRSS =  (isset($key->pubDate)) ? strip_tags($key->pubDate) : null;
+							$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
+							$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
 
-						//BDD : vérification si pas déjà en bdd
-						$sql = "SELECT lien FROM media WHERE lien = :lien";
-						$stmt = $db->prepare($sql);
-						$stmt->execute(array(':lien'=>$linkArticleRSS));
-						$sqlVERIFICATION = $stmt->fetch();
+							//BDD : vérification si pas déjà en bdd
+							$sql = "SELECT lien FROM $dbo.media WHERE lien = :lien";
+							$stmt = $db->prepare($sql);
+							$stmt->execute(array(':lien'=>$linkArticleRSS));
+							$sqlVERIFICATION = $stmt->fetch();
+				    	}
+				    	else{
+				    		$sqlVERIFICATION = true;
+				    	}
+
 
 						if (!$sqlVERIFICATION) {
 							//Insertion en bdd
-							$sqlINSERT = "INSERT INTO media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
+							$sqlINSERT = "INSERT INTO $dbo.media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
 							$stmt = $db->prepare($sqlINSERT);
 							$stmt->bindvalue(':nom', $titleMediaRSS);
 							$stmt->bindvalue(':titre', $titleArticleRSS);
@@ -82,26 +84,47 @@ function rssToDB($feeds)
 							$stmt->bindvalue(':lien', $linkArticleRSS);
 							$stmt->bindvalue(':categorie', $categoryArticleRSS);
 							$stmt->execute();
-
+							$nouveau++;
 							
 						}
 						else{
-							$alreadyInDB = 'Déjà en base de données ('.$deja.'/'.$nbrArticle.')  => '. $titleMediaRSS . ' / ' . date(DATE_RFC2822);
-							$deja++;
+							
+							if ($siPasNouveau < 4) {
+								$siPasNouveau++;
+							}
+							else{
+								$notGoingTo = false;
+							}
 						}
-						$nbrArticle++;
-				    }
-			    }
-		    	echo isset($alreadyInDB) ? $alreadyInDB. '<br><br>' : null;
-		    }
+
+							
+					}
+					$nbrArticle++;
+				}
+			}
+		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$nouveau. '</td><td>'. date(DATE_RFC2822) ."</tr>";	
 		}
+		// $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$nouveau.'</td><td>'. date(DATE_RFC2822) ."</tr>";
+		$alreadyInDB .='</table>';
+		echo isset($alreadyInDB) ? $alreadyInDB : null;
 	}
+
 	
 	catch (Exception $e) {
 		die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 	}
 
-
+	// //Attribue pour chaque article sa class/div/id pour récupérer le contenu html
+	// if(stristr($feed, 'lesoir.be') || stristr($feed, 'lavenir.net')){
+	// 	$className = 'article';
+	// }
+	// elseif(stristr($feed, 'dhnet.be') || stristr($feed, 'lalibre.be')){
+	// 	$className = 'div.article-text';
+	// }
+	// else{
+	// 	echo $feed . ' : feed non chargé<br><br>';
+	//    	$feed = false;
+	// }
     //VA ASPIRER LA PAGE WEB
         // foreach ($linkArticleRSS as $link) {
         // 	$contentURL =  file_get_html($link);
@@ -120,8 +143,11 @@ function rssToDB($feeds)
 		// 		// 	// $content[] = null;
 		// 		// }
 		// }
-//--------------end function			
+//--------------end function	
 }
+
+		
+
 $feeds = 
 [
 'http://www.lalibre.be/rss/section/actu/politique-belge.xml',

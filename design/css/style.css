@@ -20,3 +20,9 @@ tr td:nth-child(1), tr td:nth-child(2), tr td:nth-child(7){
 li{
 	margin-left: 50px;
 }
+section h1{
+	text-align: center;
+}
+.already{
+	margin: 0 0;
+}
