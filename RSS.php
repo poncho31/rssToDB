@@ -6,6 +6,7 @@ include 'header.php';
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 try {
     $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -18,6 +19,10 @@ catch (PDOException $e)
 
 
 >>>>>>> a2a05788c9c4bfbfadaf01bc770740b76a387a8e
+=======
+
+
+>>>>>>> 1cf8ce0bec0a7ce69e2704bc21be647d9f9a58ca
 
 
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
@@ -25,10 +30,14 @@ function rssToDB($feeds)
 {
 	try {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 =======
 		//Instanciation de la BDD
 >>>>>>> a2a05788c9c4bfbfadaf01bc770740b76a387a8e
+=======
+		//Instanciation de la BDD
+>>>>>>> 1cf8ce0bec0a7ce69e2704bc21be647d9f9a58ca
 		$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
