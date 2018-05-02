@@ -1,6 +1,6 @@
 <?php 
 //API SimpleHTMLDom
-// include_once '../API/simpleHtmlDom/simple_html_dom.php';
+include_once '../API/simpleHtmlDom/simple_html_dom.php';
 
 include '../view/header.php';
 // print_r(PDO::getAvailableDrivers());
@@ -48,10 +48,6 @@ function rssToDB($feeds)
 
 		    //SI XML TRUE
 		    else{
-
-			    //Si le dernier article posté est dans la BDD
-			    if (false) {}
-
 			    foreach ($xml as $attributes) {
 				    foreach ($attributes->item as $key) {
 				    	if ($goingToDB == true) {
@@ -104,7 +100,10 @@ function rssToDB($feeds)
 					}
 				}
 			}
-		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";	
+		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";
+			if ($goingToDB == false) {
+				continue;
+			}
 		}
 		// $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle.'</td><td>'. date(DATE_RFC2822) ."</tr>";
 		$alreadyInDB .='</table>';
@@ -133,6 +132,7 @@ function rssToDB($feeds)
         // 	$first_step = explode( '<div id="article-text">' , $contentURL);
         // 	$second_step = explode("</div>" , $first_step[1] );
         // 	echo $second_step[0];
+
         // }
         // var_dump($contentURL);
 		// foreach($contentURL->find($className) as $article) {
@@ -145,6 +145,9 @@ function rssToDB($feeds)
 		// 		// 	// $content[] = null;
 		// 		// }
 		// }
+
+
+
 //--------------end function	
 }
 
@@ -165,6 +168,45 @@ $feeds =
 ];
 
 rssToDB($feeds);
+
+
+// $politiciansList = 
+// [
+// 	'https://www.cumuleo.be/province/province.php?p=bruxelles',
+// 	'https://www.cumuleo.be/province/province.php?p=brabant-wallon',
+// 	'https://www.cumuleo.be/province/province.php?p=hainaut',
+// 	'https://www.cumuleo.be/province/province.php?p=namur',
+// 	'https://www.cumuleo.be/province/province.php?p=liege',
+// 	'https://www.cumuleo.be/province/province.php?p=luxembourg',
+// 	'https://www.cumuleo.be/province/province.php?p=anvers',
+// 	'https://www.cumuleo.be/province/province.php?p=brabant-flamand',
+// 	'https://www.cumuleo.be/province/province.php?p=flandre-occidentale',
+// 	'https://www.cumuleo.be/province/province.php?p=flandre-orientale',
+// 	'https://www.cumuleo.be/province/province.php?p=limbourg'
+// ];
+//  $db = new PDO("sqlsrv:Server=$serverName;Database=rss","greenline", "test1234=");
+//     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//     $db->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
+// $i = 1;
+// foreach ($politiciansList as $key) {
+// 	$link = $key;
+// 	$contentURL =  file_get_html($link);
+// 	foreach($contentURL->find('span.listingnom') as $name) {
+// 		$politiciansName =  strip_tags($name);
+// 		echo $politiciansName;
+// 		$i++;
+
+// 		$sqlINSERT = "INSERT INTO rss.politician (nom) VALUES (:nom)";
+// 		$stmt = $db->prepare($sqlINSERT);
+// 		$stmt->bindvalue(':nom', $politiciansName);
+// 		$stmt->execute();
+// 	}
+// 	// foreach ($contentURL->find('span.listingnom b') as $article) {
+// 	// 	$politiciansParty = 
+// 	// }
+// }
+// echo $i;
+
 
 
 include '../view/viewRSS.php';

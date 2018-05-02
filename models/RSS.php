@@ -1,6 +1,6 @@
 <?php 
 //API SimpleHTMLDom
-// include_once '../API/simpleHtmlDom/simple_html_dom.php';
+include_once '../API/simpleHtmlDom/simple_html_dom.php';
 
 include '../view/header.php';
 

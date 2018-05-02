@@ -1,3 +1,5 @@
+//Create Table//
+
 CREATE TABLE [media](
 	[idMedia] [int] IDENTITY(452,1) NOT NULL,
 	[nom] [nvarchar](1000) NULL,
@@ -10,20 +12,12 @@ CREATE TABLE [media](
 (
 	[idMedia] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+)
 
-ALTER TABLE [media] ADD  DEFAULT (NULL) FOR [nom]
-GO
 
-ALTER TABLE [media] ADD  DEFAULT (NULL) FOR [titre]
-GO
 
-ALTER TABLE [media] ADD  DEFAULT (NULL) FOR [date]
-GO
 
-ALTER TABLE [media] ADD  DEFAULT (NULL) FOR [lien]
-GO
+//Truncate and reset Auto_increment//
 
-ALTER TABLE [media] ADD  DEFAULT (NULL) FOR [categorie]
-GO
+truncate table rss.politician
+DBCC CHECKIDENT ('rss.politician', RESEED, 1)
