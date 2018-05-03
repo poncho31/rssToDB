@@ -126,26 +126,6 @@ function rssToDB($feeds)
 	// 	echo $feed . ' : feed non chargé<br><br>';
 	//    	$feed = false;
 	// }
-    //VA ASPIRER LA PAGE WEB
-        // foreach ($linkArticleRSS as $link) {
-        // 	$contentURL =  file_get_html($link);
-        // 	$first_step = explode( '<div id="article-text">' , $contentURL);
-        // 	$second_step = explode("</div>" , $first_step[1] );
-        // 	echo $second_step[0];
-
-        // }
-        // var_dump($contentURL);
-		// foreach($contentURL->find($className) as $article) {
-		// 	echo $article;
-		// 		// if (!empty($article)) {
-		// 		// 	// $content[] =  $article;
-		// 		// 	// print_r($article);
-		// 		// }
-		// 		// else{
-		// 		// 	// $content[] = null;
-		// 		// }
-		// }
-
 
 
 //--------------end function	

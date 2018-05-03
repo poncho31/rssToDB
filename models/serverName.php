@@ -1,4 +1,4 @@
 <?php 
-$serverName = "GREENLINE";
-$dbo = "rss";
+$serverName = "DESKTOP-O9NCA2I\SQLEXPRESS";
+$dbo = "dbo";
  ?>
