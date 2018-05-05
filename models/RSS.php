@@ -173,7 +173,9 @@ catch (PDOException $e)
 }
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
 $sqlSELECT = "SELECT * FROM media order by idMedia DESC";
-foreach ($db->query($sqlSELECT) as $row) {
+$stmt = $db->prepare($sqlSELECT);
+$stmt->execute();
+foreach ($stmt as $row) {
 	?>
 	<table>
 		<tr>

@@ -1,0 +1,11 @@
+{
+    "name": "api/rsstodb",
+    "description": "api for rss to db appli",
+    "authors": [
+        {
+            "name": "greenLine",
+            "email": "gilles.pinchart@gmail.com"
+        }
+    ],
+    "require": {}
+}

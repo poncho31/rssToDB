@@ -95,9 +95,6 @@ function rssToDB($feeds)
 							}
 						}	
 					}
-					if ($goingToDB == false) {
-						break;
-					}
 				}
 			}
 		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";
@@ -202,7 +199,9 @@ catch (PDOException $e)
 }
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
 $sqlSELECT = "SELECT * FROM $dbo.media order by idMedia DESC";
-foreach ($db->query($sqlSELECT) as $row) {
+$stmt = $db->prepare($sqlSELECT);
+$stmt->execute();
+foreach ($stmt as $row) {
 	?>
 	<table>
 		<tr>
