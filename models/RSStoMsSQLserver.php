@@ -12,7 +12,7 @@ include '../view/header.php';
 </section>
 <?php
 
-include 'serverName.php';
+
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
 function rssToDB($feeds)
 {
@@ -187,6 +187,7 @@ rssToDB($feeds);
 
 
 //SELECT FROM DB - AFFICHAGE DES DONNEES
+include 'serverName.php';
 try {
     $db = new PDO("sqlsrv:Server=$serverName;Database=rss","greenline", "test1234=");
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -197,11 +198,17 @@ catch (PDOException $e)
 {
 	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 }
-echo  "<p>ARTICLE ISSU DE LA BDD</p>";
+
+
 $sqlSELECT = "SELECT * FROM $dbo.media order by idMedia DESC";
+$sqlCount = "SELECT count(idMedia) FROM $dbo.media";
 $stmt = $db->prepare($sqlSELECT);
 $stmt->execute();
+$stmt2 = $db->query($sqlCount);
+echo  "<p>ARTICLE ISSU DE LA BDD : " . $stmt2->fetch()[0] ."</p>";
+$number = 1;
 foreach ($stmt as $row) {
+	
 	?>
 	<table>
 		<tr>
@@ -214,7 +221,7 @@ foreach ($stmt as $row) {
 			<td>Categorie</td>
 		</tr>
 		<tr>
-			<td><?php   echo $row['idMedia'] ?></td>
+			<td><?php   echo $number; $number++; ?></td>
 			<td><?php   echo $row['nom'] ?></td>
 			<td><?php 	echo $row['titre']; ?></td>
 			<td><?php 	echo $row['description']; ?></td>
@@ -224,7 +231,7 @@ foreach ($stmt as $row) {
 		</tr>
 	</table>
 	<?php 
-	
+	if($number > 20) {echo 'and so on ...'; break; }
 }
 
 include '../view/footer.php';

@@ -7,5 +7,7 @@
             "email": "gilles.pinchart@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ifsnop/mysqldump-php": "^2.4"
+    }
 }

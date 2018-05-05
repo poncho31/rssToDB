@@ -1,4 +1,7 @@
 <?php 
+
+use Ifsnop\Mysqldump as IMysqldump;
+require '../vendor/autoload.php';
 //API SimpleHTMLDom
 include_once '../API/simpleHtmlDom/simple_html_dom.php';
 
@@ -10,6 +13,16 @@ include '../view/header.php';
 	<hr>
 </section>
 <?php
+
+//Fait une sauvegarde de la bdd
+try {
+    $dump = new IMysqldump\Mysqldump('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
+    $dump->start('../data/SQLsave-'.date("d.m.y").'.sql');
+} catch (\Exception $e) {
+    echo 'mysqldump-php error: ' . $e->getMessage();
+}
+
+
 
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
 function rssToDB($feeds)
@@ -171,11 +184,16 @@ catch (PDOException $e)
 {
 	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 }
-echo  "<p>ARTICLE ISSU DE LA BDD</p>";
+
 $sqlSELECT = "SELECT * FROM media order by idMedia DESC";
+$sqlCount = "SELECT count(idMedia) FROM media";
 $stmt = $db->prepare($sqlSELECT);
 $stmt->execute();
+$stmt2 = $db->query($sqlCount);
+echo  "<p>ARTICLES ISSUS DE LA BDD : " . $stmt2->fetch()[0] ."</p>";
+$number = 1;
 foreach ($stmt as $row) {
+	
 	?>
 	<table>
 		<tr>
@@ -188,7 +206,7 @@ foreach ($stmt as $row) {
 			<td>Categorie</td>
 		</tr>
 		<tr>
-			<td><?php   echo $row['idMedia'] ?></td>
+			<td><?php   echo $number; $number++; ?></td>
 			<td><?php   echo $row['nom'] ?></td>
 			<td><?php 	echo $row['titre']; ?></td>
 			<td><?php 	echo $row['description']; ?></td>
@@ -198,7 +216,8 @@ foreach ($stmt as $row) {
 		</tr>
 	</table>
 	<?php 
-	
+	if($number > 20) {echo 'and so on ...'; break; }
 }
+
 
 include '../view/footer.php';
