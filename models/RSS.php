@@ -194,13 +194,13 @@ foreach ($stmt as $row) {
 			<td>Categorie</td>
 		</tr>
 		<tr>
-			<td><?php   echo $number; $number++; ?></td>
-			<td><?php   echo $row['nom'] ?></td>
-			<td><?php 	echo $row['titre']; ?></td>
-			<td><?php 	echo $row['description']; ?></td>
-			<td><?php 	echo $row['date']; ?></td>
-			<td><?php 	echo $row['lien']; ?></td>
-			<td><?php 	echo $row['categorie']; ?></td>
+			<td><?= $number; $number++; ?></td>
+			<td><?= $row['nom'] ?></td>
+			<td><?= $row['titre']; ?></td>
+			<td><?= $row['description']; ?></td>
+			<td><?= $row['date']; ?></td>
+			<td><?= $row['lien']; ?></td>
+			<td><?= $row['categorie']; ?></td>
 		</tr>
 	</table>
 	<?php 
