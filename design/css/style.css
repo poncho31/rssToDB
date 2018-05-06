@@ -1,7 +1,8 @@
 body{
 	margin: 1% 5%;
 	background: rgb(63,94,251);
-background: radial-gradient(circle, rgba(3,94,251,0.4847645429362881) 0%, rgba(70,123,252,0.7) 100%);
+	background: radial-gradient(circle, rgba(3,94,251,0.4847645429362881) 0%, rgba(70,123,252,0.7) 100%);
+
 
 }
 table{
@@ -32,25 +33,52 @@ section h1{
 
 .grid{
 	display: grid;
-	grid-gap: 15%;
+	grid-gap: 10% 5%;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr;
 
-	background-color: rgba(70,123,252,0.2);
+	background-color: rgba(0,0,40,0.9);
+	border: solid 15px black;
+	transform: rotate(-5deg);
 }
 .grid div button{
 	width: 100%;
-	height: 10vh;
+	height: 15vh;
 	border-radius: 5%;
-	background-color: rgba(70,123,252,0.1);
+	background-color: rgba(70,70,150,0.5);
 	transition: transform 0.4s ease-in-out, box-shadow 0.6s ease-in-out;
-	box-shadow: 2px 2px 20px black
+	box-shadow: 2px 2px 20px black;
+	font-weight: bold;
+	color: orange;
+	font-size: 1.5em;
 }
 .grid div button:hover{
 	transform: scale(1.2);
-	box-shadow: 2px 2px 50px black
+	box-shadow: 2px 2px 50px black;
 }
 .interface{
-	margin: 10%;
-	background-color: rgba(0, 0, 0, 0.9)
+	margin: 2%;
+	background: url('../img/belgianPoliticians.jpg');
+	background-size: 100% 100%;
+}
+.interface h1{
+	text-align: center;
+	color: white;
+	text-shadow: 1px 1px 20px black, -1px -1px 40 red;
+	background-color: rgba(0,0,40,0.9);
+	padding: 3%;
+	transform: rotate(5deg);
+	transition: transform 0.7s ease;
+	border: solid 15px black;
+
+}
+.interface h1:hover{
+	transform: rotate(0deg);
+}
+.transparent{
+	background-color: rgba(0,0,40,0.6);
+}
+html{
+	background-color: rgba(0,0,40, 1);
+	margin: 0, padding: 0;
 }
