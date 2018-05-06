@@ -1,7 +1,7 @@
 body{
 	margin: 1% 5%;
 	background: rgb(63,94,251);
-	background: radial-gradient(circle, rgba(3,94,251,0.4847645429362881) 0%, rgba(70,123,252,0.7) 100%);
+	background: radial-gradient(circle, rgba(3,94,40,0.4847645429362881) 0%, rgba(10,13,10,01) 100%);
 
 
 }
@@ -58,7 +58,7 @@ section h1{
 }
 .interface{
 	margin: 2%;
-	background: url('../img/belgianPoliticians.jpg');
+	/*background: url('../img/belgianPoliticians.jpg');*/
 	background-size: 100% 100%;
 }
 .interface h1{
