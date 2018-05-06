@@ -6,25 +6,15 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit3416122ac82a39326f2ef30d5031b196
 {
-    public static $prefixLengthsPsr4 = array (
-        'I' => 
-        array (
-            'Ifsnop\\' => 7,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Ifsnop\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/ifsnop/mysqldump-php/src/Ifsnop',
-        ),
+    public static $classMap = array (
+        'MySQLDump' => __DIR__ . '/..' . '/dg/mysql-dump/src/MySQLDump.php',
+        'MySQLImport' => __DIR__ . '/..' . '/dg/mysql-dump/src/MySQLImport.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3416122ac82a39326f2ef30d5031b196::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3416122ac82a39326f2ef30d5031b196::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3416122ac82a39326f2ef30d5031b196::$classMap;
 
         }, null, ClassLoader::class);
     }

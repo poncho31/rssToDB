@@ -4,59 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17f5a4a49627fbadff41b4ece8c22425",
+    "content-hash": "159ff7360c4b78dad43297db7bcb2969",
     "packages": [
         {
-            "name": "ifsnop/mysqldump-php",
-            "version": "v2.4",
+            "name": "dg/mysql-dump",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ifsnop/mysqldump-php.git",
-                "reference": "2a633b3da5db1e5bdc39c1b71c697ef197c39eeb"
+                "url": "https://github.com/dg/MySQL-dump.git",
+                "reference": "8970328c9a8665e65f3855c849f5d4de94075f13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ifsnop/mysqldump-php/zipball/2a633b3da5db1e5bdc39c1b71c697ef197c39eeb",
-                "reference": "2a633b3da5db1e5bdc39c1b71c697ef197c39eeb",
+                "url": "https://api.github.com/repos/dg/MySQL-dump/zipball/8970328c9a8665e65f3855c849f5d4de94075f13",
+                "reference": "8970328c9a8665e65f3855c849f5d4de94075f13",
                 "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "squizlabs/php_codesniffer": "1.*"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Ifsnop\\": "src/Ifsnop/"
-                }
+                "classmap": [
+                    "src/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "Diego Torres",
-                    "homepage": "https://github.com/ifsnop",
-                    "role": "Developer"
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
                 }
             ],
-            "description": "This is a php version of linux's mysqldump in terminal \"$ mysqldump -u username -p...\"",
-            "homepage": "https://github.com/ifsnop/mysqldump-php",
+            "description": "MySQL database dump.",
+            "homepage": "https://github.com/dg/MySQL-dump",
             "keywords": [
-                "backup",
-                "database",
-                "dump",
-                "export",
-                "mysql",
-                "mysqldump",
-                "pdo",
-                "sqlite"
+                "mysql"
             ],
-            "time": "2018-03-07T22:27:23+00:00"
+            "time": "2017-05-24T12:44:51+00:00"
         }
     ],
     "packages-dev": [],

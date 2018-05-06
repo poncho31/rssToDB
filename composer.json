@@ -8,6 +8,6 @@
         }
     ],
     "require": {
-        "ifsnop/mysqldump-php": "^2.4"
+        "dg/mysql-dump": "^1.4"
     }
 }

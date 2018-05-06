@@ -1,7 +1,5 @@
 <?php 
 
-use Ifsnop\Mysqldump as IMysqldump;
-require '../vendor/autoload.php';
 //API SimpleHTMLDom
 include_once '../API/simpleHtmlDom/simple_html_dom.php';
 
@@ -12,18 +10,8 @@ include '../view/header.php';
 	<h1>MySQL</h1>
 	<hr>
 </section>
+
 <?php
-
-//Fait une sauvegarde de la bdd
-try {
-    $dump = new IMysqldump\Mysqldump('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
-    $dump->start('../data/SQLsave-'.date("d.m.y").'.sql');
-} catch (\Exception $e) {
-    echo 'mysqldump-php error: ' . $e->getMessage();
-}
-
-
-
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
 function rssToDB($feeds)
 {
