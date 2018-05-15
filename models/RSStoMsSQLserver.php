@@ -22,9 +22,10 @@ function rssToDB($feeds)
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $db->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
     	$alreadyInDB = '<table id="already"><tr><td>Média</td><td>Nouveaux articles</td><td>Date</td></tr>';
-		$newArticle = 0;
+		
 		//Parcours le tableau de FEEDS
 		foreach ($feeds as $feed) {
+			$newArticle = 0;
 			$notNewArticle = 1; $goingToDB = true;
 			//Charge le fichier xml
 			$xml = simplexml_load_file($feed);

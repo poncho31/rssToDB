@@ -1,4 +1,4 @@
 <?php 
 $serverName = "GREENLINE";
-$dbo = "rss";
+$dbo = "dbo";
  ?>
