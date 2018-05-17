@@ -48,10 +48,6 @@ function rssToDB($feeds)
 
 		    //SI XML TRUE
 		    else{
-
-			    //Si le dernier article posté est dans la BDD
-			    if (false) {}
-
 			    foreach ($xml as $attributes) {
 				    foreach ($attributes->item as $key) {
 				    	if ($goingToDB == true) {
@@ -102,7 +98,6 @@ function rssToDB($feeds)
 			}
 		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";	
 		}
-		// $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle.'</td><td>'. date(DATE_RFC2822) ."</tr>";
 		$alreadyInDB .='</table>';
 		echo isset($alreadyInDB) ? $alreadyInDB : null;
 	}
@@ -112,55 +107,12 @@ function rssToDB($feeds)
 		die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 	}
 
-	// //Attribue pour chaque article sa class/div/id pour récupérer le contenu html
-	// if(stristr($feed, 'lesoir.be') || stristr($feed, 'lavenir.net')){
-	// 	$className = 'article';
-	// }
-	// elseif(stristr($feed, 'dhnet.be') || stristr($feed, 'lalibre.be')){
-	// 	$className = 'div.article-text';
-	// }
-	// else{
-	// 	echo $feed . ' : feed non chargé<br><br>';
-	//    	$feed = false;
-	// }
-    //VA ASPIRER LA PAGE WEB
-        // foreach ($linkArticleRSS as $link) {
-        // 	$contentURL =  file_get_html($link);
-        // 	$first_step = explode( '<div id="article-text">' , $contentURL);
-        // 	$second_step = explode("</div>" , $first_step[1] );
-        // 	echo $second_step[0];
-        // }
-        // var_dump($contentURL);
-		// foreach($contentURL->find($className) as $article) {
-		// 	echo $article;
-		// 		// if (!empty($article)) {
-		// 		// 	// $content[] =  $article;
-		// 		// 	// print_r($article);
-		// 		// }
-		// 		// else{
-		// 		// 	// $content[] = null;
-		// 		// }
-		// }
+
 //--------------end function	
 }
 
-		
 
-$feeds = 
-[
-'http://www.lalibre.be/rss/section/actu/politique-belge.xml',
-'http://www.lesoir.be/rss/31867/cible_principale',
-'http://www.dhnet.be/rss/section/actu.xml',
-'http://www.dhnet.be/rss.xml',
-'http://feeds.feedburner.com/rtlinfo/belgique',
-'https://www.lecho.be/rss/politique_belgique.xml',
-'https://www.levif.be/actualite/feed.rss',
-'http://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-accueil.xml',
-'http://www.sudinfo.be/rss/2023/cible_principale_gratuit',
-'http://feeds.feedburner.com/Rtlinfo/VotreRegion'
-];
-
-rssToDB($feeds);
+include 'feeds.php';
 
 
 //SELECT FROM DB - AFFICHAGE DES DONNEES
