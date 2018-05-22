@@ -16,7 +16,7 @@ $feeds =
 'http://feeds.feedburner.com/Rtlinfo/VotreRegion'
 ];
 
-rssToDB($feeds);
+
 
 
 //  ....................................................................

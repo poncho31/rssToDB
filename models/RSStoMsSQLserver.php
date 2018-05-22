@@ -118,7 +118,7 @@ function rssToDB($feeds)
 }
 
 include 'feeds.php';
-
+rssToDB($feeds);
 
 //SELECT FROM DB - AFFICHAGE DES DONNEES
 include 'serverName.php';
