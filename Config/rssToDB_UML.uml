@@ -62,7 +62,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue May 22 17:59:51 CEST 2018'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed May 23 09:51:13 CEST 2018'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -443,7 +443,7 @@
                     <UML:Comment xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000D37'/>
                   </UML:ModelElement.comment>
                   <UML:StateVertex.outgoing>
-                    <UML:Transition xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCA'/>
+                    <UML:Transition xmi.idref = '10-10-19-55-59e1e45d:1638bf10790:-8000:0000000000000ACA'/>
                   </UML:StateVertex.outgoing>
                   <UML:StateVertex.incoming>
                     <UML:Transition xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000CF8'/>
@@ -465,7 +465,7 @@
                     <UML:Transition xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DD0'/>
                   </UML:StateVertex.outgoing>
                   <UML:StateVertex.incoming>
-                    <UML:Transition xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCA'/>
+                    <UML:Transition xmi.idref = '10-10-19-55-59e1e45d:1638bf10790:-8000:0000000000000ACA'/>
                   </UML:StateVertex.incoming>
                   <UML:State.entry>
                     <UML:UninterpretedAction xmi.id = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCC'
@@ -676,15 +676,6 @@
                 <UML:ActionState xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000CF9'/>
               </UML:Transition.target>
             </UML:Transition>
-            <UML:Transition xmi.id = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCA'
-              isSpecification = 'false'>
-              <UML:Transition.source>
-                <UML:ActionState xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000CF9'/>
-              </UML:Transition.source>
-              <UML:Transition.target>
-                <UML:ActionState xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000D44'/>
-              </UML:Transition.target>
-            </UML:Transition>
             <UML:Transition xmi.id = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DD0'
               isSpecification = 'false'>
               <UML:Transition.source>
@@ -692,6 +683,18 @@
               </UML:Transition.source>
               <UML:Transition.target>
                 <UML:FinalState xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCF'/>
+              </UML:Transition.target>
+            </UML:Transition>
+            <UML:Transition xmi.id = '10-10-19-55-59e1e45d:1638bf10790:-8000:0000000000000ACA'
+              isSpecification = 'false'>
+              <UML:Transition.trigger>
+                <UML:SignalEvent xmi.idref = '10-10-19-55-59e1e45d:1638bf10790:-8000:0000000000000AC9'/>
+              </UML:Transition.trigger>
+              <UML:Transition.source>
+                <UML:ActionState xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000CF9'/>
+              </UML:Transition.source>
+              <UML:Transition.target>
+                <UML:ActionState xmi.idref = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000D44'/>
               </UML:Transition.target>
             </UML:Transition>
           </UML:StateMachine.transitions>
@@ -776,6 +779,8 @@
         </UML:Comment>
         <UML:Comment xmi.id = '10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000EC0'
           isSpecification = 'false' body = 'Automatiser&#10;=&gt; PHP &apos;Models Insert&apos;&#10;=&gt; SSIS&#10;=&gt; Insertion dans &quot;New Table&quot;&#10;&#10;Automatiser&#10;=&gt;GitPush'/>
+        <UML:SignalEvent xmi.id = '10-10-19-55-59e1e45d:1638bf10790:-8000:0000000000000AC9'
+          name = 'Action que si activation du formulaire' isSpecification = 'false'/>
       </UML:Namespace.ownedElement>
     </UML:Model>
   </XMI.content>
@@ -4907,41 +4912,6 @@ insérées par l&apos;utilisateur</text>
     >Affichage résultat</text>
   </group>
   <group name="Fig77"
-       description="org.argouml.uml.diagram.state.ui.FigTransition"
-       href="10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCA"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-      sourcePortFig="Fig66.0"
-      destPortFig="Fig76"
-      sourceFigNode="Fig66"
-      destFigNode="Fig76"
-      <argouml:pathitem figname="Fig77.1"
-                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
-                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
-                        ownerhref="10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCA"
-                        angle="270.0"
-                        offset="10" />
-    </private>
-    <path name="Fig77.0"
-      description="org.argouml.gefext.ArgoFigPoly"
-      fill="0"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="285"
-              y="1338" />
-      <lineto x="285"
-              y="1387" />
-      <lineto x="855"
-              y="1387" />
-      <lineto x="855"
-              y="1339" />
-    </path>
-  </group>
-  <group name="Fig78"
        description="org.argouml.uml.diagram.state.ui.FigFinalState[1016, 1312, 24, 24]pathVisible=false;stereotypeView=0;"
        href="10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DCF"
        fill="1"
@@ -4952,7 +4922,7 @@ insérées par l&apos;utilisateur</text>
     <private>
     </private>
     
-    <ellipse name="Fig78.0"
+    <ellipse name="Fig77.0"
       x="1028"
       y="1324"
       rx="12"
@@ -4962,7 +4932,7 @@ insérées par l&apos;utilisateur</text>
       stroke="0"
       strokecolor="black"
     />
-    <ellipse name="Fig78.1"
+    <ellipse name="Fig77.1"
       x="1028"
       y="1324"
       rx="12"
@@ -4972,7 +4942,7 @@ insérées par l&apos;utilisateur</text>
       stroke="1"
       strokecolor="black"
     />
-    <ellipse name="Fig78.2"
+    <ellipse name="Fig77.2"
       x="1027"
       y="1323"
       rx="7"
@@ -4983,7 +4953,7 @@ insérées par l&apos;utilisateur</text>
       strokecolor="85 85 170"
     />
   </group>
-  <group name="Fig79"
+  <group name="Fig78"
        description="org.argouml.uml.diagram.state.ui.FigTransition"
        href="10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DD0"
        stroke="1"
@@ -4991,17 +4961,17 @@ insérées par l&apos;utilisateur</text>
   >
     <private>
       sourcePortFig="Fig76.0"
-      destPortFig="Fig78.0"
+      destPortFig="Fig77.0"
       sourceFigNode="Fig76"
-      destFigNode="Fig78"
-      <argouml:pathitem figname="Fig79.1"
+      destFigNode="Fig77"
+      <argouml:pathitem figname="Fig78.1"
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
                         ownerhref="10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000DD0"
                         angle="270.0"
                         offset="10" />
     </private>
-    <path name="Fig79.0"
+    <path name="Fig78.0"
       description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
@@ -5014,7 +4984,7 @@ insérées par l&apos;utilisateur</text>
               y="1324" />
     </path>
   </group>
-  <group name="Fig80"
+  <group name="Fig79"
        description="org.argouml.uml.diagram.static_structure.ui.FigComment[1144, 16, 158, 104]pathVisible=false;stereotypeView=0;"
        href="10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000EC0"
        fill="1"
@@ -5025,7 +4995,7 @@ insérées par l&apos;utilisateur</text>
     <private>
     </private>
     
-    <rectangle name="Fig80.0"
+    <rectangle name="Fig79.0"
       x="1144"
       y="16"
       width="158"
@@ -5035,7 +5005,7 @@ insérées par l&apos;utilisateur</text>
       stroke="0"
       strokecolor="black"
     />
-    <path name="Fig80.1"
+    <path name="Fig79.1"
       description="org.tigris.gef.presentation.FigPoly"
       fill="1"
       fillcolor="white"
@@ -5055,7 +5025,7 @@ insérées par l&apos;utilisateur</text>
       <lineto x="1144"
               y="16" />
     </path>
-    <path name="Fig80.2"
+    <path name="Fig79.2"
       description="org.tigris.gef.presentation.FigPoly"
       fill="1"
       fillcolor="white"
@@ -5071,7 +5041,7 @@ insérées par l&apos;utilisateur</text>
       <lineto x="1291"
               y="16" />
     </path>
-    <group name="Fig80.3"
+    <group name="Fig79.3"
          description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1146, 18, 144, 0]"
          href="10-10-19-72--1059e3de:16386e85a44:-8000:0000000000000EC0"
          fill="0"
@@ -5083,7 +5053,7 @@ insérées par l&apos;utilisateur</text>
       <private>
       </private>
       
-      <rectangle name="Fig80.3.0"
+      <rectangle name="Fig79.3.0"
         x="1146"
         y="18"
         width="144"
@@ -5094,7 +5064,7 @@ insérées par l&apos;utilisateur</text>
         strokecolor="black"
       />
     </group>
-    <text name="Fig80.4"
+    <text name="Fig79.4"
       x="1146"
       y="18"
       width="144"
@@ -5116,6 +5086,41 @@ insérées par l&apos;utilisateur</text>
 
 Automatiser
 =&gt;GitPush</text>
+  </group>
+  <group name="Fig80"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="10-10-19-55-59e1e45d:1638bf10790:-8000:0000000000000ACA"
+       stroke="1"
+       strokecolor="51 51 153"
+  >
+    <private>
+      sourcePortFig="Fig66.0"
+      destPortFig="Fig76"
+      sourceFigNode="Fig66"
+      destFigNode="Fig76"
+      <argouml:pathitem figname="Fig80.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="10-10-19-55-59e1e45d:1638bf10790:-8000:0000000000000ACA"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig80.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="51 51 153"
+    >
+      <moveto x="280"
+              y="1338" />
+      <lineto x="280"
+              y="1416" />
+      <lineto x="832"
+              y="1416" />
+      <lineto x="832"
+              y="1339" />
+    </path>
   </group>
 </pgml>
 <todo>
