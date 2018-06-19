@@ -1,12 +1,8 @@
-<form action="?" method="POST">
+<form action="?section=search" method="POST">
 	<input type="text" name="entry">
 	<input type="submit" name="submitEntry">
 </form>
-<style>
-	tr{
-		border: solid 5px black;
-	}
-</style>
+
 <?php
 
 $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
@@ -21,6 +17,7 @@ SELECT nom, titre, description, date, lien, categorie FROM media where descripti
 $stmt = $db->prepare($selectDescription);
 $stmt->execute();
 ?>
+
 <table>
 	<tr>
 		<td>Nom</td>
@@ -40,3 +37,35 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 ?>
 </table>
+
+
+<hr>	
+<h1>Occurences mots</h1>
+<?php 
+$selectOccurence = 'SELECT nom, titre, description FROM media';
+
+$stmt = $db->prepare($selectOccurence);
+$stmt->execute();
+?>
+<table>
+	<tr>
+		<td>description</td>
+		<td>occurence</td>
+	</tr>
+
+<?php
+$oneWordArray = [];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	?>
+	<tr>
+		<td><?= $row['nom'] ?></td>
+		<td><?php $explode = explode(" ", $row['description']);
+		array_push($oneWordArray, $explode);
+		  ?></td>
+	</tr>
+	<?php
+}
+var_dump($oneWordArray);
+?>
+</table>
+<hr>

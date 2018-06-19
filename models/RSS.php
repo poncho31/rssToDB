@@ -1,9 +1,9 @@
 <?php 
 
 //API SimpleHTMLDom
-include_once '../API/simpleHtmlDom/simple_html_dom.php';
+include_once 'API/simpleHtmlDom/simple_html_dom.php';
 
-include '../view/header.php';
+include 'view/header.php';
 
 ?>
 <section>
@@ -154,4 +154,4 @@ foreach ($stmt as $row) {
 }
 
 
-include '../view/footer.php';
+include 'view/footer.php';

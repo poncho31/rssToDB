@@ -27,6 +27,9 @@ li{
 section h1{
 	text-align: center;
 }
+/*	tr{
+		border: solid 5px black;
+	}*/
 .already{
 	/*margin: 0 0;*/
 }
