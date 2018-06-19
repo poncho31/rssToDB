@@ -12,6 +12,7 @@
 			<div><a href="models/RSS.php"><button>MySQL</button></a></div>
 			<div><a href="models/RSStoMsSQLserver.php"><button>MS SQL server</button></a></div>
 			<div><a href="models/MySQLsaveDB.php"><button>Save MySQL Database</button></a></div>
+			<div><a href="models/search.php"><button>Search</button></a></div>
 		</div>
 	</div>
 

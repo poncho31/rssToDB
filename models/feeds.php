@@ -6,14 +6,14 @@ $feeds =
 'http://www.dhnet.be/rss/section/actu.xml',
 'http://www.dhnet.be/rss.xml',
 'http://feeds.feedburner.com/rtlinfo/belgique',
+'http://feeds.feedburner.com/Rtlinfo/VotreRegion',
 'https://www.lecho.be/rss/politique_belgique.xml',
 'https://www.lecho.be/rss/politique_economie.xml',
 'https://www.lecho.be/rss/politique_europe.xml',
 'https://www.lecho.be/rss/politique_internationale.xml',
 'https://www.levif.be/actualite/feed.rss',
 'http://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-accueil.xml',
-'http://www.sudinfo.be/rss/2023/cible_principale_gratuit',
-'http://feeds.feedburner.com/Rtlinfo/VotreRegion'
+'http://www.sudinfo.be/rss/2023/cible_principale_gratuit'
 ];
 
 

@@ -21,31 +21,24 @@ function rssToDB($feeds)
 		$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     	$alreadyInDB = '<table id="already"><tr><td>Média</td><td>Nouveaux articles</td><td>Date</td></tr>';
+				
 		
 		//Parcours le tableau de FEEDS
 		foreach ($feeds as $feed) {
 			$newArticle = 0;
 			$notNewArticle = 1; $goingToDB = true;
 			//Charge le fichier xml
-			$xml = simplexml_load_file($feed);
+			$xml = (simplexml_load_file($feed, null, LIBXML_NOCDATA) == true) ? simplexml_load_file($feed, null, LIBXML_NOCDATA) : false;
+
 			//SI XML FALSE
-		    if ($xml == false) {
-		    	$xml = new DOMDocument;
-				$xmlStr = $xml->load($feed);
-
-		    	libxml_use_internal_errors(true);
-		    	$xml = simplexml_load_string($xmlStr, 'SimpleXMLElement');
-
-
-		    	if ($xml == false) {
-		    		$errors = libxml_get_errors();
-		    		echo 'XML non chargé : <br>
-		    			<li>'.$feed.'</li>
-		    			<li>Errors type : '.var_export($errors, true).'</li>
-		    			<br><br>';
-		    	}
-		    }
-
+			libxml_use_internal_errors(true);
+		    if ($xml === false) {
+			    echo "Failed loading XML '".$feed."': ";
+			    foreach(libxml_get_errors() as $error) {
+			        echo "<br>", $error->message;
+			    }
+			}
+			
 		    //SI XML TRUE
 		    else{
 			    foreach ($xml as $attributes) {
@@ -94,7 +87,7 @@ function rssToDB($feeds)
 							}
 						}	
 					}
-				}
+		    	}
 			}
 		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";	
 		}
