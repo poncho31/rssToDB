@@ -16,9 +16,11 @@ $oneWordArray = [];
 $explode = '';
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	$replacedElement = [',', ';',' "', '" ', '.', '', '’', ':', '«', '»', '?', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', ' le ', ' la ', ' les ', ' l ', ' a ', ' à ', ' A ', 'À ', ' du ', ' des ', ' s ', ' d&# ', ' l&# ', 'La ', 'Le ', 'Les ', ' il ', 'Il ', ' avec ', ' que ', ' se ', ' ne ', ' ce ', ' son ', ' sont ', 'On ', ' cette ', ' d ', ' une ', ' qui ', ' que ', ' quoi ', ' pour ', ' par ', ' au ', ' sur ', ' et ', ' de ', ' un ', ' en ', ' … ', ' nos ', ' e ', ' ça ', ' quand ', ' dans ', ' est ', ' ont ', ' pas '];
+	$replacedElement = ["N-VA", 'nv-a'];
+	$replace = str_replace($replacedElement, "NVA", trim($row['description']));
+	$replacedElement = [',', ';', '-', ' - ',' -', '- ', '"', ' "', '" ', '.', '', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', ' le ', ' la ', ' les ', 'Les', ' l ', ' a ', ' à ', ' A ', 'À ', ' du ', ' des ', ' s ', ' il ', ' avec ', ' que ', ' se ', ' ne ', ' ce ', ' son ', ' sont ', 'On ', ' cette ', ' d ', ' une ', ' qui ', ' que ', ' quoi ', ' pour ', ' par ', ' au ', ' sur ', ' et ', ' de ', ' un ', ' en ', ' … ', ' nos ', ' e ', ' ça ', ' quand ', ' dans ', ' est ', ' ont ', ' pas ', 'ex-', '...', "s'", "d'", "l'", "n'", ' c ', ' n ', ' y ', ' un ', 'une ', ' elle ', ' nous ', ' sa ', ' ca ', ' ou ', ' h ', ' je ', ' ses ', ' on ', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#'];
 
-	$explode .= str_replace($replacedElement, " ", trim($row['description']));
+	$explode .= str_replace($replacedElement, " ", strtolower(trim($replace)));
 }
 
 $oneWordArray = explode(" ", trim($explode));

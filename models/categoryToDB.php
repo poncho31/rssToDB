@@ -1,5 +1,8 @@
+<!-- -->
+
 <?php 
 include_once 'API/simpleHtmlDom/simple_html_dom.php';
+
 try {
 	
 
@@ -86,3 +89,4 @@ $stmt->execute();
 catch (PDOException $e) {
 	echo $e->getMessage();
 }
+

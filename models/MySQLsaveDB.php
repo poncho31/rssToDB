@@ -2,14 +2,15 @@
 <?php 
 require 'vendor/autoload.php';
 try {
+	//Saved DB
 	$db = new mysqli('localhost', 'root', '', 'rss');
 	$dump = new MySQLDump($db);
 	$dump->save('data/'.date("y.m.d").'-SQLsave.sql.gz');
-	$pathContents = file_get_contents('./GitPushRssToDB.sh');
-	$output = shell_exec("git add .");
-	$output .= shell_exec('git commit -m "Automated rss to DB "');
-	echo $output;
 
+	$pathContents = file_get_contents('./GitPushRssToDB.sh');
+	exec("C:\wamp\bin\php\php5.6.35\php.exe C:\wamp\www\rssToDB\GitPushRssToDB.sh", $output);
+	print_r($output)
+	$output;
 	if ($output) {
 		echo "GIT PUSH DONE :" . $pathContents . "<br>";
 	}

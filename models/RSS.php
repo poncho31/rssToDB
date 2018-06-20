@@ -3,8 +3,6 @@
 //API SimpleHTMLDom
 include_once 'API/simpleHtmlDom/simple_html_dom.php';
 
-include 'view/header.php';
-
 ?>
 <section>
 	<h1>MySQL</h1>
@@ -152,6 +150,3 @@ foreach ($stmt as $row) {
 	<?php 
 	if($number > 20) {echo 'and so on ...'; break; }
 }
-
-
-include 'view/footer.php';

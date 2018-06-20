@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>DB</title>
-	<!-- <meta http-equiv="refresh" content="0.3; URL=?section=categoryvif"> -->
-	<link rel="stylesheet" href="design/css/style.css">
-
-</head>
-<body class="interface">
 
 	<?php
+include 'view/header.php';
 if (isset($_GET['section'])) {
 
 	switch ($_GET['section']) {
@@ -53,6 +44,5 @@ else{
 	</div>
 	<?php 
 }
+include 'view/footer.php';
 	 ?>
-</body>
-</html>

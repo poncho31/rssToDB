@@ -36,7 +36,7 @@ if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
 	$categorie = isset($_REQUEST['categorie']) ? $_REQUEST['categorie']: '';
 	$selectDescription = 
 	'
-	SELECT nom, titre, description, categorie, date, lien FROM media where description like "%'. $entry .'%"  and categorie = "'.$categorie.'"
+	SELECT nom, titre, description, categorie, date, lien FROM media where description like "%'. $entry .'%" and categorie like "%'.$categorie.'%" order by date
 	';
 	$stmt = $db->prepare($selectDescription);
 	$stmt->execute();
@@ -59,7 +59,7 @@ if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
 		<tr>
 
 			<td><?= $row['categorie']." --<br> ". $row['date']?></td>
-			<td><?= "<a href='".$row['lien']."'>" . $row['titre'] . "</a>" ?></td>
+			<td><?= "<a href='".$row['lien']."' target='_blank'>" . $row['titre'] . "</a>" ?></td>
 			<td><?= substr($row['description'], 0, 508) . "..."; ?></td>
 		</tr>
 		<?php
