@@ -3,7 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>DB</title>
+	<!-- <meta http-equiv="refresh" content="0.3; URL=?section=categoryvif"> -->
 	<link rel="stylesheet" href="design/css/style.css">
+
 </head>
 <body class="interface">
 
@@ -25,9 +27,15 @@ if (isset($_GET['section'])) {
 		case 'search':
 			require 'models/search.php';
 			break;
-		// default:
-		// 	require 'index.php';
-		// 	break;
+		case 'occurence':
+			require 'models/occurence.php';
+			break;
+		case 'categoryTest':
+			require 'models/categoryToDB.php';
+			break;
+		default:
+			require 'index.php';
+			break;
 	}
 }
 else{
@@ -39,6 +47,8 @@ else{
 			<div><a href="?section=mssqlsrv"><button>MS SQL server</button></a></div>
 			<div><a href="?section=savedb"><button>Save MySQL Database</button></a></div>
 			<div><a href="?section=search"><button>Search</button></a></div>
+			<div><a href="?section=occurence"><button>Occurence</button></a></div>
+			<div><a href="?section=categoryTest"><button>Category Test</button></a></div>
 		</div>
 	</div>
 	<?php 

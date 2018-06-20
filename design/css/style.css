@@ -67,7 +67,7 @@ section h1{
 }
 .interface h1{
 	text-align: center;
-	color: white;
+	color: black;
 	text-shadow: 1px 1px 20px black, -1px -1px 40 red;
 	/*background-color: rgba(0,0,40,0.9);*/
 	padding: 3%;
