@@ -27,9 +27,12 @@ $arCount = [];
 foreach($oneWordArray as $val)
 {
 	//Si mot se termine par 'S' et que longueur mot > 3 ALORS enlève le s
-	if (substr($val,-1) == 's' && strlen($val) > 4)
-	{
-		$val = substr($val, 0, -1);
+	//Si mot ne se termine pas par 'S' alors ajoute s
+	if (substr($val,-1) != 's' && strlen($val) > 3)
+	{	
+		// && strlen($val) > 4
+		// $val = substr($val, 0, -1);
+		$val = $val . "s";
 	}
 	$arCount[$val] = (empty($arCount[$val]) ) ? 1 : $arCount[$val]+1;
 }
@@ -68,19 +71,19 @@ function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = fal
 	arsort($data);
 	//Extrait une portion de tableau
 	$maxValues = array_slice($data, 0, $number);
-	foreach ($maxValues as $key => $value) {
+	foreach ($maxValues as $mot => $occurence) {
 		// $arCountReverse = ($boolReverseArray) ? array_flip($newArray) : $data;
-		if (strlen($key) > 1) {
-			echo $key . " : " . $value . "<br>";
+		if (strlen($mot) > 1 && $occurence > 30) {
+			echo $mot . " : " . $occurence . "<br>";
 		}
 	}
 }
-
+wordsMostOccurences(5000, $arCount, 500, 5000)
 ?>
+
 <!-- </table> -->
 <table id="occurenceTable">
 	<tr>
-		<td>-10</td>
 		<td>10 < x < 50</td>
 		<td>50 < x < 100</td>
 		<td>100 < x < 500</td>
@@ -89,13 +92,12 @@ function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = fal
 		<td>+2000</td>
 	</tr>
 	<tr>
-		<td><?= wordsMostOccurences(500, $arCount, 0, 10); ?></td>
 		<td><?= wordsMostOccurences(5000, $arCount, 10, 50); ?></td>
-		<td><?= wordsMostOccurences(500, $arCount, 50, 100); ?></td>
-		<td><?= wordsMostOccurences(500, $arCount, 100, 500); ?></td>
-		<td><?= wordsMostOccurences(500, $arCount, 500, 1000); ?></td>
-		<td><?= wordsMostOccurences(500, $arCount, 1000, 2000); ?></td>
-		<td><?= wordsMostOccurences(500, $arCount, 2000, 1000000); ?></td>
+		<td><?= wordsMostOccurences(5000, $arCount, 50, 100); ?></td>
+		<td><?= wordsMostOccurences(5000, $arCount, 100, 500); ?></td>
+		<td><?= wordsMostOccurences(5000, $arCount, 500, 1000); ?></td>
+		<td><?= wordsMostOccurences(5000, $arCount, 1000, 2000); ?></td>
+		<td><?= wordsMostOccurences(5000, $arCount, 2000, 1000000); ?></td>
 	</tr>
 </table>
 <?php
