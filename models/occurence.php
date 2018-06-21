@@ -1,5 +1,5 @@
 <hr>	
-<h1>Occurences des mots</h1>
+<h1>Occurence des mots</h1>
 <?php 
 
 $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
@@ -8,9 +8,6 @@ $selectOccurence = 'SELECT nom, titre, description FROM media';
 
 $stmt = $db->prepare($selectOccurence);
 $stmt->execute();
-
-
-
 
 $oneWordArray = [];
 $explode = '';
@@ -24,29 +21,16 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 
 $oneWordArray = explode(" ", trim($explode));
-// var_dump($oneWordArray);
 $arCount = [];
 
 foreach($oneWordArray as $val)
 {
 	$arCount[$val] = (empty($arCount[$val]) ) ? 1 : $arCount[$val]+1;
 }
-// var_dump($arCount);
-
 
 ?>
  <hr>
 <?php
-
-$dix = "";
-$cinquante = "";
-$cent = "";
-$cinqcent = "";
-$mille = "";
-$deuxmille = "";
-$plusdeuxmille = "";
-$temp = 0;
-
 
     function array_max_r($arr) {
         $max = null;
@@ -62,44 +46,6 @@ $temp = 0;
         return $max;
     }
 
-
-// $dix10 = [];
-// $dix50 = "";
-// $dix100 = "";
-// $dix500 = "";
-// $dix1000 = "";
-// $dix2000 = "";
-// $dix2000p = "";
-// foreach ($arCount as $key => $value) {
-// 	if ($value > 1) {
-
-// 		if ($value < 10) {
-// 			$dix .= $key . " : " . $value ."<br>";
-
-// 			$dix10[$key] = $value;
-// 		}
-// 		else if ($value < 50) {
-// 			$cinquante .= $key . " : " . $value ."<br>";
-// 		}
-// 		else if ($value < 100) {
-// 			$cent .= $key . " : " . $value ."<br>";
-// 		}
-// 		else if ($value < 500) {
-// 			$cinqcent .= $key . " : " . $value ."<br>";
-// 		}
-// 		else if ($value < 1000) {
-// 			$mille .= $key . " : " . $value ."<br>";
-// 		}
-// 		else if ($value < 2000) {
-// 			$deuxmille .= $key . " : " . $value ."<br>";
-// 		}
-// 		else{
-// 			$plusdeuxmille .= $key . " : " . $value ."<br>";
-// 		}
-
-
-// 	}
-// }
 
 function wordsMostOccurences($number, $array, $min, $max, $boolReverseArray = true, $uniqueOccurence = false)
 {
@@ -136,13 +82,13 @@ function wordsMostOccurences($number, $array, $min, $max, $boolReverseArray = tr
 		<td>+2000</td>
 	</tr>
 	<tr>
-		<td><?= wordsMostOccurences(50, $arCount, 0, 10); ?></td>
-		<td><?= wordsMostOccurences(50, $arCount, 10, 50); ?></td>
-		<td><?= wordsMostOccurences(50, $arCount, 50, 100); ?></td>
-		<td><?= wordsMostOccurences(50, $arCount, 100, 500); ?></td>
-		<td><?= wordsMostOccurences(50, $arCount, 500, 1000); ?></td>
-		<td><?= wordsMostOccurences(50, $arCount, 1000, 2000); ?></td>
-		<td><?= wordsMostOccurences(50, $arCount, 2000, 1000000); ?></td>
+		<td><?= wordsMostOccurences(500, $arCount, 0, 10); ?></td>
+		<td><?= wordsMostOccurences(500, $arCount, 10, 50); ?></td>
+		<td><?= wordsMostOccurences(500, $arCount, 50, 100); ?></td>
+		<td><?= wordsMostOccurences(500, $arCount, 100, 500); ?></td>
+		<td><?= wordsMostOccurences(500, $arCount, 500, 1000); ?></td>
+		<td><?= wordsMostOccurences(500, $arCount, 1000, 2000); ?></td>
+		<td><?= wordsMostOccurences(500, $arCount, 2000, 1000000); ?></td>
 	</tr>
 </table>
 <?php

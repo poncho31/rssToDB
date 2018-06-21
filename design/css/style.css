@@ -9,6 +9,7 @@ body{
 nav#header div{
 	display: flex;
 	justify-content: center;
+	margin: 0 5px;
 }
 table{
 	border:solid 1px black;

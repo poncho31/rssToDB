@@ -5,7 +5,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <form action="?section=search" method="POST">
 	<input type="text" name="entry" value="<?= isset($_POST['entry'])? $_POST['entry'] : 'Politician\'s name'; ?>"placeholder="Politician's name">
 	<select name="categorie" id="" >
-		<option name="categorie" value=' ' >categorie</option>
+		<option name="categorie" value=' ' >Toutes les categories</option>
 		<?php 
 			$selectDescription = 'SELECT categorie FROM media WHERE categorie != " "GROUP BY categorie';
 			$stmt = $db->prepare($selectDescription);
@@ -53,8 +53,8 @@ if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
 	$i = 1;
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		
-		if ($i > 20) break;
-		else $i++
+		// if ($i > 20) break;
+		// else $i++
 		?>
 		<tr>
 
