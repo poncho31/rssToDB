@@ -1,5 +1,5 @@
 <hr>	
-<h1>Occurences mots</h1>
+<h1>Occurences des mots</h1>
 <?php 
 
 $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
@@ -20,7 +20,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$replace = str_replace($replacedElement, "NVA", trim($row['description']));
 	$replacedElement = [',', ';', '-', ' - ',' -', '- ', '"', ' "', '" ', '.', '', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', ' le ', ' la ', ' les ', 'Les', ' l ', ' a ', ' à ', ' A ', 'À ', ' du ', ' des ', ' s ', ' il ', ' avec ', ' que ', ' se ', ' ne ', ' ce ', ' son ', ' sont ', 'On ', ' cette ', ' d ', ' une ', ' qui ', ' que ', ' quoi ', ' pour ', ' par ', ' au ', ' sur ', ' et ', ' de ', ' un ', ' en ', ' … ', ' nos ', ' e ', ' ça ', ' quand ', ' dans ', ' est ', ' ont ', ' pas ', 'ex-', '...', "s'", "d'", "l'", "n'", ' c ', ' n ', ' y ', ' un ', 'une ', ' elle ', ' nous ', ' sa ', ' ca ', ' ou ', ' h ', ' je ', ' ses ', ' on ', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#'];
 
-	$explode .= str_replace($replacedElement, " ", strtolower(trim($replace)));
+	$explode .= str_replace($replacedElement, " ", mb_strtolower(trim($replace)));
 }
 
 $oneWordArray = explode(" ", trim($explode));
@@ -62,38 +62,70 @@ $temp = 0;
         return $max;
     }
 
-$arrayDix = [];
-foreach ($arCount as $key => $value) {
-	if ($value > 1) {
-		if ($value < 10) {
-			$dix .= $key . " : " . $value ."<br>";
-			array_push($arrayDix, $key);
-		}
-		else if ($value < 50) {
-			$cinquante .= $key . " : " . $value ."<br>";
-		}
-		else if ($value < 100) {
-			$cent .= $key . " : " . $value ."<br>";
-		}
-		else if ($value < 500) {
-			$cinqcent .= $key . " : " . $value ."<br>";
-		}
-		else if ($value < 1000) {
-			$mille .= $key . " : " . $value ."<br>";
-		}
-		else if ($value < 2000) {
-			$deuxmille .= $key . " : " . $value ."<br>";
-		}
-		else{
-			$plusdeuxmille .= $key . " : " . $value ."<br>";
-		}
+
+// $dix10 = [];
+// $dix50 = "";
+// $dix100 = "";
+// $dix500 = "";
+// $dix1000 = "";
+// $dix2000 = "";
+// $dix2000p = "";
+// foreach ($arCount as $key => $value) {
+// 	if ($value > 1) {
+
+// 		if ($value < 10) {
+// 			$dix .= $key . " : " . $value ."<br>";
+
+// 			$dix10[$key] = $value;
+// 		}
+// 		else if ($value < 50) {
+// 			$cinquante .= $key . " : " . $value ."<br>";
+// 		}
+// 		else if ($value < 100) {
+// 			$cent .= $key . " : " . $value ."<br>";
+// 		}
+// 		else if ($value < 500) {
+// 			$cinqcent .= $key . " : " . $value ."<br>";
+// 		}
+// 		else if ($value < 1000) {
+// 			$mille .= $key . " : " . $value ."<br>";
+// 		}
+// 		else if ($value < 2000) {
+// 			$deuxmille .= $key . " : " . $value ."<br>";
+// 		}
+// 		else{
+// 			$plusdeuxmille .= $key . " : " . $value ."<br>";
+// 		}
 
 
+// 	}
+// }
+
+function wordsMostOccurences($number, $array, $min, $max, $boolReverseArray = true, $uniqueOccurence = false)
+{
+	$newArray = [];
+	foreach ($array as $key => $value) {
+		if ($value >= $min && $value < $max) {
+			$newArray[$key] = $value;
+		}
+	}
+	$data = $newArray;
+	//Occurence unique : mot=>10, mot=>9, mot=>8, ... | Occurence pas unique : mot=>10, mot=>10, mot=> 10, mot=>9, mot=>9, mot=>9, mot=>9, ...
+	$data = ($uniqueOccurence)?array_unique($data) : $data;
+	//Trie un tableau en ordre inverse et conserve l'association des index
+	arsort($data);
+	//Extrait une portion de tableau
+	$maxValues = array_slice($data, 0, $number);
+	foreach ($maxValues as $key => $value) {
+		$arCountReverse = ($boolReverseArray) ? array_flip($newArray) : $data;
+
+		echo $key . " : " . $value . "<br>";
 	}
 }
+
 ?>
 <!-- </table> -->
-<table>
+<table id="occurenceTable">
 	<tr>
 		<td>-10</td>
 		<td>10 < x < 50</td>
@@ -104,45 +136,16 @@ foreach ($arCount as $key => $value) {
 		<td>+2000</td>
 	</tr>
 	<tr>
-		<td><?= $dix ?></td>
-		<td><?= $cinquante ?></td>
-		<td><?= $cent ?></td>
-		<td><?= $cinqcent ?></td>
-		<td><?= $mille ?></td>
-		<td><?= $deuxmille ?></td>
-		<td><?= $plusdeuxmille ?></td>
+		<td><?= wordsMostOccurences(50, $arCount, 0, 10); ?></td>
+		<td><?= wordsMostOccurences(50, $arCount, 10, 50); ?></td>
+		<td><?= wordsMostOccurences(50, $arCount, 50, 100); ?></td>
+		<td><?= wordsMostOccurences(50, $arCount, 100, 500); ?></td>
+		<td><?= wordsMostOccurences(50, $arCount, 500, 1000); ?></td>
+		<td><?= wordsMostOccurences(50, $arCount, 1000, 2000); ?></td>
+		<td><?= wordsMostOccurences(50, $arCount, 2000, 1000000); ?></td>
 	</tr>
 </table>
-
 <?php
-// var_dump($arrayDix);
 
-function wordsMostOccurences($number, $array, $boolReverseArray, $bool)
-{
-	$data = $array;
-	//Trie les données 
-	rsort($data);
-	$data = array_unique($data);
-	$maxValues = array_slice($data, 0, $number);
-	foreach ($maxValues as $key => $value) {
-		// Inverse les clés-valeurs du tableau
-		$arCountReverse = ($boolReverseArray) ? array_flip($array) : $data;
-		echo " ' " . $arCountReverse[$value] . " ' " .' a la plus grande occurence : ' .(($bool) ? $value : $key) . "<br>";
-	}
-}
 
-// var_dump($arCount);
-wordsMostOccurences(100, $arCount, true, true);
- echo '<hr>';
 
-$arrayDix2 = [];
-$arrayDix = array_flip($arrayDix);
-foreach($arrayDix as $val)
-{
-	$arrayDix2[$val] = (empty($arrayDix2[$val])) ? 1 : $arrayDix2[$val]+1;
-}
-wordsMostOccurences(10, $arrayDix, true, false);
-
-// print_r($arrayDix);
-echo "<hr>";
-// print_r($arCount);

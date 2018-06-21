@@ -6,6 +6,10 @@ body{
 
 
 }
+nav#header div{
+	display: flex;
+	justify-content: center;
+}
 table{
 	border:solid 1px black;
 }
@@ -31,6 +35,10 @@ section h1{
 /*	tr{
 		border: solid 5px black;
 	}*/
+
+#occurenceTable td{
+	width: 14.28vw;
+}
 .already{
 	/*margin: 0 0;*/
 }
