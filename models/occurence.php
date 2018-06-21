@@ -15,6 +15,7 @@ $explode = '';
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$replacedElement = ["N-VA", 'nv-a'];
 	$replace = str_replace($replacedElement, "NVA", trim($row['description']));
+
 	$replacedElement = [',', ';', '-', ' - ',' -', '- ', '"', ' "', '" ', '.', '', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', ' le ', ' la ', ' les ', 'Les', ' l ', ' a ', ' à ', ' A ', 'À ', ' du ', ' des ', ' s ', ' il ', ' avec ', ' que ', ' se ', ' ne ', ' ce ', ' son ', ' sont ', 'On ', ' cette ', ' d ', ' une ', ' qui ', ' que ', ' quoi ', ' pour ', ' par ', ' au ', ' sur ', ' et ', ' de ', ' un ', ' en ', ' … ', ' nos ', ' e ', ' ça ', ' quand ', ' dans ', ' est ', ' ont ', ' pas ', 'ex-', '...', "s'", "d'", "l'", "n'", ' c ', ' n ', ' y ', ' un ', 'une ', ' elle ', ' nous ', ' sa ', ' ca ', ' ou ', ' h ', ' je ', ' ses ', ' on ', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#'];
 
 	$explode .= str_replace($replacedElement, " ", mb_strtolower(trim($replace)));
@@ -25,6 +26,11 @@ $arCount = [];
 
 foreach($oneWordArray as $val)
 {
+	//Si mot se termine par 'S' et que longueur mot > 3 ALORS enlève le s
+	if (substr($val,-1) == 's' && strlen($val) > 4)
+	{
+		$val = substr($val, 0, -1);
+	}
 	$arCount[$val] = (empty($arCount[$val]) ) ? 1 : $arCount[$val]+1;
 }
 
@@ -84,7 +90,7 @@ function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = fal
 	</tr>
 	<tr>
 		<td><?= wordsMostOccurences(500, $arCount, 0, 10); ?></td>
-		<td><?= wordsMostOccurences(500, $arCount, 10, 50); ?></td>
+		<td><?= wordsMostOccurences(5000, $arCount, 10, 50); ?></td>
 		<td><?= wordsMostOccurences(500, $arCount, 50, 100); ?></td>
 		<td><?= wordsMostOccurences(500, $arCount, 100, 500); ?></td>
 		<td><?= wordsMostOccurences(500, $arCount, 500, 1000); ?></td>
