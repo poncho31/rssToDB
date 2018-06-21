@@ -20,7 +20,7 @@ $stmt->execute();
 	    echo $row['nom'] . " => Categorie : ' <span style='color:red;'>" . $row['categorie'] . "</span> '  => " . $row['id'] . " <br>";
 
 		$link = $row['lien'];
-		$contentURL =  (file_get_html($link))?file_get_html($link):false;
+		$contentURL =  file_get_html($link);
 		if ($contentURL != false) {
 			$rtlCategory = "";
 			foreach($contentURL->find('.w-content-details-article-breadcrumb li:nth-child(4) > a') as $name) {
@@ -44,16 +44,10 @@ $stmt->execute();
 		}
 	}
 	echo "end";
-}
-
-catch (PDOException $e) {
-	echo $e->getMessage();
-}
 
 
 
 
-try {
 
 // LE VIF
 
@@ -84,6 +78,8 @@ $stmt->execute();
 		}
 	}
 	echo '<hr>Vif<br>';
+
+	$db->close();
 }
 
 catch (PDOException $e) {

@@ -50,6 +50,33 @@ function rssToDB($feeds)
 							$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
 							$categoryArticleRSS =  (isset($key->category)) ? strip_tags($key->category) : null;
 
+							//Si la catégorie est NULL (rtlinfo + VifLexpress)
+								//Vérifie si pas Levif
+							if ($categoryArticleRSS == null && !stristr($titleMediaRSS, 'Levif')) {
+								$link = $linkArticleRSS;
+
+								$contentURL =  file_get_html($link);
+								if ($contentURL != false) {
+									$rtlCategory = "";
+									foreach($contentURL->find('.w-content-details-article-breadcrumb li:nth-child(4) > a') as $name) {
+										$rtlCategory .=  strip_tags($name);
+									}
+									$replacedElement = array("Home", "Actu", "Belgique", "/\s+/");
+									$rtlCategory = trim(str_replace($replacedElement, "", $rtlCategory));
+									$categoryArticleRSS = $rtlCategory;
+								}
+								else{
+									$categoryArticleRSS = 'Undefined category';
+								}
+							}
+								//Vérifie si Levif
+							else if ($categoryArticleRSS == null && stristr($titleMediaRSS, 'Levif')){
+								$link= $linkArticleRSS;
+								$tab = explode('/', $link);
+								$categoryArticleRSS = $tab[3] . " " . $tab[4];
+							}
+
+
 							//BDD : vérification si pas déjà en bdd
 							$sql = "SELECT lien FROM media WHERE lien = :lien";
 							$stmt = $db->prepare($sql);

@@ -47,7 +47,7 @@ foreach($oneWordArray as $val)
     }
 
 
-function wordsMostOccurences($number, $array, $min, $max, $boolReverseArray = true, $uniqueOccurence = false)
+function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = false)
 {
 	$newArray = [];
 	foreach ($array as $key => $value) {
@@ -63,9 +63,10 @@ function wordsMostOccurences($number, $array, $min, $max, $boolReverseArray = tr
 	//Extrait une portion de tableau
 	$maxValues = array_slice($data, 0, $number);
 	foreach ($maxValues as $key => $value) {
-		$arCountReverse = ($boolReverseArray) ? array_flip($newArray) : $data;
-
-		echo $key . " : " . $value . "<br>";
+		// $arCountReverse = ($boolReverseArray) ? array_flip($newArray) : $data;
+		if (strlen($key) > 1) {
+			echo $key . " : " . $value . "<br>";
+		}
 	}
 }
 

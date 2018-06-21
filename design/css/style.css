@@ -6,10 +6,17 @@ body{
 
 
 }
+nav#header{
+	position: fixed;
+	background-color: black;
+}
 nav#header div{
 	display: flex;
 	justify-content: center;
-	margin: 0 5px;
+	/*margin: 0 5px;*/
+}
+header{
+	min-height: 50px;
 }
 table{
 	border:solid 1px black;

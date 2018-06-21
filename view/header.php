@@ -16,3 +16,6 @@
 			<div><a href="?section=occurence"><button>Occurence</button></a></div>
 			<div><a href="?section=categoryTest"><button>Category Test</button></a></div>
 	</nav>
+	<header>
+		
+	</header>
