@@ -1,5 +1,6 @@
 <?php 
-
+use Poncho\Database;
+include('vendor/autoload.php');
 //API SimpleHTMLDom
 include_once 'API/simpleHtmlDom/simple_html_dom.php';
 
@@ -16,8 +17,10 @@ function rssToDB($feeds)
 	try {
 		include 'serverName.php';
 		//Instanciation de la BDD
-		$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
-		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		// $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
+		// $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$dbClass = new Poncho\Database();
+		$db = $dbClass->getDatabase();
     	$alreadyInDB = '<table id="already"><tr><td>Média</td><td>Nouveaux articles</td><td>Date</td></tr>';
 				
 		

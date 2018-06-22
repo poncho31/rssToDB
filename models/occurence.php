@@ -1,9 +1,13 @@
+<?php 
+use Poncho\Database;
+require 'src/Database.php';
+$dbClass = new Database();
+$db = $dbClass->getDatabase();
+ ?>
 <hr>	
 <h1>Occurence des mots</h1>
 <?php 
 
-$db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $selectOccurence = 'SELECT nom, titre, description FROM media';
 
 $stmt = $db->prepare($selectOccurence);

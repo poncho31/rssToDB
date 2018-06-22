@@ -50,17 +50,18 @@ if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
 		</tr>
 
 	<?php
-	$i = 1;
+	$i = 0;
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		
 		// if ($i > 20) break;
 		// else $i++
+		$i++;
 		?>
 		<tr>
 
 			<td><?= $row['categorie']." --<br> ". $row['date']?></td>
 			<td><?= "<a href='".$row['lien']."' target='_blank'>" . $row['titre'] . "</a>" ?></td>
-			<td><?= substr($row['description'], 0, 508) . "..."; ?></td>
+			<td><?= substr($row['description'], 0, 508) . "... " . $i; ?></td>
 		</tr>
 		<?php
 	}

@@ -9,5 +9,12 @@
     ],
     "require": {
         "dg/mysql-dump": "^1.4"
+    },
+    "autoload": {
+        "classmap": 
+        [
+            "src/Database.php"
+        ]
     }
 }
+
