@@ -12,25 +12,45 @@ include_once 'API/simpleHtmlDom/simple_html_dom.php';
 
 <?php
 //VA RECHERCHER LES FLUX RSS EN FONCTION DU LIEN
+function highlight($needles, $haystack){
+	foreach ($needles as $needle) {
+	    $ind = stripos($haystack, $needle);
+	    $len = strlen($needle);
+	    if($ind !== false){
+	        return "<b>" . substr($haystack, $ind, $len) . "</b>";
+	    }
+    }
+} 
+
+function outputProgress($current, $total){
+	$pourcentage = round($current / $total * 100);
+	echo " <div class='progression' style='position: absolute;'><progress class='progression' value='".$pourcentage."' max='100'></progress></div> ";
+	@ob_end_flush();
+	flush();
+}
+
 function rssToDB($feeds)
 {
 	try {
 		include 'serverName.php';
 		//Instanciation de la BDD
-		// $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
-		// $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$dbClass = new Poncho\Database();
 		$db = $dbClass->getDatabase();
-    	$alreadyInDB = '<table id="already"><tr><td>Média</td><td>Nouveaux articles</td><td>Date</td></tr>';
+    	$alreadyInDB = '<table id="already"><tr><td>Media</td><td>Nouveaux articles</td><td>Date</td></tr>';
 				
 		
 		//Parcours le tableau de FEEDS
+		$current = 0;
 		foreach ($feeds as $feed) {
+			$timestamp_debut = microtime(true);
+			
+			$current++;
+			outputProgress($current, count($feeds));
+
 			$newArticle = 0;
 			$notNewArticle = 1; $goingToDB = true;
 			//Charge le fichier xml
 			$xml = (simplexml_load_file($feed, null, LIBXML_NOCDATA) == true) ? simplexml_load_file($feed, null, LIBXML_NOCDATA) : false;
-
 			//SI XML FALSE
 			libxml_use_internal_errors(true);
 		    if ($xml === false) {
@@ -117,7 +137,11 @@ function rssToDB($feeds)
 					}
 		    	}
 			}
-		    $alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";	
+		$alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";
+		$mediaName = array('rtl', 'dh','lalibre', 'lesoir', 'lecho', 'levif', 'rtbf', 'sudinfo');
+		$timestamp_fin = microtime(true);
+		$difference_ms = $timestamp_fin - $timestamp_debut;
+		echo "<span class='progression' style='float: right; width: 70%;'>" .  highlight($mediaName, $feed ) . " : " . number_format($difference_ms,2) . ' secondes.'."<br></span>";
 		}
 		$alreadyInDB .='</table>';
 		echo isset($alreadyInDB) ? $alreadyInDB : null;
@@ -134,7 +158,11 @@ function rssToDB($feeds)
 
 
 include 'feeds.php';
+$timestamp_debut = microtime(true);
 rssToDB($feeds);
+$timestamp_fin = microtime(true);
+$difference_ms = $timestamp_fin - $timestamp_debut;
+echo 'Exécution du script : ' . number_format($difference_ms, 2) . ' secondes.';
 
 //SELECT FROM DB - AFFICHAGE DES DONNEES
 try {
