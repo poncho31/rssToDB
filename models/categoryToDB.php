@@ -21,7 +21,7 @@ $stmt->execute();
 
 		$link = $row['lien'];
 		$contentURL =  file_get_html($link);
-		if ($contentURL != false) {
+		if ($contentURL == true) {
 			$rtlCategory = "";
 			foreach($contentURL->find('.w-content-details-article-breadcrumb li:nth-child(4) > a') as $name) {
 				$rtlCategory .=  strip_tags($name);
@@ -31,19 +31,23 @@ $stmt->execute();
 			echo $rtlCategory;
 
 			$sqlINSERT = "UPDATE media SET categorie = :nomCategorieAinserer WHERE idMedia = :idCatNull ";
-			$stmt = $db->prepare($sqlINSERT);
-			$stmt->bindvalue(':nomCategorieAinserer', $rtlCategory);
-			$stmt->bindvalue(':idCatNull', $row['id']);
-			if ($stmt) {
-				$stmt->execute();
+			$stmtUpdate = $db->prepare($sqlINSERT);
+			$stmtUpdate->bindvalue(':nomCategorieAinserer', $rtlCategory);
+			$stmtUpdate->bindvalue(':idCatNull', $row['id'])
+			;
+			if ($stmtUpdate->execute()) {
+				$stmtUpdate->execute();
 				echo " OK :D <br>";
 			}
 			else{
 				echo "Pas OK :'( <br>";
 			}
 		}
+		else{
+			echo "Erreur";
+		}
 	}
-	echo "end";
+	echo "End RTL";
 
 
 
@@ -77,9 +81,7 @@ $stmt->execute();
 			echo "Pas OK :'( <br>";
 		}
 	}
-	echo '<hr>Vif<br>';
-
-	$db->close();
+	echo '<hr>End Vif<br>';
 }
 
 catch (PDOException $e) {

@@ -14,7 +14,7 @@
 			<div><a href="?section=savedb"><button>Save MySQL Database</button></a></div>
 			<div><a href="?section=search"><button>Search</button></a></div>
 			<div><a href="?section=occurence"><button>Occurence</button></a></div>
-			<div><a href="?section=categoryTest"><button>Category Test</button></a></div>
+			<div><a href="?section=categoryTest"><button>Patch Category</button></a></div>
 	</nav>
 	<header>
 		

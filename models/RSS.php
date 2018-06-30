@@ -41,6 +41,7 @@ function rssToDB($feeds)
 		
 		//Parcours le tableau de FEEDS
 		$current = 0;
+		$totalNewArticles= 0;
 		foreach ($feeds as $feed) {
 			$timestamp_debut = microtime(true);
 			
@@ -123,6 +124,7 @@ function rssToDB($feeds)
 							$stmt->bindvalue(':categorie', $categoryArticleRSS);
 							$stmt->execute();
 							$newArticle++;
+							$totalNewArticles++;
 							
 						}
 						else{
@@ -137,14 +139,19 @@ function rssToDB($feeds)
 					}
 		    	}
 			}
+$timestamp_fin = microtime(true);
 		$alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";
+
 		$mediaName = array('rtl', 'dh','lalibre', 'lesoir', 'lecho', 'levif', 'rtbf', 'sudinfo');
-		$timestamp_fin = microtime(true);
+
+		
 		$difference_ms = $timestamp_fin - $timestamp_debut;
 		echo "<span class='progression' style='float: right; width: 70%;'>" .  highlight($mediaName, $feed ) . " : " . number_format($difference_ms,2) . ' secondes.'."<br></span>";
 		}
 		$alreadyInDB .='</table>';
 		echo isset($alreadyInDB) ? $alreadyInDB : null;
+		echo "Nombres de flux RSS vérifiés : " . $current ."<br>";
+		echo "Nombres de nouveux articles : " . $totalNewArticles ."<br>";
 	}
 
 	
@@ -162,7 +169,7 @@ $timestamp_debut = microtime(true);
 rssToDB($feeds);
 $timestamp_fin = microtime(true);
 $difference_ms = $timestamp_fin - $timestamp_debut;
-echo 'Exécution du script : ' . number_format($difference_ms, 2) . ' secondes.';
+echo 'Exécution du script : ' . number_format($difference_ms, 2) . ' secondes.<br>';
 
 //SELECT FROM DB - AFFICHAGE DES DONNEES
 try {
@@ -180,7 +187,7 @@ $sqlCount = "SELECT count(idMedia) FROM media";
 $stmt = $db->prepare($sqlSELECT);
 $stmt->execute();
 $stmt2 = $db->query($sqlCount);
-echo  "<p>ARTICLES ISSUS DE LA BDD : " . $stmt2->fetch()[0] ."</p>";
+echo  "Nombre d'articles dans BDD : " . $stmt2->fetch()[0];
 $number = 1;
 foreach ($stmt as $row) {
 	

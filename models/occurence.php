@@ -6,8 +6,19 @@ $db = $dbClass->getDatabase();
  ?>
 <hr>	
 <h1>Occurence des mots</h1>
+<form action="?section=occurence" method="POST">
+	<input type="text" name="word">
+	<input type="submit" name="submit">
+</form>
 <?php 
-
+function highlight($needle, $haystack){
+	    $ind = stripos($haystack, $needle);
+	    $len = strlen($needle);
+	    if($ind !== false){
+	        return "<b>" . substr($haystack, $ind, $len) . "</b>";
+	    }
+} 
+$timestamp_debut = microtime(true);
 $selectOccurence = 'SELECT nom, titre, description FROM media';
 
 $stmt = $db->prepare($selectOccurence);
@@ -16,17 +27,21 @@ $stmt->execute();
 $oneWordArray = [];
 $explode = '';
 
+	
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
 	$replacedElement = ["N-VA", 'nv-a'];
 	$replace = str_replace($replacedElement, "NVA", trim($row['description']));
 
 	$replacedElement = [',', ';', '-', ' - ',' -', '- ', '"', ' "', '" ', '.', '', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', ' le ', ' la ', ' les ', 'Les', ' l ', ' a ', ' à ', ' A ', 'À ', ' du ', ' des ', ' s ', ' il ', ' avec ', ' que ', ' se ', ' ne ', ' ce ', ' son ', ' sont ', 'On ', ' cette ', ' d ', ' une ', ' qui ', ' que ', ' quoi ', ' pour ', ' par ', ' au ', ' sur ', ' et ', ' de ', ' un ', ' en ', ' … ', ' nos ', ' e ', ' ça ', ' quand ', ' dans ', ' est ', ' ont ', ' pas ', 'ex-', '...', "s'", "d'", "l'", "n'", ' c ', ' n ', ' y ', ' un ', 'une ', ' elle ', ' nous ', ' sa ', ' ca ', ' ou ', ' h ', ' je ', ' ses ', ' on ', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#'];
 
 	$explode .= str_replace($replacedElement, " ", mb_strtolower(trim($replace)));
+
 }
 
 $oneWordArray = explode(" ", trim($explode));
 $arCount = [];
+
 
 foreach($oneWordArray as $val)
 {
@@ -40,7 +55,9 @@ foreach($oneWordArray as $val)
 	}
 	$arCount[$val] = (empty($arCount[$val]) ) ? 1 : $arCount[$val]+1;
 }
-
+		$timestamp_fin = microtime(true);
+		$difference_ms = $timestamp_fin - $timestamp_debut;
+		echo "<span class='progression' style='float: right; width: 70%;'>"  . " : " . number_format($difference_ms,2) . ' secondes.'."<br></span>";
 ?>
  <hr>
 <?php
@@ -62,6 +79,7 @@ foreach($oneWordArray as $val)
 
 function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = false)
 {
+
 	$newArray = [];
 	foreach ($array as $key => $value) {
 		if ($value >= $min && $value < $max) {
@@ -82,26 +100,57 @@ function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = fal
 		}
 	}
 }
-wordsMostOccurences(5000, $arCount, 500, 5000)
+function wordOccurence($word, $array){
+	foreach ($array as $key => $value) {
+		if (stristr($key, $word)) {
+			if ($key == $word || $key.'s' == $word || $key == $word."s" || $key."s" == $word."s"){
+				echo $key . ' : ' . $value . '<br>';
+			}
+		}
+	}
+
+}
+if (isset($_POST['submit'])) {
+	$word = isset($_POST['word'])?$_POST['word']:'';
+	wordOccurence($word, $arCount);
+}
 ?>
 
 <!-- </table> -->
 <table id="occurenceTable">
 	<tr>
-		<td>10 < x < 50</td>
+<!-- 		<td>10 < x < 50</td>
 		<td>50 < x < 100</td>
 		<td>100 < x < 500</td>
 		<td>500 < x < 1000</td>
 		<td>1000 < x < 2000</td>
-		<td>+2000</td>
+		<td>+2000</td> -->
 	</tr>
 	<tr>
-		<td><?= wordsMostOccurences(5000, $arCount, 10, 50); ?></td>
-		<td><?= wordsMostOccurences(5000, $arCount, 50, 100); ?></td>
-		<td><?= wordsMostOccurences(5000, $arCount, 100, 500); ?></td>
-		<td><?= wordsMostOccurences(5000, $arCount, 500, 1000); ?></td>
-		<td><?= wordsMostOccurences(5000, $arCount, 1000, 2000); ?></td>
-		<td><?= wordsMostOccurences(5000, $arCount, 2000, 1000000); ?></td>
+		<td>
+			<?php 
+		// wordsMostOccurences(5000, $arCount, 10, 50); 
+		?></td>
+		<td>
+			<?php 
+		// wordsMostOccurences(5000, $arCount, 50, 100); 
+		?></td>
+		<td>
+			<?php 
+		// wordsMostOccurences(5000, $arCount, 100, 500); 
+		?></td>
+		<td>
+			<?php 
+		// wordsMostOccurences(5000, $arCount, 500, 1000); 
+		?></td>
+		<td>
+			<?php 
+		// wordsMostOccurences(5000, $arCount, 1000, 2000); 
+		?></td>
+		<td>
+			<?php 
+		// wordsMostOccurences(5000, $arCount, 2000, 1000000); 
+		?></td>
 	</tr>
 </table>
 <?php

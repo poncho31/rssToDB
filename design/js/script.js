@@ -1,10 +1,9 @@
 $(document).ready(function(){
-	var val = $('progress.progression').val();
-	if ( val == 8) {
+	var val = $('progress.progression');
+	val.on('click', function(){
 		$('.progression')
-		.delay(5000)
 		.queue(function (next) { 
 		    $(this).css({'display' : 'none'});
 		})
-	}
+	})		
 })
