@@ -103,30 +103,30 @@ function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = fal
 }
 function wordOccurence($word,$word2, $array){
 	$wordOccurence = array();
-	foreach ($array as $key => $value) {
-		if (stristr($key, $word)) {
-			if ($key == $word || $key.'s' == $word || $key == $word."s" || $key."s" == $word."s"){
-				// echo $key . ' : ' . $value . '<br>';
-				$wordOccurence [$key] = $value;
+	if (isset($word) || $word2){
+		foreach ($array as $key => $value) {
+			if (isset($word) && stristr($key, $word)) {
+				if ($key == $word || $key.'s' == $word || $key == $word."s" || $key."s" == $word."s"){
+					$wordOccurence [$key] = $value;
+				}
+			}
+			else if (isset($word2) && !empty(stristr($key, $word2))) {
+				if ($key == $word2 || $key.'s' == $word2 || $key == $word2."s" || $key."s" == $word2."s"){
+					$wordOccurence [$key] = $value;
+				}
 			}
 		}
-		else if (stristr($key, $word2)) {
-			if ($key == $word2 || $key.'s' == $word2 || $key == $word2."s" || $key."s" == $word2."s"){
-				$wordOccurence [$key] = $value;
-			}
-		}
-	}
 		$wordOccurenceJSON = json_encode($wordOccurence);
-		var_dump($wordOccurenceJSON);
+		echo "<input type=hidden id=occurenceValues value='".$wordOccurenceJSON."'/>";
+		echo "<canvas id='myChart'></canvas>";
+	}
 
 }
-if (isset($_POST['submit']) && !empty($_POST['submit'])) {
-	$word = isset($_POST['word'])?$_POST['word']:'';
-	$word2 = isset($_POST['word2'])?$_POST['word2']:'';
-	wordOccurence($word, $word2, $arCount);
-}
+$word1 = isset($_POST['word'])?$_POST['word']:false;
+$word2 = isset($_POST['word2'])?$_POST['word2']:false;
+wordOccurence($word1, $word2, $arCount);
 ?>
-<canvas id="myChart" width="400" height="400"></canvas>
+<!-- <canvas id="myChart" width="400" height="400"></canvas> -->
 <!-- </table> -->
 <table id="occurenceTable">
 	<tr>

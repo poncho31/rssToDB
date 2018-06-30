@@ -102,3 +102,8 @@ html{
 	/*background-color: rgba(0,0,40, 1);*/
 	margin: 0, padding: 0;
 }
+
+#myChart{
+	max-width: 70vw;
+	max-height: 50vh;
+}
