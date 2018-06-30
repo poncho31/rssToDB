@@ -147,7 +147,6 @@ $feeds =
 'http://blogs.lecho.be/monargent/rss.xml',
 'http://blogs.lecho.be/tzine/rss.xml',
 'https://www.lecho.be/rss/debats.xml',
-'',
 'https://www.levif.be/actualite/feed.rss',
 'http://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-accueil.xml',
 'http://rss.rtbf.be/media/rss/audio/lapremiere_recent.xml',
