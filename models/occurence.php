@@ -7,7 +7,8 @@ $db = $dbClass->getDatabase();
 <hr>	
 <h1>Occurence des mots</h1>
 <form action="?section=occurence" method="POST">
-	<input type="text" name="word">
+	<input type="text" name="word" placeholder="Variable 1">
+	<input type="text" name="word2" placeholder="Variable 2">
 	<input type="submit" name="submit">
 </form>
 <?php 
@@ -100,22 +101,32 @@ function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = fal
 		}
 	}
 }
-function wordOccurence($word, $array){
+function wordOccurence($word,$word2, $array){
+	$wordOccurence = array();
 	foreach ($array as $key => $value) {
 		if (stristr($key, $word)) {
 			if ($key == $word || $key.'s' == $word || $key == $word."s" || $key."s" == $word."s"){
-				echo $key . ' : ' . $value . '<br>';
+				// echo $key . ' : ' . $value . '<br>';
+				$wordOccurence [$key] = $value;
+			}
+		}
+		else if (stristr($key, $word2)) {
+			if ($key == $word2 || $key.'s' == $word2 || $key == $word2."s" || $key."s" == $word2."s"){
+				$wordOccurence [$key] = $value;
 			}
 		}
 	}
+		$wordOccurenceJSON = json_encode($wordOccurence);
+		var_dump($wordOccurenceJSON);
 
 }
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && !empty($_POST['submit'])) {
 	$word = isset($_POST['word'])?$_POST['word']:'';
-	wordOccurence($word, $arCount);
+	$word2 = isset($_POST['word2'])?$_POST['word2']:'';
+	wordOccurence($word, $word2, $arCount);
 }
 ?>
-
+<canvas id="myChart" width="400" height="400"></canvas>
 <!-- </table> -->
 <table id="occurenceTable">
 	<tr>
@@ -153,7 +164,3 @@ if (isset($_POST['submit'])) {
 		?></td>
 	</tr>
 </table>
-<?php
-
-
-
