@@ -25,8 +25,10 @@ function highlight($needles, $haystack){
 function outputProgress($current, $total){
 	$pourcentage = round($current / $total * 100);
 	echo " <div class='progression' style='position: absolute;'><progress class='progression' value='".$pourcentage."' max='100'></progress></div> ";
-	@ob_end_flush();
-	flush();
+	// if (ob_get_contents()) {
+	// }
+		@ob_end_flush();
+	@flush();
 }
 
 function rssToDB($feeds)
