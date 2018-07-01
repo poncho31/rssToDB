@@ -21,8 +21,11 @@ if (isset($_GET['section'])) {
 		case 'occurence':
 			require 'models/occurence.php';
 			break;
-		case 'categoryTest':
-			require 'models/categoryToDB.php';
+		case 'patch':
+			require 'models/patch.php';
+			break;
+		case 'actualite':
+			require 'view/sections/actualite.php';
 			break;
 		default:
 			require 'index.php';
@@ -32,14 +35,15 @@ if (isset($_GET['section'])) {
 else{
 	?>
 		<div class="transparent">
-		<h1>Application's Name</h1>
+		<h1>Search and Destroy</h1>
 		<div class="grid">
 			<div><a href="?section=mysql"><button>MySQL</button></a></div>
 			<div><a href="?section=mssqlsrv"><button>MS SQL server</button></a></div>
 			<div><a href="?section=savedb"><button>Save MySQL Database</button></a></div>
 			<div><a href="?section=search"><button>Search</button></a></div>
 			<div><a href="?section=occurence"><button>Occurence</button></a></div>
-			<div><a href="?section=categoryTest"><button>Category Test</button></a></div>
+			<div><a href="?section=patch"><button>Category Test</button></a></div>
+			<div><a href="?section=actualite"><button>Actualite</button></a></div>
 		</div>
 	</div>
 	<?php 

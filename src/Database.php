@@ -19,6 +19,7 @@ class Database
 			$this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
     		
     	} catch (PDOException $e) {
+            //CLASS ERROR
     		die('<span style="color:white">Erreur :  : ' . $e->getMessage()) . '</span>';
     	}
     	return $this->db;
@@ -30,4 +31,53 @@ class Database
 		}
 		return $this->db;
 	}
+    private function saveDB(){
+
+    }
+}
+
+//SELECT
+class Search extends Database
+{
+    
+    function __construct()
+    {
+        # code...
+    }
+
+
+}
+
+//INSERT
+class InsertRSS extends Database
+{
+    
+    function __construct()
+    {
+        # code...
+    }
+    
+}
+
+//SELECT + INSERT
+//
+class PreparedData extends Database
+{
+    
+    function __construct()
+    {
+        # code...
+    }
+    
+}
+
+// UPDATE
+class Update extends Database
+{
+    
+    function __construct()
+    {
+        # code...
+    }
+    
 }

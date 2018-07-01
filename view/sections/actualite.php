@@ -1,4 +1,4 @@
-<hr>
+
 <?php
 //SELECT FROM DB - AFFICHAGE DES DONNEES
 try {
@@ -11,7 +11,7 @@ catch (PDOException $e)
 	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
 }
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
-$sqlSELECT = "SELECT * FROM media order by idMedia DESC";
+$sqlSELECT = "SELECT * FROM media order by idMedia DESC LIMIT 1000";
 
 ?>
 	<table>
@@ -41,22 +41,3 @@ foreach ($db->query($sqlSELECT) as $row) {
 }
 ?>
 </table>
-<?php
-$sqlSelectMedia = "SELECT nom, categorie FROM media where nom like '%sudinfo%'";
-foreach ($db->query($sqlSelectMedia) as $row) {
-	echo $row['nom'] . " => ". $row['categorie'] . "<br>";
-}
-
-
-$updateTable =
-			  [
-			  	"UPDATE media SET nom = 'rtl' where nom like '%rtl%'",
-			  	"UPDATE media SET nom = 'dh' where nom like '%dh%'",
-			  	"UPDATE media SET nom = 'lecho' where nom like '%lecho%'",
-			  	"UPDATE media SET nom = 'lesoir' where nom like '%lesoir%'",
-			  	"UPDATE media SET nom = 'lalibre' where nom like '%lalibre%'",
-			  	"UPDATE media SET nom = 'levif' where nom like '%levif%'",
-			  	"UPDATE media SET nom = 'rtbf' where nom like '%rtbf%'",
-			  	"UPDATE media SET nom = 'sudinfo' where nom like '%sudinfo%'"
-			  ];
-?>

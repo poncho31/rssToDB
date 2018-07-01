@@ -1,11 +1,11 @@
-<!-- -->
-
 <?php 
+
+// *******************************PATCH FOR CATEGORY 'Catégorie'************
 include_once 'API/simpleHtmlDom/simple_html_dom.php';
 
 try {
 	
-
+echo "<b>PATCH column 'categorie' </b><br>";
 $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -48,11 +48,6 @@ $stmt->execute();
 		}
 	}
 	echo "End RTL";
-
-
-
-
-
 // LE VIF
 
 $selectCat = 
@@ -81,10 +76,46 @@ $stmt->execute();
 			echo "Pas OK :'( <br>";
 		}
 	}
-	echo '<hr>End Vif<br>';
+	echo 'End Vif<br>';
 }
 
 catch (PDOException $e) {
 	echo $e->getMessage();
 }
 
+
+
+
+
+//********************************* PATCH for CATEGORY 'NOM'******************
+
+echo "<hr><b>PATCH column 'NOM' </b><br>";
+//SELECT FROM DB - AFFICHAGE DES DONNEES
+try {
+    $db = new PDO("mysql:host=localhost;dbname=rss;charset=utf8","root", "");
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $db->exec("set names utf8");
+}
+catch (PDOException $e)
+{
+	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
+}
+$sqlSelectMedia = "SELECT nom, count(nom) as numb FROM media GROUP BY nom";
+$tot = 0;
+foreach ($db->query($sqlSelectMedia) as $row) {
+	echo $row['nom'] . " => ". $row['numb'] . "<br>";
+	$tot += $row['numb'];
+}
+echo 'Total : ' . $tot;
+$updateTable =
+			  [
+			  	"UPDATE media SET nom = 'rtl' where nom like '%rtl%'",
+			  	"UPDATE media SET nom = 'dh' where nom like '%dh%'",
+			  	"UPDATE media SET nom = 'lecho' where nom like '%lecho%'",
+			  	"UPDATE media SET nom = 'lesoir' where nom like '%lesoir%'",
+			  	"UPDATE media SET nom = 'lalibre' where nom like '%lalibre%'",
+			  	"UPDATE media SET nom = 'levif' where nom like '%levif%'",
+			  	"UPDATE media SET nom = 'rtbf' where nom like '%rtbf%'",
+			  	"UPDATE media SET nom = 'sudinfo' where nom like '%sudinfo%'",
+			  	"UPDATE media SET nom = 'tijd' where nom like '%tijd%'"
+			  ];

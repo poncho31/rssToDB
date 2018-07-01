@@ -21,7 +21,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					<option value="<?= $row['categorie'] ?>" ><?= $row['categorie']; ?></option>
 					<?php	
 				}
-
 			}
 		 ?>
 	</select>
@@ -36,7 +35,7 @@ if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
 	$categorie = isset($_POST['categorie']) ? $_POST['categorie']: '';
 	$selectDescription = 
 	'
-	SELECT nom, titre, description, categorie, date, lien FROM media where description like "%'. $entry .'%" and categorie like "%'.$categorie.'%" order by date
+	SELECT nom, titre, description, categorie, date, lien FROM media where description like "%'. $entry .'%" and categorie like "%'.$categorie.'%" order by date LIMIT 20
 	';
 	$stmt = $db->prepare($selectDescription);
 	$stmt->execute();
@@ -50,18 +49,14 @@ if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
 		</tr>
 
 	<?php
-	$i = 0;
+	// date_format($date,"Y/m/d H:i:s")
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-		
-		if ($i >= 20) break;
-		else $i++;
-		// $i++;
 		?>
 		<tr>
 
-			<td><?= $row['categorie']." --<br> ". $row['date']?></td>
+			<td><?= $row['categorie']." --<br> ". strftime("%Y-%m-%d %H:%M:%S", strtotime($row['date']))?></td>
 			<td><?= "<a href='".$row['lien']."' target='_blank'>" . $row['titre'] . "</a>" ?></td>
-			<td><?= substr($row['description'], 0, 508) . "... " . $i; ?></td>
+			<td><?= substr($row['description'], 0, 508) . "... " ?></td>
 		</tr>
 		<?php
 	}

@@ -119,7 +119,7 @@ function rssToDB($feeds)
 							$stmt->bindvalue(':nom', $titleMediaRSS);
 							$stmt->bindvalue(':titre', $titleArticleRSS);
 							$stmt->bindvalue(':description', $descriptionArticleRSS);
-							$stmt->bindvalue(':date', $publicationDateArticleRSS);
+							$stmt->bindvalue(':date', strftime("%Y-%m-%d %H:%M:%S", strtotime($publicationDateArticleRSS)));
 							$stmt->bindvalue(':lien', $linkArticleRSS);
 							$stmt->bindvalue(':categorie', $categoryArticleRSS);
 							$stmt->execute();
