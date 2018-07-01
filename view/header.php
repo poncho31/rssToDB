@@ -9,7 +9,7 @@
 <body >
 	<nav id="header">
 			<div><a href="index.php"><button>Homepage</button></a><div>
-			<div><a href="view/sections/actualite.php"><button>Actualite</button></a><div>
+			<div><a href="?section=actualite"><button>Actualite</button></a><div>
 			<div><a href="?section=mysql"><button>MySQL</button></a><div>
 			<div><a href="?section=mssqlsrv"><button disabled>MS SQL server</button></a></div>
 			<div><a href="?section=savedb"><button>Save MySQL Database</button></a></div>

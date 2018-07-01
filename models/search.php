@@ -63,3 +63,28 @@ if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
 }
 ?>
 </table>
+<?php 
+// Select txt
+$fp = fopen("data/politiciansNamesListFORMATED.txt", 'r');
+$fr = fread($fp, filesize("data/politiciansNamesListFORMATED.txt"));
+//Explode txt in an array
+$arraycsv = explode(';', $fr);
+
+$politiciansName = [];
+//Pour chaque ligne de politicien, retrouver son nom et prénom grâce à un délimiteur 'espace' en inversant la ligne (car prénom est à la fin)
+//
+foreach ($arraycsv as $key) {
+	$politicians = explode(' ', strrev($key), 2);
+	$firstname = strrev($politicians[0]);
+	$lastname = strrev($politicians[1]);
+	$politiciansName[$lastname] = $firstname;
+}
+// Insérer chaque politicien dans Table 'politicians'
+foreach ($politiciansName as $key => $value) {
+	$sql = "INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
+	// $stmt = $db->prepare($sql);
+	// $stmt->bindparam(':lastname', $key);
+	// $stmt->bindparam(':firstname', $value);
+	// $stmt->execute();
+}
+ ?>

@@ -1,6 +1,6 @@
 <?php 
 
-// *******************************PATCH FOR CATEGORY 'Catégorie'************
+// *******************PATCH FOR Table media COLUMN 'Catégorie'************
 include_once 'API/simpleHtmlDom/simple_html_dom.php';
 
 try {
@@ -87,7 +87,7 @@ catch (PDOException $e) {
 
 
 
-//********************************* PATCH for CATEGORY 'NOM'******************
+//**********************PATCH for Table media COLUMN 'NOM'******************
 
 echo "<hr><b>PATCH column 'NOM' </b><br>";
 //SELECT FROM DB - AFFICHAGE DES DONNEES
@@ -119,3 +119,6 @@ $updateTable =
 			  	"UPDATE media SET nom = 'sudinfo' where nom like '%sudinfo%'",
 			  	"UPDATE media SET nom = 'tijd' where nom like '%tijd%'"
 			  ];
+foreach ($updateTable as $key) {
+	$db->query($key);
+}
