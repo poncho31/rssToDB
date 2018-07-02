@@ -14,7 +14,7 @@ try {
 	// if ($output) {
 	// 	echo "GIT PUSH DONE :" . $pathContents . "<br>";
 	// }
-	// echo "Saved without errors : " . date("y.m.d");
+	echo "Saved without errors : " . date("y.m.d");
 
 } catch (Exception $e) {
 	echo "Errors : " . $e;

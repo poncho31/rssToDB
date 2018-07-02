@@ -211,5 +211,16 @@ foreach ($updateTable as $key) {
 // }
 // echo $i;
 
+// SELECT p.idPol, p.lastname, m.description FROM politicians p, media m where m.description like CONCAT('% ', CONCAT(UCASE(LEFT(p.lastname, 1)), SUBSTRING(p.lastname, 2)), ' %')
 
-// SELECT p.idPol, p.lastname, m.description FROM politicians p, media m where m.description like CONCAT('% ', p.lastname, ' %') LIMIT 0,100 
+
+// SELECT m.description FROM media m
+// INNER JOIN medpol mp ON m.idMedia  = mp.fk_media
+// INNER JOIN politicians p ON p.idPol = mp.fk_pol
+// WHERE p.lastname = 'di rupo'
+
+// SELECT m.description, p.lastname, p.firstname FROM media m
+// INNER JOIN medpol mp ON m.idMedia  = mp.fk_media
+// INNER JOIN politicians p ON p.idPol = mp.fk_pol
+// WHERE p.lastname = 'di rupo' or p.firstname = 'elio'
+
