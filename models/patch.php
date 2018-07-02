@@ -165,3 +165,50 @@ foreach ($updateTable as $key) {
 // 	$stmt->bindparam(':firstname', $value);
 // 	$stmt->execute();
 // }
+
+//INSERT idPol from table politicians where firstname or lastname found in description table Media in table medpol fkPol and fkmedia
+//1) Select name from politician
+//2) Check if name match with description'
+// SELECT p.idPol, p.lastname, m.description
+// FROM politicians p
+// LEFT JOIN media as m
+// ON p.idPol like '%%'
+// WHERE TA.ID IS NULL
+// SELECT p.idPol, p.lastname, m.description
+// FROM politicians p, media m
+// WHERE EXISTS
+// (
+//    SELECT * FROM media as m
+//    WHERE m.description like '%p.lastname%'
+// )
+
+
+// $fp = fopen("data/politiciansNamesListFORMATED.txt", 'r');
+// $fr = fread($fp, filesize("data/politiciansNamesListFORMATED.txt"));
+// $arraycsv = explode(';', $fr);
+// $politiciansName = [];
+// foreach ($arraycsv as $key) {
+// 	$politicians = explode(' ', strrev($key), 2);
+// 	$firstname = strrev($politicians[0]);
+// 	$lastname = strrev($politicians[1]);
+// 	$politiciansName[$lastname] = $firstname;
+// }
+// $i = 0;
+// foreach ($politiciansName as $key) {
+// 	$sqlMatchName = "
+// 	SELECT nom
+// 	FROM media m
+// 	WHERE m.description like '%".$key."%'
+// 	";
+// 	$stmt = $db->prepare($sqlMatchName);
+// 	$stmt->execute();
+// 	$row;
+// 	while ($row = $stmt->fetch()) {
+// 		echo $row['nom'] ." <span style='color:red;'>".$row['nom'] ."</span><br>";
+// 	$i++;
+// 	echo $i ." / " .(count($politiciansName) * count($row))."<hr>";
+// 	@ob_end_flush();
+// 	flush();
+// 	}
+// }
+// echo $i;

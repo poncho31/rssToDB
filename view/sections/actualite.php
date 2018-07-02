@@ -1,15 +1,9 @@
 
 <?php
-//SELECT FROM DB - AFFICHAGE DES DONNEES
-try {
-    $db = new PDO("mysql:host=localhost;dbname=rss;charset=utf8","root", "");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // $db->exec("set names utf8");
-}
-catch (PDOException $e)
-{
-	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
-}
+use Poncho\Database\Database;
+require 'vendor/autoload.php';
+$db = new Database();
+
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
 $sqlSELECT = "SELECT * FROM media order by idMedia DESC LIMIT 1000";
 
@@ -25,16 +19,17 @@ $sqlSELECT = "SELECT * FROM media order by idMedia DESC LIMIT 1000";
 			<td>Categorie</td>
 		</tr>
 <?php
-foreach ($db->query($sqlSELECT) as $row) {
+$stmt = $db->getQuery($sqlSELECT);
+while ($row = $stmt->fetch()) {
 	?>
 		<tr>
-			<td><?php   echo $row['idMedia'] ?></td>
-			<td><?php   echo $row['nom'] ?></td>
-			<td><?php 	echo $row['titre']; ?></td>
-			<td><?php 	echo $row['description']; ?></td>
-			<td><?php 	echo $row['date']; ?></td>
-			<td><?php 	echo $row['lien']; ?></td>
-			<td><?php 	echo $row['categorie']; ?></td>
+			<td><?= $row->idMedia ?></td>
+			<td><?= $row->nom ?></td>
+			<td><?= $row->titre ?></td>
+			<td><?= $row->description; ?></td>
+			<td><?= $row->date; ?></td>
+			<td><?= $row->lien; ?></td>
+			<td><?= $row->categorie; ?></td>
 		</tr>
 	
 	<?php 

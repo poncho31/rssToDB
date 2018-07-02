@@ -1,5 +1,5 @@
 <?php 
-use Poncho\Database;
+use Poncho\Database\Database;
 include('vendor/autoload.php');
 //API SimpleHTMLDom
 include_once 'API/simpleHtmlDom/simple_html_dom.php';
@@ -36,8 +36,8 @@ function rssToDB($feeds)
 	try {
 		include 'serverName.php';
 		//Instanciation de la BDD
-		$dbClass = new Poncho\Database();
-		$db = $dbClass->getDatabase();
+		$db = new Database();
+		//HTML table
     	$alreadyInDB = '<table id="already"><tr><td>Media</td><td>Nouveaux articles</td><td>Date</td></tr>';
 				
 		
@@ -105,8 +105,8 @@ function rssToDB($feeds)
 
 							//BDD : vérification si pas déjà en bdd
 							$sql = "SELECT lien FROM media WHERE lien = :lien";
-							$stmt = $db->prepare($sql);
-							$stmt->execute(array(':lien'=>$linkArticleRSS));
+							// $stmt = $db->prepare($sql);
+							$stmt = $db->getQuery($sql, [':lien'=>$linkArticleRSS]);
 							$sameLinkArticle = $stmt->fetch();
 				    	}
 				    	else{
@@ -117,14 +117,18 @@ function rssToDB($feeds)
 						if (!$sameLinkArticle) {
 							//Insertion en bdd
 							$sqlINSERT = "INSERT INTO media (nom, titre, description, date, lien, categorie) VALUES (:nom, :titre, :description, :date, :lien, :categorie)";
-							$stmt = $db->prepare($sqlINSERT);
-							$stmt->bindvalue(':nom', $titleMediaRSS);
-							$stmt->bindvalue(':titre', $titleArticleRSS);
-							$stmt->bindvalue(':description', $descriptionArticleRSS);
-							$stmt->bindvalue(':date', strftime("%Y-%m-%d %H:%M:%S", strtotime($publicationDateArticleRSS)));
-							$stmt->bindvalue(':lien', $linkArticleRSS);
-							$stmt->bindvalue(':categorie', $categoryArticleRSS);
-							$stmt->execute();
+
+							$param = 
+									[':nom' => $titleMediaRSS,
+									':titre' => $titleArticleRSS,
+									':description'=> $descriptionArticleRSS,
+									':date' => strftime("%Y-%m-%d %H:%M:%S", strtotime($publicationDateArticleRSS)),
+									':lien' => $linkArticleRSS,
+									':categorie' => $categoryArticleRSS]
+								;
+							// $stmt = $db->prepare($sqlINSERT);
+							$stmt = $db->getQuery($sqlINSERT, $param);
+							// $stmt->execute();
 							$newArticle++;
 							$totalNewArticles++;
 							
@@ -173,25 +177,21 @@ $timestamp_fin = microtime(true);
 $difference_ms = $timestamp_fin - $timestamp_debut;
 echo 'Exécution du script : ' . number_format($difference_ms, 2) . ' secondes.<br>';
 
-//SELECT FROM DB - AFFICHAGE DES DONNEES
-try {
-    $db = new PDO("mysql:host=localhost;dbname=rss;charset=utf8","root", "");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // $db->exec("set names utf8");
-}
-catch (PDOException $e)
-{
-	die('<span style="color:black">Erreur :  : ' . $e->getMessage()) . '</span>';
-}
+
+
+
+// AFFICHAGE
+$db = new Database();
 
 $sqlSELECT = "SELECT * FROM media order by idMedia DESC";
-$sqlCount = "SELECT count(idMedia) FROM media";
-$stmt = $db->prepare($sqlSELECT);
-$stmt->execute();
-$stmt2 = $db->query($sqlCount);
-echo  "Nombre d'articles dans BDD : " . $stmt2->fetch()[0];
+$sqlCount = "SELECT count(idMedia) as count FROM media";
+
+$stmt = $db->getQuery($sqlSELECT);
+$stmt2 = $db->getQuery($sqlCount);
+
+while($row = $stmt2->fetch()){echo  "Nombre d'articles dans BDD : " . $row->count;};
 $number = 1;
-foreach ($stmt as $row) {
+while($row = $stmt->fetch()) {
 	
 	?>
 	<table>
@@ -205,13 +205,13 @@ foreach ($stmt as $row) {
 			<td>Categorie</td>
 		</tr>
 		<tr>
-			<td><?= $number; $number++; ?></td>
-			<td><?= $row['nom'] ?></td>
-			<td><?= $row['titre']; ?></td>
-			<td><?= $row['description']; ?></td>
-			<td><?= $row['date']; ?></td>
-			<td><?= $row['lien']; ?></td>
-			<td><?= $row['categorie']; ?></td>
+			<td><?= $row->idMedia; $number++ ?></td>
+			<td><?= $row->nom ?></td>
+			<td><?= $row->titre; ?></td>
+			<td><?= $row->description; ?></td>
+			<td><?= $row->date; ?></td>
+			<td><?= $row->lien; ?></td>
+			<td><?= $row->categorie; ?></td>
 		</tr>
 	</table>
 	<?php 

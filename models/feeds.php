@@ -1,6 +1,7 @@
 <?php 
 $feeds = 
 [
+	//LA LIBRE
 'http://www.lalibre.be/rss/section/actu/politique-belge.xml',
 'http://www.lalibre.be/rss.xml',
 'http://www.lalibre.be/rss/dossier/5b34c7ba55324d3f130abf58.xml',
@@ -45,6 +46,8 @@ $feeds =
 'http://www.lalibre.be/rss/infos/afp.xml',
 'http://www.lalibre.be/rss/dossiers.xml',
 'http://www.lalibre.be/rss/dossiers.xml',
+
+// LE SOIR
 'http://www.lesoir.be/rss/81851/cible_principale_gratuit',
 'http://www.lesoir.be/rss/81862/cible_principale_gratuit',
 'http://www.lesoir.be/rss/31868/cible_principale',
@@ -67,6 +70,7 @@ $feeds =
 'http://www.lesoir.be/rss/16/cible_principale',
 'http://www.lesoir.be/rss/23/cible_principale',
 'http://www.lesoir.be/rss/31920/maga_cible_principale_gratuit',
+//LA DH
 'http://www.dhnet.be/rss/section/actu.xml',
 'http://www.dhnet.be/rss.xml',
 'http://www.dhnet.be/rss/section/actu.xml',
@@ -100,19 +104,23 @@ $feeds =
 'http://www.dhnet.be/rss/section/medias/series.xml',
 'http://www.dhnet.be/rss/section/buzz.xml',
 'http://www.dhnet.be/rss/section/conso.xml',
+
+//RTL INFO
 'http://feeds.feedburner.com/rtlinfo/belgique?format=xml',
 'http://feeds.feedburner.com/Rtlinfo/VotreRegion?format=xml',
-'https://feeds.feedburner.com/Rtlinfos-ALaUne',
-'https://feeds.feedburner.com/rtlinfo/france',
-'https://feeds.feedburner.com/Rtlinfo/VotreRegion',
-'https://feeds.feedburner.com/RTLInternational',
-'https://feeds.feedburner.com/RTLEconomie',
-'https://feeds.feedburner.com/RTLSports',
-'https://feeds.feedburner.com/rtlsport/football',
-'https://feeds.feedburner.com/rtlinfo/people',
-'https://feeds.feedburner.com/rtlpeople/royaute',
-'https://feeds.feedburner.com/rtlpeople/buzz',
-'https://feeds.feedburner.com/rtlsport/footballetranger',
+// 'https://feeds.feedburner.com/Rtlinfos-ALaUne',
+// 'https://feeds.feedburner.com/rtlinfo/france',
+// 'https://feeds.feedburner.com/Rtlinfo/VotreRegion',
+// 'https://feeds.feedburner.com/RTLInternational',
+// 'https://feeds.feedburner.com/RTLEconomie',
+// 'https://feeds.feedburner.com/RTLSports',
+// 'https://feeds.feedburner.com/rtlsport/football',
+// 'https://feeds.feedburner.com/rtlinfo/people',
+// 'https://feeds.feedburner.com/rtlpeople/royaute',
+// 'https://feeds.feedburner.com/rtlpeople/buzz',
+// 'https://feeds.feedburner.com/rtlsport/footballetranger',
+
+//L'ECHO
 'https://www.lecho.be/rss/actualite.xml',
 'https://www.lecho.be/rss/politique_europe.xml',
 'https://www.lecho.be/rss/politique_belgique.xml',
@@ -145,9 +153,14 @@ $feeds =
 'http://blogs.lecho.be/monargent/rss.xml',
 'http://blogs.lecho.be/tzine/rss.xml',
 'https://www.lecho.be/rss/debats.xml',
+
+//LE VIF
 'https://www.levif.be/actualite/feed.rss',
+
+//LA RTBF
 'http://rss.rtbf.be/article/rss/highlight_rtbfinfo_info-accueil.xml',
 'http://rss.rtbf.be/media/rss/audio/lapremiere_recent.xml',
+//SUDINFO
 'http://www.sudinfo.be/rss/2023/cible_principale_gratuit'
 ];
 

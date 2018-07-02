@@ -3,7 +3,7 @@
     "description": "api for rss to db appli",
     "authors": [
         {
-            "name": "greenLine",
+            "name": "poncho",
             "email": "gilles.pinchart@gmail.com"
         }
     ],
@@ -11,10 +11,10 @@
         "dg/mysql-dump": "^1.4"
     },
     "autoload": {
-        "classmap": 
-        [
-            "src/Database.php"
-        ]
+        "psr-4": 
+        {
+            "Poncho\\": "src"
+        }
     }
 }
 
