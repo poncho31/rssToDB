@@ -207,8 +207,9 @@ foreach ($updateTable as $key) {
 // 		echo $row['nom'] ." <span style='color:red;'>".$row['nom'] ."</span><br>";
 // 	$i++;
 // 	echo $i ." / " .(count($politiciansName) * count($row))."<hr>";
-// 	@ob_end_flush();
-// 	flush();
 // 	}
 // }
 // echo $i;
+
+
+// SELECT p.idPol, p.lastname, m.description FROM politicians p, media m where m.description like CONCAT('% ', p.lastname, ' %') LIMIT 0,100 

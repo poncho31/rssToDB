@@ -1,8 +1,8 @@
 <?php 
-use Poncho\Database;
-require 'src/Database.php';
-$dbClass = new Database();
-$db = $dbClass->getDatabase();
+use Poncho\Database\Database;
+require 'vendor/autoload.php';
+$db = new Database();
+
  ?>
 <hr>	
 <h1>Occurence des mots</h1>
@@ -22,13 +22,13 @@ function highlight($needle, $haystack){
 $timestamp_debut = microtime(true);
 $selectOccurence = 'SELECT nom, titre, description FROM media';
 
-$stmt = $db->prepare($selectOccurence);
-$stmt->execute();
+// $stmt = $db->prepare($selectOccurence);
+// $stmt->execute();
 
 $oneWordArray = [];
 $explode = '';
 
-	
+$stmt = $db->getQuery($selectOccurence);	
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 	$replacedElement = ["N-VA", 'nv-a'];
@@ -124,7 +124,7 @@ function wordOccurence($word,$word2, $array){
 }
 $word1 = isset($_POST['word'])?$_POST['word']:false;
 $word2 = isset($_POST['word2'])?$_POST['word2']:false;
-wordOccurence($word1, $word2, $arCount);
+// wordOccurence($word1, $word2, $arCount);
 ?>
 <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
 <!-- </table> -->
@@ -140,7 +140,7 @@ wordOccurence($word1, $word2, $arCount);
 	<tr>
 		<td>
 			<?php 
-		// wordsMostOccurences(5000, $arCount, 10, 50); 
+		wordsMostOccurences(5000, $arCount, 200, 2000); 
 		?></td>
 		<td>
 			<?php 

@@ -10,14 +10,16 @@ class Database
     /**
      * summary
      */
-    protected $config;
+    private $config;
     private $db;
     public function __construct($dbname = 'rss', $host = 'localhost', $login = 'root', $psw = '')
     {
+        
+        $this->getINIConfig();
         if (!$this->db) 
         {
         	try {
-    	        $this->db = new PDO("mysql:dbname=$dbname;host=$host;charset=utf8", $login, $psw);
+    	        $this->db = new PDO("mysql:dbname=".$this->config['dbname'].";host=".$this->config['host'].";charset=utf8", $this->config['login'], $this->config['pswd']);
     			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     			$this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         		
@@ -52,11 +54,9 @@ class Database
     }
 
     private function getINIConfig(){
-        $iniArrayDB = parse_ini_file('../config/config.ini', true);
+        $iniArrayDB = parse_ini_file('config/config.ini', true);
         $this->config = $iniArrayDB['database'];
         return $this->config;
-
-
     }
 }
 
