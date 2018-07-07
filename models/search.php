@@ -26,16 +26,20 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	</select>
 	<input type="submit" name="submitEntry">
 </form>
+<!-- <a href="?section=search&previous=0">Previous</a>
+<a href="?section=search&next=20">Next</a> -->
+
 <?php
-// var_dump($_REQUEST['categorie']);
+
 
 if (isset($_POST['submitEntry']) && !empty($_POST['submitEntry'])) {
-
+	// $previous = isset($_GET['previous']) ? $_GET['previous'] : 0;
+	// $next = isset($_GET['next']) ? $_GET['next'] : 20;
 	$entry = isset($_POST['entry']) ? $_POST['entry'] : null; 
 	$categorie = isset($_POST['categorie']) ? $_POST['categorie']: '';
 	$selectDescription = 
 	'
-	SELECT nom, titre, description, categorie, date, lien FROM media where description like "%'. $entry .'%" and categorie like "%'.$categorie.'%" order by date LIMIT 20
+	SELECT nom, titre, description, categorie, date, lien FROM media where description like "%'. $entry .'%" and categorie like "%'.$categorie.'%" order by date LIMIT '.$previous.', '.$next.'
 	';
 	$stmt = $db->prepare($selectDescription);
 	$stmt->execute();

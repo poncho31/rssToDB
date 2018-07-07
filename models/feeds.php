@@ -148,10 +148,10 @@ $feeds =
 'https://www.lecho.be/rss/politique_economie.xml',
 'https://www.lecho.be/rss/politique_europe.xml',
 'https://www.lecho.be/rss/politique_internationale.xml',
-'http://blogs.lecho.be/fairtrade/rss.xml',
+// 'http://blogs.lecho.be/fairtrade/rss.xml',
 'https://www.lecho.be/rss/les_cracks_en_action.xml',
-'http://blogs.lecho.be/monargent/rss.xml',
-'http://blogs.lecho.be/tzine/rss.xml',
+// 'http://blogs.lecho.be/monargent/rss.xml',
+// 'http://blogs.lecho.be/tzine/rss.xml',
 'https://www.lecho.be/rss/debats.xml',
 
 //LE VIF

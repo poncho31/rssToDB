@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 $db = new Database();
 
 echo  "<p>ARTICLE ISSU DE LA BDD</p>";
-$sqlSELECT = "SELECT * FROM media order by idMedia DESC LIMIT 1000";
+$sqlSELECT = "SELECT * FROM media order by idMedia DESC LIMIT 0, 20";
 
 ?>
 	<table>
