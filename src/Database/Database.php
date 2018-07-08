@@ -1,6 +1,7 @@
 <?php
 namespace Poncho\Database;
 use \PDO;
+
 /**
  * summary
  */
@@ -10,9 +11,9 @@ class Database
     /**
      * summary
      */
-    private $config;
-    private $db;
-    public function __construct($dbname = 'rss', $host = 'localhost', $login = 'root', $psw = '')
+    protected $config;
+    protected $db;
+    public function __construct()
     {
         
         $this->getINIConfig();
@@ -30,13 +31,6 @@ class Database
         }
         $this->db;
     }
-
-	// public function getDatabase(){
-	// 	if (!$this->db) {
-	// 		$this->db = new Database();
-	// 	}
-	// 	return $this->db;
-	// }
 
     public function getQuery($sql, $param = false){
         if ($param) {
@@ -60,23 +54,12 @@ class Database
     }
 }
 
-//SELECT
-class Search extends Database
-{
-    
-    function __construct()
-    {
-        # code...
-    }
-
-
-}
 
 //INSERT
 class InsertRSS extends Database
 {
     
-    function __construct()
+    public function __construct()
     {
         # code...
     }
@@ -88,7 +71,7 @@ class InsertRSS extends Database
 class PreparedData extends Database
 {
     
-    function __construct()
+    public function __construct()
     {
         # code...
     }
@@ -99,7 +82,7 @@ class PreparedData extends Database
 class Update extends Database
 {
     
-    function __construct()
+    public function __construct()
     {
         # code...
     }
