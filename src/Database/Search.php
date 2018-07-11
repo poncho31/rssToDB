@@ -34,6 +34,5 @@ class Search extends Database
 		$previous = ($limit == 0)? 0: $limit - 20;
 		$entry = isset($_REQUEST[$entry]) ? $_REQUEST[$entry] : ''; 
 		$category = isset($_REQUEST[$category]) ? $_REQUEST[$category]: '';
-
     }
 }
