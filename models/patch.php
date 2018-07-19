@@ -10,6 +10,21 @@ $db = new PDO('mysql:dbname=rss;host=localhost;charset=utf8','root', '');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // RTL INFO
+								// $link = $linkArticleRSS;
+
+								// $contentURL =  file_get_html($link);
+								// if ($contentURL != false) {
+								// 	$rtlCategory = "";
+								// 	foreach($contentURL->find('.w-content-details-article-breadcrumb li:nth-child(4) > a') as $name) {
+								// 		$rtlCategory .=  strip_tags($name);
+								// 	}
+								// 	$replacedElement = array("Home", "Actu", "Belgique", "/\s+/");
+								// 	$rtlCategory = trim(str_replace($replacedElement, "", $rtlCategory));
+								// 	$categoryArticleRSS = $rtlCategory;
+								// }
+								// else{
+								// 	$categoryArticleRSS = 'Undefined category';
+								// }
 $selectCat = 
 	'
 	SELECT categorie, lien, nom, idMedia as id FROM media where categorie IS NULL and nom NOT like "%Levif.be%"
