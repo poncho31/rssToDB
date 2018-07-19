@@ -160,7 +160,7 @@ function updateMediaName($db){
 	}
 	$sqlSelectMedia = "SELECT nom, count(nom) as numb FROM media GROUP BY nom";
 	$tot = 0;
-	echo "Nombres d'article par Media";
+	echo "Nombres d'article par Media <br>";
 	foreach ($db->getQuery($sqlSelectMedia) as $row) {
 		echo $row->nom . " => ". $row->numb . "<br>";
 		$tot += $row->numb;
