@@ -145,7 +145,7 @@ function rssToDB($feeds)
 					}
 		    	}
 			}
-$timestamp_fin = microtime(true);
+		$timestamp_fin = microtime(true);
 		$alreadyInDB .= '<tr><td>'.$titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";
 
 		$mediaName = array('rtl', 'dh','lalibre', 'lesoir', 'lecho', 'levif', 'rtbf', 'sudinfo');
@@ -191,6 +191,15 @@ $stmt2 = $db->getQuery($sqlCount);
 
 while($row = $stmt2->fetch()){echo  "Nombre d'articles dans BDD : " . $row->count;};
 $number = 1;
+
+//Saved DB
+$dbMysqli = new mysqli('localhost', 'root', '', 'rss');
+$dump = new MySQLDump($dbMysqli);
+if ($dump) {
+	$dump->save('data/'.date("y.m.d").'-SQLsave.sql.gz');
+	echo "Saved without errors : " . date("y.m.d");
+}
+
 while($row = $stmt->fetch()) {
 	
 	?>
