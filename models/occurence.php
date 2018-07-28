@@ -13,14 +13,14 @@ $db = new Database();
 </form>
 <?php 
 function highlight($needle, $haystack){
-	    $ind = stripos($haystack, $needle);
-	    $len = strlen($needle);
-	    if($ind !== false){
-	        return "<b>" . substr($haystack, $ind, $len) . "</b>";
-	    }
+	$ind = stripos($haystack, $needle);
+	$len = strlen($needle);
+	if($ind !== false){
+	    return "<b>" . substr($haystack, $ind, $len) . "</b>";
+	}
 } 
 $timestamp_debut = microtime(true);
-$selectOccurence = 'SELECT nom, titre, description FROM media';
+$selectOccurence = 'SELECT nom, titre, description, idMedia FROM media';
 
 // $stmt = $db->prepare($selectOccurence);
 // $stmt->execute();
@@ -28,9 +28,18 @@ $selectOccurence = 'SELECT nom, titre, description FROM media';
 $oneWordArray = [];
 $explode = '';
 
-$stmt = $db->getQuery($selectOccurence);	
+$stmt = $db->getQuery($selectOccurence);
+$wordSayArray = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
+
+	// $wordSay = substr($row['description'], ($p = strpos($row['description'], '"')), strrpos($row['description'], '"')-$p);
+	preg_match_all('/".*?"/', $row['description'], $out);
+	// array_push($wordSayArray, $wordSay);
+	// var_dump($out);
+	foreach ($out as $key) {
+		if(!empty($key)) { $wordSayArray[$row['idMedia']] = $key;}
+	}
 	$replacedElement = ["N-VA", 'nv-a'];
 	$replace = str_replace($replacedElement, "NVA", trim($row['description']));
 
@@ -39,7 +48,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$explode .= str_replace($replacedElement, " ", mb_strtolower(trim($replace)));
 
 }
-
+var_dump($wordSayArray);
 $oneWordArray = explode(" ", trim($explode));
 $arCount = [];
 
