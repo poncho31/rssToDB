@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<!-- <meta http-equiv="refresh" content="0.3; URL=?section=categoryTest"> -->
+	<meta http-equiv="refresh" content="7200; URL=?section=mysql">
 	<title>RSS TEST</title>
 	<link rel="stylesheet" href="design/css/style.css">
 </head>

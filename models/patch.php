@@ -512,7 +512,7 @@ foreach ($updateTable as $key) {
 
 
 // INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)
-//SELECT p.idPol, m.idMedia, p.lastname, p.firstname, m.description
+// SELECT p.idPol, m.idMedia
 // FROM politicians p, media m
 // where m.description
 // like CONCAT('% ', p.lastname, ' %')
@@ -532,33 +532,37 @@ like CONCAT('% ', p.lastname, ' %')
 and
 m.description LIKE concat('%', p.firstname, '%')";
 
-$sql = "SELECT m.description, p.lastname, p.firstname, m.categorie, count(lastname)  as countpol
+$sql = 
+"SELECT m.nom,
+		GROUP_CONCAT(JSON_OBJECT(
+			'mediaName', m.nom,
+			'firstname', p.firstname,
+			'lastname', p.lastname
+		)) as politicsName
 FROM media m
 INNER JOIN medpol mp ON m.idMedia = mp.fk_media 
 INNER JOIN politicians p ON p.idPol = mp.fk_pol 
 WHERE p.idPol = mp.fk_pol
-group by m.categorie
-order by count(lastname)
-DESC
+GROUP BY m.nom
 ";
+$politiciansByMedia = [];
 $stmt = $db->getQuery($sql);
+var_dump($stmt->fetch()->politicsName);
+echo $stmt->fetch()->politicsName;
 while ($row = $stmt->fetch()) {
-	echo $row->categorie . "<br>";
-	// echo "<span style='text-indent: 50px'>".$row->lastname . " / ". $row->firstname ."</span><br>";
-	echo "<span style='text-indent: 50px'>" .$row->countpol . "</span><br>";
-	// echo $row->firstname . "<br>";
-	// if($row->firstname == 'Stefan') {echo 'yep'; }
-	// if (stristr($description, ' ' .$row->firstname. ' ') == true and stristr($description, $row->lastname) == true
-	// ) {
-	// 	echo $row->firstname . " / " . $row->lastname . "<br>";
-		// echo $description . "<br>";
-		// $sql = "INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)  
-				// SELECT p.idPol, m.idMedia
-				// FROM politicians p, media m
-				// where m.description
-				// like CONCAT('% ', p.lastname, ' %')
-				// and like CONCAT('% ', p.firstname, ' %')
-		// 		";
-		
+	// echo $row->politicsName ."<hr>";
+
+
+
+	// echo $row->nom . "<br>";
+	// $lastname =  explode(',',$row->politicsName);
+	// $politiciansByMedia [$row->nom] = [];
+	// foreach ($lastname as $polLastname) {
+	// 	if (!in_array($polLastname, $politiciansByMedia [$row->nom])) {
+	// 		array_push($politiciansByMedia [$row->nom], ['lastname' => $polLastname]);
+	// 	}
 	// }
+	// // $politiciansByMedia [$row->nom] = $singleLastname;
+	// echo $row->countL . "<br>";
 }
+// var_dump($politiciansByMedia);
