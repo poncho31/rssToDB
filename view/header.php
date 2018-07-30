@@ -16,6 +16,8 @@
 			<div><a href="?section=search"><button>Search</button></a></div>
 			<div><a href="?section=occurence"><button>Occurence</button></a></div>
 			<div><a href="?section=patch"><button>Patch</button></a></div>
+			<div><a href="?section=homepage"><button>HomepageModels</button></a></div>
+
 	</nav>
 	<header>
 		

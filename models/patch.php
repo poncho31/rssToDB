@@ -517,52 +517,52 @@ foreach ($updateTable as $key) {
 // where m.description
 // like CONCAT('% ', p.lastname, ' %')
 // and
-// m.description LIKE concat('%', p.firstname, '%')
+// m.description LIKE concat('% ', p.firstname, ' %')
 // SELECT p.idPol, m.idMedia FROM politicians p, media m where m.description like CONCAT('% ', p.lastname, ' %')
 echo "<hr><br>";
 $db = new Database();
-$description = ' elio DefefefbarefftBartBffartiëls Di RUpo bart rhhfdh Lefèvre gsdgdsg fgsf';
-$sql = "SELECT lastname, firstname, idPol
-		FROM politicians";
+// $description = ' elio DefefefbarefftBartBffartiëls Di RUpo bart rhhfdh Lefèvre gsdgdsg fgsf';
+// $sql = "SELECT lastname, firstname, idPol
+// 		FROM politicians";
 
-$sql = "SELECT p.idPol, m.idMedia, p.lastname, p.firstname, m.description
-FROM politicians p, media m
-where m.description
-like CONCAT('% ', p.lastname, ' %')
-and
-m.description LIKE concat('%', p.firstname, '%')";
+// $sql = "SELECT p.idPol, m.idMedia, p.lastname, p.firstname, m.description
+// FROM politicians p, media m
+// where m.description
+// like CONCAT('% ', p.lastname, ' %')
+// and
+// m.description LIKE concat('%', p.firstname, '%')";
 
 $sql = 
-"SELECT m.nom,
-		GROUP_CONCAT(JSON_OBJECT(
-			'mediaName', m.nom,
-			'firstname', p.firstname,
-			'lastname', p.lastname
-		)) as politicsName
+'SELECT
+		JSON_OBJECT(
+			"firstname", p.firstname,
+			"lastname", p.lastname,
+			"count", count(p.lastname)
+		) as politicsName
 FROM media m
 INNER JOIN medpol mp ON m.idMedia = mp.fk_media 
 INNER JOIN politicians p ON p.idPol = mp.fk_pol 
-WHERE p.idPol = mp.fk_pol
-GROUP BY m.nom
-";
+WHERE p.idPol = mp.fk_pol and m.date > CURDATE() - INTERVAL 7 DAY
+GROUP BY p.lastname
+HAVING count(p.lastname) > 1
+order by count(p.lastname) DESC
+';
+//  GROUP_CONCAT(DISTINCT ....)
+//https://www.w3resource.com/mysql/aggregate-functions-and-grouping/aggregate-functions-and-grouping-group_concat.php
 $politiciansByMedia = [];
 $stmt = $db->getQuery($sql);
-var_dump($stmt->fetch()->politicsName);
-echo $stmt->fetch()->politicsName;
-while ($row = $stmt->fetch()) {
-	// echo $row->politicsName ."<hr>";
+// var_dump($stmt->fetchAll());
+// $jsonData = json_decode($stmt->fetchAll());
+// var_dump($jsonData);
 
-
-
-	// echo $row->nom . "<br>";
-	// $lastname =  explode(',',$row->politicsName);
-	// $politiciansByMedia [$row->nom] = [];
-	// foreach ($lastname as $polLastname) {
-	// 	if (!in_array($polLastname, $politiciansByMedia [$row->nom])) {
-	// 		array_push($politiciansByMedia [$row->nom], ['lastname' => $polLastname]);
-	// 	}
-	// }
-	// // $politiciansByMedia [$row->nom] = $singleLastname;
-	// echo $row->countL . "<br>";
+$arrayobj = new ArrayObject();
+foreach ($stmt->fetchAll() as $row) {
+	$arrayobj->append(json_decode($row->politicsName));
+}
+// var_dump($arrayobj);
+foreach ($arrayobj as $key) {
+	echo $key->lastname . "<br>";
+	echo $key->firstname . "<br>";
+	echo $key->count . "<hr>";
 }
 // var_dump($politiciansByMedia);
