@@ -16,7 +16,8 @@ $sql =
 			"firstname", p.firstname,
 			"lastname", p.lastname,
 			"count", count(p.lastname),
-            "say", GROUP_CONCAT((m.description REGEXP("/.a/")) SEPARATOR ";;;")
+            "descriptions", GROUP_CONCAT(m.description SEPARATOR ";;;"),
+            "idMedia", GROUP_CONCAT(m.idMedia SEPARATOR ";;;")
 		) as politicsName
 FROM media m
 INNER JOIN medpol mp ON m.idMedia = mp.fk_media 
@@ -29,30 +30,29 @@ order by count(p.lastname) DESC
 $politiciansByMedia = [];
 $stmt = $db->getQuery($sql);
 $arrayobj = new ArrayObject();
+$out;
 foreach ($stmt->fetchAll() as $row) {
-	$arrayobj->append(json_decode($row->politicsName));
+    $arrayobj->append(json_decode($row->politicsName));
+    // preg_match_all('/".*?"/', $row->descriptions, $row->descriptions);
+    // $sayArray = explode(";;;", $row->descriptions);
+
+
 }
 foreach ($arrayobj as $key) {
-    // echo "<pre>";
-	echo $key->lastname . "<br>";
-	echo $key->firstname . "<br>";
-	echo $key->count . "<br>";
-    var_dump($key->say) . "<hr>";
-    // // var_dump($key->say);
-    // $sayArray = explode(";;;", $key->say);
-    // $out = [];
-    // // $key->say = [];
-    // foreach ($sayArray as $sayKey) {
-    //     preg_match_all('/".*?"/', $sayKey, $out);
-    //     // $key->say = $out;
-    //     // var_dump($out);
-    //     foreach ($out as $key => $value) {
-    //         if(!empty($key)) { echo $value;}
-    //     }
-    // }
-    // // var_dump($key->say);
+    preg_match_all('/".*?"/', $key->descriptions, $out);
+    $key->descriptions = [];
+    foreach ($out[0] as $value) {
+        array_push($key->descriptions, $value);
+    }
+}
+
+foreach ($arrayobj as $key => $value) {
+    echo $value->lastname . "<br>";
+    var_dump($value->idMedia);
+    foreach ($value->descriptions as $key) {
+        echo $key . "<br>";
+    }
     echo "<hr>";
 }
-var_dump($arrayobj);
 
 ?>
