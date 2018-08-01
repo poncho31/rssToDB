@@ -442,13 +442,13 @@ print_r($politiciansName);
 echo "</pre>";
 
 // Insérer chaque politicien dans Table 'politicians'
-// foreach ($politiciansName as $key => $value) {
-// 	$sql = "SET NAMES 'utf8'; SET CHARACTER SET utf8; INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
-// 	$stmt = $db->prepare($sql);
-// 	$stmt->bindparam(':lastname', $key);
-// 	$stmt->bindparam(':firstname', $value);
-// 	$stmt->execute();
-// }
+foreach ($politiciansName as $key => $value) {
+	$sql = "SET NAMES 'utf8'; SET CHARACTER SET utf8; INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
+	$stmt = $db->prepare($sql);
+	$stmt->bindparam(':lastname', $key);
+	$stmt->bindparam(':firstname', $value);
+	$stmt->execute();
+}
 
 
 

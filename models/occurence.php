@@ -56,7 +56,7 @@ foreach ($wordSayArray as $idMedia => $key) {
 		$sql = "INSERT INTO citations (citation, FK_idMedia)
 				VALUES (".$citation.", ".$idMedia.")";
 		$stmt = $db->getQuery($sql);
-		$stmt->execute();
+		// $stmt->execute();
 		// $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	}
