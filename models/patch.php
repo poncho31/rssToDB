@@ -421,29 +421,36 @@ foreach ($updateTable as $key) {
 
 // *****************INSERT politicians firstname/lastname intto TABLE Politicians ***************************
 
-// // Select txt
-// $fp = fopen("data/politiciansNamesListFORMATED.txt", 'r');
-// $fr = fread($fp, filesize("data/politiciansNamesListFORMATED.txt"));
-// //Explode txt in an array
-// $arraycsv = explode(';', $fr);
+// Select txt
+$fp = fopen("data/mandataires/bourgmestres/bourgmestreAll.txt", 'r');
+$fr = fread($fp, filesize("data/mandataires/bourgmestres/bourgmestreAll.txt"));
+//Explode txt in an array
+$arraycsv = explode(';', $fr);
 
-// $politiciansName = [];
-// //Pour chaque ligne de politicien, retrouver son nom et prénom grâce à un délimiteur 'espace' en inversant la ligne (car prénom est à la fin)
+// var_dump($arraycsv);
+$politiciansName = [];
+//Pour chaque ligne de politicien, retrouver son nom et prénom grâce à un délimiteur 'espace' en inversant la ligne (car prénom est à la fin)
 
-// foreach ($arraycsv as $key) {
-// 	$politicians = explode(' ', strrev($key), 2);
-// 	$firstname = strrev($politicians[0]);
-// 	$lastname = strrev($politicians[1]);
-// 	$politiciansName[$lastname] = $firstname;
-// }
-// //Insérer chaque politicien dans Table 'politicians'
+foreach ($arraycsv as $key) {
+	$politicians = explode(' ', $key, 2);
+	$lastname = $politicians[1];
+	$firstname = $politicians[0];
+	$politiciansName[$lastname] = $firstname;
+}
+echo "<pre>";
+print_r($politiciansName);
+echo "</pre>";
+
+// Insérer chaque politicien dans Table 'politicians'
 // foreach ($politiciansName as $key => $value) {
-// 	$sql = "INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
+// 	$sql = "SET NAMES 'utf8'; SET CHARACTER SET utf8; INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
 // 	$stmt = $db->prepare($sql);
 // 	$stmt->bindparam(':lastname', $key);
 // 	$stmt->bindparam(':firstname', $value);
 // 	$stmt->execute();
 // }
+
+
 
 //INSERT idPol from table politicians where firstname or lastname found in description table Media in table medpol fkPol and fkmedia
 //1) Select name from politician
@@ -462,17 +469,18 @@ foreach ($updateTable as $key) {
 // )
 
 
-// $fp = fopen("data/politiciansNamesListFORMATED.txt", 'r');
-// $fr = fread($fp, filesize("data/politiciansNamesListFORMATED.txt"));
-// $arraycsv = explode(';', $fr);
+// $fp = fopen("data/mandataires/bourgmestres/bourgmestreAll.csv", 'r');
+// $fr = fread($fp, filesize("data/mandataires/bourgmestres/bourgmestreAll.csv"));
+// $arraycsv = explode('\r', $fr);
 // $politiciansName = [];
+// $i = 1;
 // foreach ($arraycsv as $key) {
 // 	$politicians = explode(' ', strrev($key), 2);
 // 	$firstname = strrev($politicians[0]);
 // 	$lastname = strrev($politicians[1]);
 // 	$politiciansName[$lastname] = $firstname;
 // }
-// $i = 0;
+// // var_dump($politiciansName);
 // foreach ($politiciansName as $key) {
 // 	$sqlMatchName = "
 // 	SELECT nom

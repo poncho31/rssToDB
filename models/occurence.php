@@ -48,92 +48,114 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$explode .= str_replace($replacedElement, " ", mb_strtolower(trim($replace)));
 
 }
-var_dump($wordSayArray);
-$oneWordArray = explode(" ", trim($explode));
-$arCount = [];
+// var_dump($wordSayArray);
+foreach ($wordSayArray as $idMedia => $key) {
+	foreach ($key as $citation) {
+		// echo $idMedia . "<br>";
+		// echo $citation . "<br>";
+		$sql = "INSERT INTO citations (citation, FK_idMedia)
+				VALUES (".$citation.", ".$idMedia.")";
+		$stmt = $db->getQuery($sql);
+		$stmt->execute();
+		// $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-foreach($oneWordArray as $val)
-{
-	//Si mot se termine par 'S' et que longueur mot > 3 ALORS enlève le s
-	//Si mot ne se termine pas par 'S' alors ajoute s
-	if (substr($val,-1) != 's' && strlen($val) > 3)
-	{	
-		// && strlen($val) > 4
-		// $val = substr($val, 0, -1);
-		$val = $val . "s";
 	}
-	$arCount[$val] = (empty($arCount[$val]) ) ? 1 : $arCount[$val]+1;
 }
-		$timestamp_fin = microtime(true);
-		$difference_ms = $timestamp_fin - $timestamp_debut;
-		echo "<span class='progression' style='float: right; width: 70%;'>"  . " : " . number_format($difference_ms,2) . ' secondes.'."<br></span>";
-?>
- <hr>
-<?php
 
-    function array_max_r($arr) {
-        $max = null;
-        if (!is_array($arr)) return;
+//DELETE DUPLICATE
+// DELETE a
+// FROM
+//     citations AS a,
+//     citations AS b
+// WHERE
+//     a.id < b.id
+//     AND a.citation <=> b.citation
+//     AND a.FK_idMedia <=> b.FK_idMedia
+
+
+
+// $oneWordArray = explode(" ", trim($explode));
+// $arCount = [];
+
+
+// foreach($oneWordArray as $val)
+// {
+// 	//Si mot se termine par 'S' et que longueur mot > 3 ALORS enlève le s
+// 	//Si mot ne se termine pas par 'S' alors ajoute s
+// 	if (substr($val,-1) != 's' && strlen($val) > 3)
+// 	{	
+// 		// && strlen($val) > 4
+// 		// $val = substr($val, 0, -1);
+// 		$val = $val . "s";
+// 	}
+// 	$arCount[$val] = (empty($arCount[$val]) ) ? 1 : $arCount[$val]+1;
+// }
+// 		$timestamp_fin = microtime(true);
+// 		$difference_ms = $timestamp_fin - $timestamp_debut;
+// 		echo "<span class='progression' style='float: right; width: 70%;'>"  . " : " . number_format($difference_ms,2) . ' secondes.'."<br></span>";
+
+//     function array_max_r($arr) {
+//         $max = null;
+//         if (!is_array($arr)) return;
  
-        foreach ($arr as $key => $value) {
-            if (is_array($value)) {
-                $max = max(array_max_r($value), $max);
-            } else {
-                $max = max($value, $max);
-            }
-        }
-        return $max;
-    }
+//         foreach ($arr as $key => $value) {
+//             if (is_array($value)) {
+//                 $max = max(array_max_r($value), $max);
+//             } else {
+//                 $max = max($value, $max);
+//             }
+//         }
+//         return $max;
+//     }
 
 
-function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = false)
-{
+// function wordsMostOccurences($number, $array, $min, $max, $uniqueOccurence = false)
+// {
 
-	$newArray = [];
-	foreach ($array as $key => $value) {
-		if ($value >= $min && $value < $max) {
-			$newArray[$key] = $value;
-		}
-	}
-	$data = $newArray;
-	//Occurence unique : mot=>10, mot=>9, mot=>8, ... | Occurence pas unique : mot=>10, mot=>10, mot=> 10, mot=>9, mot=>9, mot=>9, mot=>9, ...
-	$data = ($uniqueOccurence)?array_unique($data) : $data;
-	//Trie un tableau en ordre inverse et conserve l'association des index
-	arsort($data);
-	//Extrait une portion de tableau
-	$maxValues = array_slice($data, 0, $number);
-	foreach ($maxValues as $mot => $occurence) {
-		// $arCountReverse = ($boolReverseArray) ? array_flip($newArray) : $data;
-		if (strlen($mot) > 1 && $occurence > 30) {
-			echo $mot . " : " . $occurence . "<br>";
-		}
-	}
-}
-function wordOccurence($word,$word2, $array){
-	$wordOccurence = array();
-	if (isset($word) || $word2){
-		foreach ($array as $key => $value) {
-			if (isset($word) && stristr($key, $word)) {
-				if ($key == $word || $key.'s' == $word || $key == $word."s" || $key."s" == $word."s"){
-					$wordOccurence [$key] = $value;
-				}
-			}
-			else if (isset($word2) && !empty(stristr($key, $word2))) {
-				if ($key == $word2 || $key.'s' == $word2 || $key == $word2."s" || $key."s" == $word2."s"){
-					$wordOccurence [$key] = $value;
-				}
-			}
-		}
-		$wordOccurenceJSON = json_encode($wordOccurence);
-		echo "<input type=hidden id=occurenceValues value='".$wordOccurenceJSON."'/>";
-		echo "<canvas id='myChart'></canvas>";
-	}
+// 	$newArray = [];
+// 	foreach ($array as $key => $value) {
+// 		if ($value >= $min && $value < $max) {
+// 			$newArray[$key] = $value;
+// 		}
+// 	}
+// 	$data = $newArray;
+// 	//Occurence unique : mot=>10, mot=>9, mot=>8, ... | Occurence pas unique : mot=>10, mot=>10, mot=> 10, mot=>9, mot=>9, mot=>9, mot=>9, ...
+// 	$data = ($uniqueOccurence)?array_unique($data) : $data;
+// 	//Trie un tableau en ordre inverse et conserve l'association des index
+// 	arsort($data);
+// 	//Extrait une portion de tableau
+// 	$maxValues = array_slice($data, 0, $number);
+// 	foreach ($maxValues as $mot => $occurence) {
+// 		// $arCountReverse = ($boolReverseArray) ? array_flip($newArray) : $data;
+// 		if (strlen($mot) > 1 && $occurence > 30) {
+// 			echo $mot . " : " . $occurence . "<br>";
+// 		}
+// 	}
+// }
+// function wordOccurence($word,$word2, $array){
+// 	$wordOccurence = array();
+// 	if (isset($word) || $word2){
+// 		foreach ($array as $key => $value) {
+// 			if (isset($word) && stristr($key, $word)) {
+// 				if ($key == $word || $key.'s' == $word || $key == $word."s" || $key."s" == $word."s"){
+// 					$wordOccurence [$key] = $value;
+// 				}
+// 			}
+// 			else if (isset($word2) && !empty(stristr($key, $word2))) {
+// 				if ($key == $word2 || $key.'s' == $word2 || $key == $word2."s" || $key."s" == $word2."s"){
+// 					$wordOccurence [$key] = $value;
+// 				}
+// 			}
+// 		}
+// 		$wordOccurenceJSON = json_encode($wordOccurence);
+// 		echo "<input type=hidden id=occurenceValues value='".$wordOccurenceJSON."'/>";
+// 		echo "<canvas id='myChart'></canvas>";
+// 	}
 
-}
-$word1 = isset($_POST['word'])?$_POST['word']:false;
-$word2 = isset($_POST['word2'])?$_POST['word2']:false;
-// wordOccurence($word1, $word2, $arCount);
+// }
+// $word1 = isset($_POST['word'])?$_POST['word']:false;
+// $word2 = isset($_POST['word2'])?$_POST['word2']:false;
+// // wordOccurence($word1, $word2, $arCount);
 ?>
 <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
 <!-- </table> -->
@@ -149,7 +171,7 @@ $word2 = isset($_POST['word2'])?$_POST['word2']:false;
 	<tr>
 		<td>
 			<?php 
-		wordsMostOccurences(5000, $arCount, 200, 2000); 
+		// wordsMostOccurences(5000, $arCount, 200, 2000); 
 		?></td>
 		<td>
 			<?php 
