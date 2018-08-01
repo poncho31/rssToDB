@@ -71,6 +71,9 @@ foreach ($wordSayArray as $idMedia => $key) {
 //     a.id < b.id
 //     AND a.citation <=> b.citation
 //     AND a.FK_idMedia <=> b.FK_idMedia
+
+
+
 // $oneWordArray = explode(" ", trim($explode));
 // $arCount = [];
 
