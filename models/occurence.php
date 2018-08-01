@@ -56,22 +56,10 @@ foreach ($wordSayArray as $idMedia => $key) {
 		$sql = "INSERT INTO citations (citation, FK_idMedia)
 				VALUES (".$citation.", ".$idMedia.")";
 		$stmt = $db->getQuery($sql);
-		// $stmt->execute();
 		// $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	}
 }
-
-//DELETE DUPLICATE
-// DELETE a
-// FROM
-//     citations AS a,
-//     citations AS b
-// WHERE
-//     a.id < b.id
-//     AND a.citation <=> b.citation
-//     AND a.FK_idMedia <=> b.FK_idMedia
-
 
 
 // $oneWordArray = explode(" ", trim($explode));

@@ -422,33 +422,33 @@ foreach ($updateTable as $key) {
 // *****************INSERT politicians firstname/lastname intto TABLE Politicians ***************************
 
 // Select txt
-$fp = fopen("data/mandataires/bourgmestres/bourgmestreAll.txt", 'r');
-$fr = fread($fp, filesize("data/mandataires/bourgmestres/bourgmestreAll.txt"));
-//Explode txt in an array
-$arraycsv = explode(';', $fr);
+// $fp = fopen("data/mandataires/bourgmestres/bourgmestreAll.txt", 'r');
+// $fr = fread($fp, filesize("data/mandataires/bourgmestres/bourgmestreAll.txt"));
+// //Explode txt in an array
+// $arraycsv = explode(';', $fr);
 
-// var_dump($arraycsv);
-$politiciansName = [];
-//Pour chaque ligne de politicien, retrouver son nom et prénom grâce à un délimiteur 'espace' en inversant la ligne (car prénom est à la fin)
+// // var_dump($arraycsv);
+// $politiciansName = [];
+// //Pour chaque ligne de politicien, retrouver son nom et prénom grâce à un délimiteur 'espace' en inversant la ligne (car prénom est à la fin)
 
-foreach ($arraycsv as $key) {
-	$politicians = explode(' ', $key, 2);
-	$lastname = $politicians[1];
-	$firstname = $politicians[0];
-	$politiciansName[$lastname] = $firstname;
-}
-echo "<pre>";
-print_r($politiciansName);
-echo "</pre>";
+// foreach ($arraycsv as $key) {
+// 	$politicians = explode(' ', $key, 2);
+// 	$lastname = $politicians[1];
+// 	$firstname = $politicians[0];
+// 	$politiciansName[$lastname] = $firstname;
+// }
+// echo "<pre>";
+// print_r($politiciansName);
+// echo "</pre>";
 
-// Insérer chaque politicien dans Table 'politicians'
-foreach ($politiciansName as $key => $value) {
-	$sql = "SET NAMES 'utf8'; SET CHARACTER SET utf8; INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
-	$stmt = $db->prepare($sql);
-	$stmt->bindparam(':lastname', $key);
-	$stmt->bindparam(':firstname', $value);
-	$stmt->execute();
-}
+// // Insérer chaque politicien dans Table 'politicians'
+// foreach ($politiciansName as $key => $value) {
+// 	$sql = "SET NAMES 'utf8'; SET CHARACTER SET utf8; INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
+// 	$stmt = $db->prepare($sql);
+// 	$stmt->bindparam(':lastname', $key);
+// 	$stmt->bindparam(':firstname', $value);
+// 	$stmt->execute();
+// }
 
 
 
@@ -574,3 +574,46 @@ foreach ($arrayobj as $key) {
 	echo $key->count . "<hr>";
 }
 // var_dump($politiciansByMedia);
+
+
+
+
+// !!!! MEDPOL !!!!
+// INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)
+// SELECT p.idPol, m.idMedia
+// FROM politicians p, media m
+// where m.description
+// like CONCAT('% ', p.lastname, ' %')
+// and
+// m.description LIKE concat('% ', p.firstname, ' %')
+
+
+// POLITICIANS CSV INSERT
+// $fp = fopen("data/mandataires/bourgmestres/bourgmestreAll.txt", 'r');
+// $fr = fread($fp, filesize("data/mandataires/bourgmestres/bourgmestreAll.txt"));
+// //Explode txt in an array
+// $arraycsv = explode(';', $fr);
+
+// // var_dump($arraycsv);
+// $politiciansName = [];
+// //Pour chaque ligne de politicien, retrouver son nom et prénom grâce à un délimiteur 'espace' en inversant la ligne (car prénom est à la fin)
+
+// foreach ($arraycsv as $key) {
+// 	$politicians = explode(' ', $key, 2);
+// 	$lastname = $politicians[1];
+// 	$firstname = $politicians[0];
+// 	$politiciansName[$lastname] = $firstname;
+// }
+// echo "<pre>";
+// print_r($politiciansName);
+// echo "</pre>";
+
+// // Insérer chaque politicien dans Table 'politicians'
+// foreach ($politiciansName as $key => $value) {
+// 	$sql = "SET NAMES 'utf8'; SET CHARACTER SET utf8; INSERT INTO politicians (lastname, firstname) VALUES(:lastname, :firstname)";
+// 	$stmt = $db->prepare($sql);
+// 	$stmt->bindparam(':lastname', $key);
+// 	$stmt->bindparam(':firstname', $value);
+// 	$stmt->execute();
+// }
+
