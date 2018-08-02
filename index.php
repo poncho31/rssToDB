@@ -31,6 +31,10 @@ if (isset($_GET['section'])) {
 		case 'homepage':
 			require 'models/homepageModels.php';
 			break;
+
+		case 'addLexique':
+			require 'models/csvTodb.php';
+			break;
 		default:
 			require 'index.php';
 			break;
@@ -49,6 +53,7 @@ else{
 			<div><a href="?section=patch"><button>Category Test</button></a></div>
 			<div><a href="?section=actualite"><button>Actualite</button></a></div>
 			<div><a href="?section=homepage"><button>HomepageModels</button></a></div>
+			<div><a href="?section=addLexique"><button>addLexique</button></a></div>
 		</div>
 	</div>
 	<?php 

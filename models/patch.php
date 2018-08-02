@@ -577,8 +577,10 @@ foreach ($arrayobj as $key) {
 
 
 
+//---------------------------------------------------------------------------
 
 // !!!! MEDPOL !!!!
+
 // INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)
 // SELECT p.idPol, m.idMedia
 // FROM politicians p, media m
@@ -587,8 +589,10 @@ foreach ($arrayobj as $key) {
 // and
 // m.description LIKE concat('% ', p.firstname, ' %')
 
+//---------------------------------------------------------------------------
 
-// POLITICIANS CSV INSERT
+// !!! POLITICIANS CSV INSERT !!!
+
 // $fp = fopen("data/mandataires/bourgmestres/bourgmestreAll.txt", 'r');
 // $fr = fread($fp, filesize("data/mandataires/bourgmestres/bourgmestreAll.txt"));
 // //Explode txt in an array
@@ -615,5 +619,26 @@ foreach ($arrayobj as $key) {
 // 	$stmt->bindparam(':lastname', $key);
 // 	$stmt->bindparam(':firstname', $value);
 // 	$stmt->execute();
+// }
+
+//---------------------------------------------------------------------------
+
+// !!! CITATIIONS !!!
+
+// $wordSayArray = [];
+// preg_match_all('/".*?"/', $row['description'], $out);
+// foreach ($out as $key) {
+// 	if(!empty($key)) { $wordSayArray[$row['idMedia']] = $key;}
+// }
+// foreach ($wordSayArray as $idMedia => $key) {
+// 	foreach ($key as $citation) {
+// 		// echo $idMedia . "<br>";
+// 		// echo $citation . "<br>";
+// 		$sql = "INSERT INTO citations (citation, FK_idMedia)
+// 				VALUES (".$citation.", ".$idMedia.")";
+// 		$stmt = $db->getQuery($sql);
+// 		// $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// 	}
 // }
 

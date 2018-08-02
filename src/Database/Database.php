@@ -21,7 +21,8 @@ class Database
         if (!$this->db) 
         {
         	try {
-    	        $this->db = new PDO("mysql:dbname=".$this->config['dbname'].";host=".$this->config['host'].";charset=utf8", $this->config['login'], $this->config['pswd']);
+                $this->db = new PDO("mysql:dbname=".$this->config['dbname'].";host=".$this->config['host'].";charset=utf8", $this->config['login'], $this->config['pswd'],
+                                    [PDO::MYSQL_ATTR_LOCAL_INFILE => true]);
     			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     			$this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         		
@@ -35,7 +36,8 @@ class Database
 
     public function getQuery($sql, $param = false){
         if ($param) {
-            $stmt = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY)); //ATTR_CURSOR is the default attribute
+            $stmt = $this->db->prepare($sql,
+                array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY)); //ATTR_CURSOR is the default attribute
             $stmt->execute($param);
             $this->last_id = $this->db->lastInsertId();
         }
