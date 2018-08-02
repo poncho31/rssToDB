@@ -31,7 +31,8 @@ $sqlLexique = "SELECT orthographe FROM `lexique`
 			  ";
 $stmt = $db->getQuery($sqlLexique);
 $lexiquePronoms = [];
-$replacedElements = [',', ';', ' - ',' -', '- ', '"', ' "', '" ', '...', '.', ' .', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', 'l\'', ' l ', ' s\'', ' d ', ' d\'', 'C\'est ', ' n\'est ', ' sera ', ' d\'un ', ' t\'', ' on ', ' tout ', ' été ', ' sont ', ' ayant ', ' ont ', ' son ',' ne ', ' pas ', ' d\'abord ', ' être ',  ' sa ', ' est ', ' et ', ' a ', ' A ', ' qu ', ' qu\'', 'a-t-on', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#'];
+$replacedElements = [',', ';', ' - ',' -', '- ', '"', ' "', '" ', '...', '.', ' .', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', 'l\'', ' l ', ' s\'', ' d ', ' d\'', 'C\'est ', ' n\'est ', ' ces ', ' sera ', ' d\'un ', ' t\'', ' on ', ' tout ', ' été ', ' sont ', ' ayant ', ' ont ', ' son ',' ne ', ' pas ', ' d\'abord ', ' être ',  ' sa ', ' est ', ' et ', ' a ', ' A ', ' qu ', ' qu\'', 'a-t-on', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#',
+' vendredi ', ' samedi ', ' dimanche ', ' lundi ', ' mardi ', ' mercredi ', ' jeudi ', ' juillet ', ' aout ', ' septembre ', ' octobre ', ' novembre ', ' décembre ', ' janvier ', ' février ', ' mars ', ' avril ', ' mai ', ' juin ', ' plus ', ' ans ', ' fait ', ' mois ', ' était '];
 
 foreach ($replacedElements as $key) {
 	array_push($lexiquePronoms, $key);
@@ -72,6 +73,15 @@ foreach ($explodeArticle as $idMedia => $value) {
 }
 var_dump($mediaOccurenceCount);
 var_dump($occurenceTotal);
+arsort($occurenceTotal);
+
+foreach ($occurenceTotal as $key => $value) {
+	if ($value > 10) {
+		echo $key . "<br>";
+		echo $value . "<br>";
+		echo "<hr>";
+	}
+}
 
 die();
 
