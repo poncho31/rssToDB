@@ -31,10 +31,10 @@ $sqlLexique = "SELECT orthographe FROM `lexique`
 			  ";
 $stmt = $db->getQuery($sqlLexique);
 $lexiquePronoms = [];
-$replacedElements = [',', ';', ' - ',' -', '- ', '"', ' "', '" ', '...', '.', ' .', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', 'l\'', ' l ', ' s\'', ' d ', ' d\'', 'C\'est ', ' n\'est ', ' ces ', ' sera ', ' d\'un ', ' t\'', ' on ', ' tout ', ' été ', ' sont ', ' ayant ', ' ont ', ' son ',' ne ', ' pas ', ' d\'abord ', ' être ',  ' sa ', ' est ', ' et ', ' a ', ' A ', ' qu ', ' qu\'', 'a-t-on', 'L&#', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#',
-' vendredi ', ' samedi ', ' dimanche ', ' lundi ', ' mardi ', ' mercredi ', ' jeudi ', ' juillet ', ' aout ', ' septembre ', ' octobre ', ' novembre ', ' décembre ', ' janvier ', ' février ', ' mars ', ' avril ', ' mai ', ' juin ', ' plus ', ' ans ', ' fait ', ' mois ', ' était ',
- 'Le ', 'La ', ' deux ', 'Un ', 'Les ', ' faire ', '  France ', 'L\'', ' monde ', ' cette ', ' Belgique ', ' pays ', ' lors ', ' avoir ', 'Une ', ' mais ', ' jours ', ' soir ', ' personnes ', ' avait ', ' comme ', ' encore ' ];
-
+  $replacedElements = [',', ';', ' - ',' -', '- ', '"', ' "', '" ', '...', '.', ' .', '’', ':', '«', '»', '?', '“', '!', '_', '|', '+', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ')', '(', '°', '/', '%', '€', '$', '•', '–', 'l\'', ' l ', ' s\'', ' d ', ' d\'', 'C\'est ', ' n\'est ', ' ces ', ' sera ', ' d\'un ', ' t\'', ' on ', ' tout ', ' été ', ' sont ', ' ayant ', ' ont ', ' son ',' ne ', ' pas ', ' d\'abord ', ' être ',  ' sa ', ' est ', ' et ', ' a ', ' A ', ' qu ', ' qu\'', 'a-t-on', 'L&#', 'l&#', 'd&#', 's&#', 'n&#', 'o&#', 'c&#', 'qu&#',
+  ' vendredi ', ' samedi ', ' dimanche ', ' lundi ', ' mardi ', ' mercredi ', ' jeudi ', ' juillet ', ' aout ', ' septembre ', ' octobre ', ' novembre ', ' décembre ', ' janvier ', ' février ', ' mars ', ' avril ', ' mai ', ' juin ', ' plus ', ' ans ', ' fait ', ' mois ', ' était ',
+  'Le ', 'La ', ' deux ', 'Un ', 'Les ', ' faire ', ' France ', 'L\'', ' monde ', ' cette ', ' Belgique ', ' pays ', ' lors ', ' avoir ', 'Une ', ' mais ', ' jours ', ' soir ', ' personnes ', ' avait ', ' comme ', ' encore ',
+  ' moins ', ' annoncé ', ' dernier ', ' trois ', ' temps ', ' homme ', ' très ', ' année '];
 foreach ($replacedElements as $key) {
 	array_push($lexiquePronoms, $key);
 }
