@@ -71,7 +71,7 @@ function rssToDB($feeds, $db)
 						$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
 						
 						//BDD : vérification si pas déjà en bdd
-						$sql = "SELECT lien FROM media WHERE lien = :lien";
+						$sql = "SELECT lien FROM media WHERE lien = :lien ORDER BY date DESC limit 0, 1000 ";
 						$stmt = $db->getQuery($sql, [':lien'=>$linkArticleRSS]);
 						$sameLinkArticle = $stmt->fetch();
 						
