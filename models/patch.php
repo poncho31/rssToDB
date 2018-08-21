@@ -580,14 +580,29 @@ foreach ($arrayobj as $key) {
 //---------------------------------------------------------------------------
 
 // !!!! MEDPOL !!!!
+	//get the highest idMedia
+	// => SELECT id FROM table ORDER BY id DESC LIMIT 0, 1
 
-// INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)
-// SELECT p.idPol, m.idMedia
-// FROM politicians p, media m
-// where m.description
-// like CONCAT('% ', p.lastname, ' %')
-// and
-// m.description LIKE concat('% ', p.firstname, ' %')
+	// INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)
+	// SELECT p.idPol, m.idMedia
+	// FROM politicians p, media m
+	// where m.description
+	// like CONCAT('% ', p.lastname, ' %')
+	// and
+	// m.description LIKE concat('% ', p.firstname, ' %')
+	// and m.idMedia > (SELECT fk_media FROM medpol ORDER BY fk_media DESC LIMIT 0, 1)
+
+
+
+
+// DELETE DUPLICATES
+	// DELETE t1 FROM politicians t1
+	// INNER JOIN politicians t2
+	// WHERE t1.idPol < t2.idPol
+	// AND t1.lastname = t2.lastname
+	// and t1.firstname = t2.firstname
+
+
 
 //---------------------------------------------------------------------------
 
