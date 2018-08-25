@@ -34,7 +34,7 @@ $db = new Database();
 function rssToDB($feeds, $db)
 {
 	try {
-		include 'serverName.php';
+		// include 'serverName.php';
 		//Instanciation de la BDD
 		
 		//HTML table
@@ -71,7 +71,7 @@ function rssToDB($feeds, $db)
 						$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
 						
 						//BDD : vérification si pas déjà en bdd
-						$sql = "SELECT lien FROM media WHERE lien = :lien ORDER BY date DESC limit 0, 1000 ";
+						$sql = "SELECT lien FROM media WHERE lien = :lien ORDER BY date DESC limit 0, 700 ";
 						$stmt = $db->getQuery($sql, [':lien'=>$linkArticleRSS]);
 						$sameLinkArticle = $stmt->fetch();
 						
@@ -113,23 +113,6 @@ function rssToDB($feeds, $db)
 							// $stmt->execute();
 							$newArticle++;
 							$totalNewArticles++;
-							// $last_id = $db->last_id;
-							
-
-							// $sql = "SELECT lastname, firstname, idPol
-							// 		FROM politicians";
-							// $stmt = $db->getQuery($sql);
-							// while ($row = $stmt->fetch()) {
-							// 	if (stristr($descriptionArticleRSS, " " .ucfirst($row->lastname). " ") == true
-							// 		and stristr($descriptionArticleRSS, $row->firstname)
-							// 	) {
-							// 		$sqlInsertMedpol = "INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)  
-							// 				VALUES (".$row->idPol.",".$last_id.")
-							// 				";
-							// 		$db->getQuery($sqlInsertMedpol);
-									
-							// 	}
-							// }
 						}
 					}
 		    	}
@@ -181,8 +164,10 @@ $updateTable =
 			//POLITIQUE
 				"UPDATE media SET categorie = 'Politique' 
 					 where categorie like '%politique%'
+					    or categorie like '%Politique%'
 					    or categorie like '%jeudi en prime%'
 					    or categorie like '%enseignement%'
+					    or categorie like '%Communales 2018%'
 				",
 
 			//ECONOMIE
@@ -193,12 +178,14 @@ $updateTable =
 						or categorie like '%eco-débat%'
 						or categorie like '%placements%'
 						or categorie like '%conjoncture%'
+						or categorie like '%Conjoncture%'
 						or categorie like '%finances%'
 						or categorie like '%finance%'
 						or categorie like '%prix energie%'
 						or categorie like '%Consommation%'
 						or categorie like '%marchésFonds%'
 						or categorie like '%immo%'
+						or categorie like '%Immo%'
 						or categorie like '%immobilier%'
 						or categorie like '%cracks%'
 						or categorie like '%top stories%'
@@ -206,6 +193,8 @@ $updateTable =
 						or categorie like '%Argent%'
 						or categorie like '%arnaques%'
 						or categorie like '%Emploi%'
+						or categorie like '%Assurance%'
+						or categorie like '%Entreprise%'
 				",
 
 			//ACTUALITE
@@ -236,6 +225,7 @@ $updateTable =
 				     where categorie like '%régions%'
 						or categorie like '%VotreRegion %'
 						or categorie like '%bruxelles%'
+						or categorie like '%Bruxelles%'
 						or categorie like '%liège%'
 						or categorie like '%hainaut%'
 						or categorie like '%brabant%'
@@ -260,9 +250,11 @@ $updateTable =
 						or categorie like '%Espagne%'
 						or categorie like '%italie%'
 						or categorie like '%france%'
+						or categorie like '%Pays-Bas%'
 						or categorie like '%USA%'
 						or categorie like '%proche-orient%'
 						or categorie like '%international%'
+						or categorie like '%International%'
 				",
 
 			//SPORTS
@@ -271,6 +263,7 @@ $updateTable =
 						or categorie like '%football%'
 						or categorie like '%Jeu de Balle%'
 						or categorie like '%foot%'
+						or categorie like '%Piste%'
 						or categorie like '%mercato%'
 						or categorie like '%rugby%'
 						or categorie like '%voile%'
@@ -291,6 +284,7 @@ $updateTable =
 						or categorie like '%athlétisme%'
 						or categorie like '%jo%'
 						or categorie like '%judo%'
+						or categorie like '%Boxe%'
 						or categorie like '%mondial 2018%'
 						or categorie like '%route%'
 						or categorie like '%Tour de france%'
@@ -301,6 +295,7 @@ $updateTable =
 						or categorie like '%c1%'
 						or categorie like '%c2%'
 						or categorie like '%championnat%'
+						or categorie like '%Mondiaux%'
 						or categorie like '%golf%'
 						or categorie like '%jeux olympiques%'
 						or categorie like '%coupe davis%'
@@ -314,12 +309,17 @@ $updateTable =
 						or categorie like '%eupen%'
 						or categorie like '%f.c. bruges%'
 						or categorie like '%Equipes nationales%'
+						or categorie like '%League%'
+						or categorie like '%Champions%'
 				",
 
 			// SCIENCES	
-				"UPDATE media SET categorie = 'Sciences' 
+				"UPDATE media SET categorie = 'Sciences & santé' 
 					 where categorie like '%sciences%'
+					 	or categorie like '%Sciences%'
+					 	or categorie like '%Sciences - Santé%'
 					    or categorie like '%santé%'
+					    or categorie like '%Santé%'
 					    or categorie like '%Science & nature%'
 					    or categorie like '%Psycho%'
 						or categorie like '%sexualite%'
@@ -332,6 +332,7 @@ $updateTable =
 				"UPDATE media SET categorie = 'Environnement' 
 					 where categorie like '%environnement%'
 					 	or categorie like '%planète%'
+					 	or categorie like '%Planète%'
 					 	or categorie like '%Agriculture%'
 					    or categorie like '%developpement durable%'
 					    or categorie like '%Animaux%'
@@ -350,6 +351,7 @@ $updateTable =
 					    or categorie like '%MagazineHi-Tech%'
 					    or categorie like '%jeux video%'
 					    or categorie like '%inspire%'
+					    or categorie like '%GENERAL%'
 				",
 
 			// LOISIRS	
@@ -358,9 +360,14 @@ $updateTable =
 					    or categorie like '%festivals%'
 					    or categorie like '%concert%'
 					    or categorie like '%livre%'
+					    or categorie like '%Kroll%'
 					    or categorie like '%culture%'
+					    or categorie like '%Mode%'
+					    or categorie like '%art%'
 					    or categorie like '%arts%'
+					    or categorie like '%Arts%'
 					    or categorie like '%cinema%'
+					    or categorie like '%Cinema%'
 					    or categorie like '%werchter%'
 					    or categorie like '%rock%'
 					    or categorie like '%scènes%'
@@ -369,12 +376,15 @@ $updateTable =
 					    or categorie like '%lifestyle%'
 					    or categorie like '%voyages%'
 					    or categorie like '%food%'
+					    or categorie like '%Expos en cours%'
 					    or categorie like '%Les racines élémentaires%'
 					    or categorie like '%Vous avez de ces mots...%'
 				",
 			// TELEVISION	
 				"UPDATE media SET categorie = 'Télévision & radio' 
-					 where categorie like '%ltélé%'
+					 where categorie like '%télé%'
+					 	or categorie like '%Télé%'
+					 	or categorie like '%Médias%'
 					    or categorie like '%telecom%'
 					    or categorie like '%television%'
 					    or categorie like '%série tv%'
@@ -403,6 +413,7 @@ $updateTable =
 			// Archives	
 				"UPDATE media SET categorie = 'Archives' 
 					 where categorie like '%archive%'
+					 	or categorie like '%Grands Formats%'
 				",
 			// AUTRES
 				"UPDATE media SET categorie = 'Autres' 
@@ -423,10 +434,12 @@ $updateTable =
 					    or categorie like '%vip%'
 					    or categorie like '%sabato%'
 					    or categorie like '%Gaffes%'
-					    or categorie like '%Bandeau Soirmag%'
 					    or categorie like '%MAD%'
 					    or categorie like '%Magazine%'
 					    or categorie like '%insolite%'
+					    or categorie like '%Hommes%'
+					    or categorie like '%personnalité%'
+					    or categorie like '%Soirmag%'
 				",
 			  ];
 	foreach ($updateTable as $key) {
@@ -440,14 +453,40 @@ $updateTable =
 		$tot += $row->numb;
 	}
 }
+function foreachOneResult($array){
+	foreach ($array as $key) {
+		return $key;
+	}
+}
+function updateMedpolTabe($db){
+	$medPolBefore = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medpol'))->cnt;
 
+	$sql = 
+	   "INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)
+		SELECT p.idPol, m.idMedia
+		FROM politicians p, media m
+		where m.description
+		like CONCAT('% ', p.lastname, ' %')
+		and
+		m.description LIKE concat('% ', p.firstname, ' %')
+		and m.idMedia > (SELECT fk_media FROM medpol ORDER BY fk_media DESC LIMIT 0, 1)
+	";
+	$stmt = $db->getQuery($sql);
+	$medPolAfter = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medpol'))->cnt;
+	$medPolNew = $medPolAfter - $medPolBefore;
+	if ($stmt) {
+		echo 'Mise à jour table MedPol : ' . $medPolNew . " nouvelles liaisons (".$medPolAfter.")<br>";
+	}
+
+}
 
 include 'feeds.php';
 $timestamp_debut = microtime(true);
 rssToDB($feeds, $db);
+updateMedpolTabe($db);
 $timestamp_fin = microtime(true);
 $difference_ms = $timestamp_fin - $timestamp_debut;
-echo 'Exécution du script : ' . number_format($difference_ms, 2) . ' secondes.<br>';
+echo 'Exécution du script : ' . number_format($difference_ms / 60, 2) . ' minutes.<br>';
 
 
 
@@ -460,7 +499,9 @@ $sqlCount = "SELECT count(idMedia) as count FROM media";
 $stmt = $db->getQuery($sqlSELECT);
 $stmt2 = $db->getQuery($sqlCount);
 
-while($row = $stmt2->fetch()){echo  "Nombre d'articles dans BDD : " . $row->count ."<br>";};
+while($row = $stmt2->fetch()){
+	echo  "Nombre d'articles dans BDD : " . $row->count ."<br>";
+};
 $number = 1;
 
 //Saved DB
@@ -468,7 +509,7 @@ $dbMysqli = new mysqli('localhost', 'root', '', 'rss');
 $dump = new MySQLDump($dbMysqli);
 if ($dump) {
 	$dump->save('data/'.date("y.m.d").'-SQLsave.sql.gz');
-	echo "Saved without errors : " . date("y.m.d") . "<br>";
+	echo "Sauvegarde de la base de données : " . date("y.m.d") . "<br>";
 }
 updateMediaName($db);
 while($row = $stmt->fetch()) {
