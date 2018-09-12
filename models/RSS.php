@@ -71,7 +71,7 @@ function rssToDB($feeds, $db)
 						$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
 						
 						//BDD : vérification si pas déjà en bdd
-						$sql = "SELECT lien FROM media WHERE lien = :lien ORDER BY date DESC limit 0, 700 ";
+						$sql = "SELECT lien FROM media WHERE lien = :lien ORDER BY date DESC limit 0, 1000 ";
 						$stmt = $db->getQuery($sql, [':lien'=>$linkArticleRSS]);
 						$sameLinkArticle = $stmt->fetch();
 						
@@ -458,17 +458,17 @@ function foreachOneResult($array){
 		return $key;
 	}
 }
-function updateMedpolTabe($db){
+function updateMedpolTable($db){
 	$medPolBefore = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medpol'))->cnt;
 
 	$sql = 
 	   "INSERT INTO medpol (medpol.fk_pol, medpol.fk_media)
 		SELECT p.idPol, m.idMedia
 		FROM politicians p, media m
-		where m.description
-		like CONCAT('% ', p.lastname, ' %')
+		WHERE m.description
+		LIKE CONCAT('% ', p.lastname, ' %')
 		and
-		m.description LIKE concat('% ', p.firstname, ' %')
+		m.description LIKE CONCAT('% ', p.firstname, ' %')
 		and m.idMedia > (SELECT fk_media FROM medpol ORDER BY fk_media DESC LIMIT 0, 1)
 	";
 	$stmt = $db->getQuery($sql);
@@ -477,13 +477,33 @@ function updateMedpolTabe($db){
 	if ($stmt) {
 		echo 'Mise à jour table MedPol : ' . $medPolNew . " nouvelles liaisons (".$medPolAfter.")<br>";
 	}
+}
+function updateMedpartiTable($db){
+	$medpartiBefore = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medparti'))->cnt;
+
+	$sql = 
+	   "INSERT INTO medparti (medparti.fk_parti, medparti.fk_media)
+		SELECT mp.id, m.idMedia
+		FROM parti mp, media m
+		WHERE 
+		m.description LIKE CONCAT('% ', mp.nom, ' %')
+		or
+		m.description LIKE CONCAT('% ', mp.nomComplet, ' %')
+		-- and m.idMedia > (SELECT fk_media FROM medparti ORDER BY fk_media DESC LIMIT 0, 1)
+	";
+	$stmt = $db->getQuery($sql);
+	$medpartiAfter = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medparti'))->cnt;
+	$medpartiNew = $medpartiAfter - $medpartiBefore;
+	if ($stmt) {
+		echo 'Mise à jour table Medparti : ' . $medpartiNew . " nouvelles liaisons (".$medpartiAfter.")<br>";
+	}
 
 }
-
 include 'feeds.php';
 $timestamp_debut = microtime(true);
 rssToDB($feeds, $db);
-updateMedpolTabe($db);
+updateMedpolTable($db);
+updateMedpartiTable($db);
 $timestamp_fin = microtime(true);
 $difference_ms = $timestamp_fin - $timestamp_debut;
 echo 'Exécution du script : ' . number_format($difference_ms / 60, 2) . ' minutes.<br>';
