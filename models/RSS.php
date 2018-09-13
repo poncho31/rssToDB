@@ -483,14 +483,14 @@ function updateMedpartiTable($db){
 
 	$sql = 
 	   "INSERT INTO medparti (medparti.fk_parti, medparti.fk_media)
-		SELECT mp.id, m.idMedia
+	    SELECT mp.id, m.idMedia
 		FROM parti mp, media m
 		WHERE 
 		m.idMedia > (SELECT fk_media FROM medparti ORDER BY fk_media DESC LIMIT 0, 1)
-		and
-		m.description LIKE BINARY CONCAT('%', mp.nom, '%')
-		or
-		m.description LIKE BINARY CONCAT('%', mp.nomComplet, '%')
+		and m.description LIKE CONCAT('% ', mp.nom, ' %')
+		or m.description LIKE BINARY CONCAT('%', mp.nom, ' %')
+		or m.description LIKE CONCAT('% ', mp.nomComplet, ' %')
+		or m.description LIKE BINARY CONCAT('%', mp.nomComplet, ' %')
 	";
 	$stmt = $db->getQuery($sql);
 	$medpartiAfter = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medparti'))->cnt;
