@@ -486,10 +486,11 @@ function updateMedpartiTable($db){
 		SELECT mp.id, m.idMedia
 		FROM parti mp, media m
 		WHERE 
-		m.description LIKE CONCAT('% ', mp.nom, ' %')
+		m.idMedia > (SELECT fk_media FROM medparti ORDER BY fk_media DESC LIMIT 0, 1)
+		and
+		m.description LIKE BINARY CONCAT('%', mp.nom, '%')
 		or
-		m.description LIKE CONCAT('% ', mp.nomComplet, ' %')
-		-- and m.idMedia > (SELECT fk_media FROM medparti ORDER BY fk_media DESC LIMIT 0, 1)
+		m.description LIKE BINARY CONCAT('%', mp.nomComplet, '%')
 	";
 	$stmt = $db->getQuery($sql);
 	$medpartiAfter = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medparti'))->cnt;
