@@ -3201,7 +3201,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
       }
 
     .header .logo {
-      font-family: 'Pacifico', cursive;
+      font-family: 'Pacifico';
+      text-shadow: 2px 2px 1px black;
       color: #e5474b;
       display: inline-block;
       height: inherit;
@@ -3829,19 +3830,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 
 .gilles-title div, .gilles-title{
-      font-family: 'Pacifico', cursive;
+      font-family: 'Pacifico';
       color: #e5474b;
       background-color: rgba(0,0,0, 0.1);
       font-weight: bolder;
+      font-variant: small-caps;
+      font-size: 1.5em;
+      text-shadow: 2px 2px 1px black;
 }
 .gilles-homepage{
-      font-family: 'Pacifico', cursive;
+      font-family: 'Pacifico';
       color: whitesmoke;
 }
 .content h4{
   float: left;
   color: whitesmoke;
-  font-family: 'Pacifico', cursive;
+  font-family: 'Pacifico';
 
 }
 .content{
@@ -3852,22 +3856,26 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 .content li{
   font-size: 30px;
+  text-shadow: 2px 2px 1px black;
   position: relative;
   left: 25px;
 }
 .content h2{
   text-align: center;
   text-decoration: underline;
+  text-shadow: 2px 2px 1px black;
 }
 .content h3{
   font-style: italic;
   font-size: 29px;
+  text-shadow: 2px 2px 1px black;
 }
 .content span{
   font-style: italic;
 }
 .content h5{
   font-size: 29px;
+  text-shadow: 2px 2px 1px black;
 }
 .content .process{
   background-color: whitesmoke;
@@ -3876,4 +3884,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .content img{
   float: right;
 }
-.active { color: red; }
+*{
+  text-shadow: 2px 2px 1px black;
+}
+.active { background-color: red; }

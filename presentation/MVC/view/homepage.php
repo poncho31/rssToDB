@@ -3,8 +3,8 @@
 			<section class="banner">
 				<!-- <div class="inner"><a href="?section=intro" class="logo">RSS to DB</a></div> -->
 				<div class="inner">
-					<h1 class="gilles-title">Présentation d'un projet<br />
-					de data visualisation</h1>
+					<h1 ><div class="gilles-title">Présentation d'un projet<br/>
+					de data visualisation</div></h1>
 				</div>
 			</section>
 
