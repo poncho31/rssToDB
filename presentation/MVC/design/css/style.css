@@ -3881,9 +3881,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background-color: whitesmoke;
   height: 50px;
 }
-.content img{
+/*.content img{
   float: right;
-}
+}*/
 *{
   text-shadow: 2px 2px 1px black;
 }

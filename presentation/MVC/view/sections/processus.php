@@ -37,6 +37,12 @@
 			</ul>
 		</div><br>
 <hr>
+		<div>
+			<h2>3. Visuel de l'administration de la BDD</h2>
+			<img class="imgAdminBDD" src="MVC/design/img/administrationBDD.png"  alt="">
+		</div><br>
+<hr>
+
 
 <!-- 2 -->
 <div class="process"><h3>A. Administration de l'application</h3></div><br>
@@ -44,9 +50,20 @@
 			<h2>1. Côté serveur (<span>Symfony</span>)</h2>
 			<ul>
 				<h3>Deux types de requêtes</h3>
-				<li>les requêtes de longues durées</li>
-				<li>les requêtes de courtes durées</li>
-				<h5><div>&#x2192;  Symfony est utilisé en tant qu'API (renvoit du JSON)</div></h5>
+				<li>les requêtes de longues durées
+				</li>
+				<img class="imgAdminBDD" src="MVC/design/img/lowQuerySymfony.png"  alt="">
+				<img class="imgAdminBDD" src="MVC/design/img/lowQueryJSONreturnSymfony.png"  alt="">
+
+				<li>les requêtes de courtes durées
+				</li>
+				<img class="imgAdminBDD" src="MVC/design/img/fastQuerySymfony.png"  alt="">
+				<br><br>
+				<h5>
+					<div>&#x2192;  Symfony est utilisé en tant qu'API (renvoit du JSON)</div>
+				</h5>
+				<h5></h5>
+				
 			</ul>
 		</div><br>
 <hr>
@@ -55,9 +72,14 @@
 			<ul>
 				<h3>Deux types de requêtes</h3>
 				<li>les requêtes automatiques</li>
+				<img class="imgAdminBDD" src="MVC/design/img/administrationBDD.png"  alt="">
+
 				<li>les requêtes en fonction de critères</li>
+				<img class="imgAdminBDD" src="MVC/design/img/administrationBDD.png"  alt="">
+				<br><br>
 				<h5><div>&#x2192;  Angular communique avec symfony au moyen de requêtes AJAX</div></h5>
 			</ul>
 		</div><br>
+
 </div>
 </section>

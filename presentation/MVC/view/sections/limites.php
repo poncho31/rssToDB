@@ -23,7 +23,6 @@
 				<h3></h3>
 				<li>Pas assez poussées</li>
 				<li>Utiliser des REGEX (?)</li>
-				<li>Passer à mongoDB afin d'accélérer les requêtes SQL</li>
 			</ul>
 		</div>
 		<hr><br>

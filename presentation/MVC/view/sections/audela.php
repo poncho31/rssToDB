@@ -14,7 +14,7 @@
 				<li>Analyse de contenu</li>
 				<li>Utilisation de graphiques</li>
 				<li>Résumé de contenus</li>
-				<li>Point essentiels d'un document</li>
+				<li>Points essentiels d'un document</li>
 			</ul>
 		</div>
 		<hr><br>

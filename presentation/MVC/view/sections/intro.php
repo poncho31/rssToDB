@@ -19,8 +19,9 @@
 
 			<ul>
 				<h3>Objet du projet</h3>
-				<li>Données politico-médiatiques</li>
-				<li>flux RSS (<span>Really Simple Syndication</span>)</li>
+				<li>Mettre en évidence des données politico-médiatiques</li>
+				<li>Utilisation de flux RSS (<span>Really Simple Syndication</span>)</li>
+				<li>Apprentissage de Frameworks frontend et backend</li>
 			</ul>
 
 		</div>
@@ -38,7 +39,9 @@
 				<li>Création de la BDD
 					<ul>
 						<li>Table <span>Medias</span> (contient les articles importés)</li>
+						<img class="imgAdminBDD" src="MVC/design/img/tableMedia.png"  alt="">
 						<li>Table <span>Politicians</span></li>
+						<img class="imgAdminBDD" src="MVC/design/img/tablePoliticians.png"  alt="">
 					</ul>
 				</li>
 				<li>Insertion des données en BDD</li>
@@ -49,13 +52,14 @@
 				<h3>Phase 3</h3>
 				<li>Refactoring (<span>réusinage de code</span>)</li>
 				<li>Chart.js</li>
+				<img class="imgAdminBDD" src="MVC/design/img/chartjs.png"  alt="">
 			</ul>
 
 			<ul>
 				<h3>Phase 4</h3>
 				<li>Utilisation de Frameworks frontend et backend</li>
-				<li>Angular</li>
-				<li>Symfony</li>
+				<li>Angular <img class="imgAdminBDD" src="MVC/design/img/angular.png" width="50px" alt=""></li>
+				<li>Symfony <img class="imgAdminBDD" src="MVC/design/img/symfony.png" width="50px" alt=""></li>
 			</ul>
 		</div>
 	</div>

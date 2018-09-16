@@ -14,6 +14,9 @@
 				<h3></h3>
 				<li>Présentation de données pertinentes</li>
 				<li>Utilisation de l'occurence des mots</li>
+				<br>
+				<img class="imgAdminBDD" src="MVC/design/img/administrationBDD.png"  alt="">
+				<br>
 			</ul>
 		</div>
 		<br>
@@ -25,8 +28,6 @@
 					<ul>
 						<li>Utilisation de graphique</li>
 						<li>Résumer des idées / analyses</li>
-						<li>Aider dans la prise de décision individuelle</li>
-						<li>Aider à la connaissance</li>
 					</ul><br>
 
 				<h3>Au niveau de l'analyse</h3>
