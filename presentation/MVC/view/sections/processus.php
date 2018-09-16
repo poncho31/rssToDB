@@ -45,7 +45,7 @@
 
 
 <!-- 2 -->
-<div class="process"><h3>A. Administration de l'application</h3></div><br>
+<div class="process"><h3>B. Administration de l'application</h3></div><br>
 		<div>
 			<h2>1. Côté serveur (<span>Symfony</span>)</h2>
 			<ul>
