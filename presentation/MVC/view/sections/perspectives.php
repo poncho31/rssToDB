@@ -21,7 +21,7 @@
 		</div>
 		<br>
 <hr>
-		<div>
+<!-- 		<div>
 			<h2>2. Centralisation de données <span>politico-médiatiques</span></h2>
 			<ul>
 				<h3>Au niveau visuel</h3>
@@ -39,6 +39,6 @@
 			</ul>
 		</div>
 		<br>
-<hr>
+<hr> -->
 
 </section>
