@@ -72,10 +72,11 @@
 			<ul>
 				<h3>Deux types de requêtes</h3>
 				<li>les requêtes automatiques</li>
-				<img class="imgAdminBDD" src="MVC/design/img/administrationBDD.png"  alt="">
+				<img class="imgAdminBDD" src="MVC/design/img/administrationAppliAutoHomepage.png"  alt="">
+				<img class="imgAdminBDD" src="MVC/design/img/administrationAppliAutoTrends.png"  alt="">
 
 				<li>les requêtes en fonction de critères</li>
-				<img class="imgAdminBDD" src="MVC/design/img/administrationBDD.png"  alt="">
+				<img class="imgAdminBDD" src="MVC/design/img/administrationAppliCriteres.png"  alt="">
 				<br><br>
 				<h5><div>&#x2192;  Angular communique avec symfony au moyen de requêtes AJAX</div></h5>
 			</ul>

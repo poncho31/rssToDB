@@ -3884,6 +3884,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 /*.content img{
   float: right;
 }*/
+img{
+  max-width: 100%;
+}
 *{
   text-shadow: 2px 2px 1px black;
 }

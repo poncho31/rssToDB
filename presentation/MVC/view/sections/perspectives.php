@@ -15,7 +15,7 @@
 				<li>Présentation de données pertinentes</li>
 				<li>Utilisation de l'occurence des mots</li>
 				<br>
-				<img class="imgAdminBDD" src="MVC/design/img/administrationBDD.png"  alt="">
+				<img class="imgAdminBDD" src="MVC/design/img/topArticles.png"  alt="">
 				<br>
 			</ul>
 		</div>
