@@ -155,7 +155,7 @@ $updateTable =
 				",
 			  	"UPDATE media SET nom = 'lesoir' where nom like '%lesoir%'",
 			  	"UPDATE media SET nom = 'lalibre' where nom like '%lalibre%'",
-			  	"UPDATE media SET nom = 'levif' where nom like '%levif%'",
+			  	"UPDATE media SET nom = 'levif' where nom like '%vif%'",
 			  	"UPDATE media SET nom = 'rtbf' where nom like '%rtbf%'",
 			  	"UPDATE media SET nom = 'rtbf' where nom like '%la Première%'",
 				"UPDATE media SET nom = 'sudinfo' where nom like '%sudinfo%'",
