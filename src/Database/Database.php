@@ -13,7 +13,6 @@ class Database
      */
     protected $config;
     protected $db;
-    public $last_id;
     public function __construct()
     {
         
@@ -39,7 +38,6 @@ class Database
             $stmt = $this->db->prepare($sql,
                 array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY)); //ATTR_CURSOR is the default attribute
             $stmt->execute($param);
-            $this->last_id = $this->db->lastInsertId();
         }
         else{
             $stmt = $this->db->query($sql);
