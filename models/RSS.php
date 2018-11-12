@@ -108,9 +108,7 @@ function rssToDB($feeds, $db)
 							':lien' => $linkArticleRSS,
 							':categorie' => $categoryArticleRSS]
 							;
-							// $stmt = $db->prepare($sqlINSERT);
 							$stmt = $db->getQuery($sqlINSERT, $param);
-							// $stmt->execute();
 							$newArticle++;
 							$totalNewArticles++;
 						}
@@ -118,7 +116,7 @@ function rssToDB($feeds, $db)
 		    	}
 			}
 		$timestamp_fin = microtime(true);
-		$alreadyInDB .= '<tr><td>'. $titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>";
+		$alreadyInDB .= ($newArticle > 0)? '<tr><td>'. $titleMediaRSS .'</td><td>'.$newArticle. '</td><td>'. date(DATE_RFC850) ."</td></tr>" : '';
 
 		$mediaName = array('rtl', 'dh','lalibre', 'lesoir', 'lecho', 'levif', 'rtbf', 'sudinfo');
 
@@ -274,6 +272,7 @@ $updateTable =
 						or categorie like '%auto%'
 						or categorie like '%formule 1%'
 						or categorie like '%moto%'
+						or categorie like '%Cyclo-cross%'
 						or categorie like '%tennis%'
 						or categorie like '%hockey%'
 						or categorie like '%wrc%'
@@ -286,7 +285,11 @@ $updateTable =
 						or categorie like '%judo%'
 						or categorie like '%Boxe%'
 						or categorie like '%mondial 2018%'
+						or categorie like '%Euro 2016%'
 						or categorie like '%route%'
+						or categorie like '%Volley%'
+						or categorie like '%Handball%'
+						or categorie like '%Handball%'
 						or categorie like '%Tour de france%'
 						or categorie like '%ATP - WTA%'
 						or categorie like '%grands chelems%'
@@ -370,11 +373,13 @@ $updateTable =
 					    or categorie like '%Cinema%'
 					    or categorie like '%werchter%'
 					    or categorie like '%rock%'
+					    or categorie like '%Chanson%'
 					    or categorie like '%scènes%'
 					    or categorie like '%concours reine elisabeth%'
 					    or categorie like '%séries%'
 					    or categorie like '%lifestyle%'
 					    or categorie like '%voyages%'
+					    or categorie like '%spectacles%'
 					    or categorie like '%food%'
 					    or categorie like '%Expos en cours%'
 					    or categorie like '%Les racines élémentaires%'
@@ -474,8 +479,18 @@ function updateMedpolTable($db){
 	$stmt = $db->getQuery($sql);
 	$medPolAfter = foreachOneResult($db->getQuery('SELECT count(*) as cnt FROM medpol'))->cnt;
 	$medPolNew = $medPolAfter - $medPolBefore;
+
+	$sqlPolName = "SELECT p.lastname lastname, p.firstname firstname FROM politicians p
+				   INNER JOIN medpol m ON m.fk_pol = p.idpol
+				   ORDER BY m.id DESC
+				   LIMIT ". $medPolNew;
+	$polName = '';
+	foreach ($db->getQuery($sqlPolName) as $val) {
+		$polName .= $val->firstname ." ". $val->lastname . " | ";
+	}
 	if ($stmt) {
 		echo 'Mise à jour table MedPol : ' . $medPolNew . " nouvelles liaisons (".$medPolAfter.")<br>";
+		echo $polName . "<br>";
 	}
 }
 function updateMedpartiTable($db){
@@ -504,7 +519,7 @@ include 'feeds.php';
 $timestamp_debut = microtime(true);
 rssToDB($feeds, $db);
 updateMedpolTable($db);
-updateMedpartiTable($db);
+// updateMedpartiTable($db);
 $timestamp_fin = microtime(true);
 $difference_ms = $timestamp_fin - $timestamp_debut;
 echo 'Exécution du script : ' . number_format($difference_ms / 60, 2) . ' minutes.<br>';
