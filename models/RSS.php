@@ -65,13 +65,13 @@ function rssToDB($feeds, $db)
 		    //SI XML TRUE
 		    else{
 			    foreach ($xml as $attributes) {
-				    foreach ($attributes->item as $key) {
+					foreach ($attributes->item as $key) {
 						//VARIABLES : affectation des données issues du fichier xml + vérification
 						$linkArticleRSS =  (isset($key->link)) ? strip_tags($key->link) : null;
 						$titleMediaRSS =  (isset($attributes->title)) ? strip_tags($attributes->title) : null;
 						
 						//BDD : vérification si pas déjà en bdd
-						$sql = "SELECT lien FROM media WHERE lien = :lien ORDER BY date DESC limit 0, 1000 ";
+						$sql = "SELECT lien FROM media WHERE lien = :lien ORDER BY date DESC";
 						$stmt = $db->getQuery($sql, [':lien'=>$linkArticleRSS]);
 						$sameLinkArticle = $stmt->fetch();
 						
@@ -128,6 +128,7 @@ function rssToDB($feeds, $db)
 		echo isset($alreadyInDB) ? $alreadyInDB : null;
 		echo "Nombres de flux RSS vérifiés : " . $current ."<br>";
 		echo "Nombres de nouveux articles : " . $totalNewArticles ."<br>";
+		logs("RssToDb", "Nombres de nouveux articles:$totalNewArticles");
 	}
 
 	
@@ -456,7 +457,9 @@ $updateTable =
 	foreach ($db->getQuery($sqlSelectMedia) as $row) {
 		echo $row->nom . " => ". $row->numb . "<br>";
 		$tot += $row->numb;
+		logs('Nombre d\'articles par media', $row->nom .":".$row->numb);
 	}
+	logs("Nombre d'articles total", $tot);
 }
 function foreachOneResult($array){
 	foreach ($array as $key) {
@@ -488,7 +491,10 @@ function updateMedpolTable($db){
 	foreach ($db->getQuery($sqlPolName) as $val) {
 		$polName .= $val->firstname ." ". $val->lastname . " | ";
 	}
+	if($polName == ''){$polName = "none";}
 	if ($stmt) {
+		logs("Medpol", $polName);
+		logs("Medpol", "Nombre articles : " . $medPolAfter);
 		echo 'Mise à jour table MedPol : ' . $medPolNew . " nouvelles liaisons (".$medPolAfter.")<br>";
 		echo $polName . "<br>";
 	}
@@ -515,13 +521,25 @@ function updateMedpartiTable($db){
 	}
 
 }
+function logs($categorie, $data){
+	$log = "";
+	if(!file_exists("./data/log.csv")){
+		$log .= "date, categorie, data\n";
+	}
+	$log .= date("d-m-Y H:i:s").", $categorie, $data \n";
+	file_put_contents("./data/log.csv", $log, FILE_APPEND);
+	// echo $log;
+}
+
 include 'feeds.php';
 $timestamp_debut = microtime(true);
 rssToDB($feeds, $db);
 updateMedpolTable($db);
+
 // updateMedpartiTable($db);
 $timestamp_fin = microtime(true);
 $difference_ms = $timestamp_fin - $timestamp_debut;
+logs("time", number_format($difference_ms / 60, 2));
 echo 'Exécution du script : ' . number_format($difference_ms / 60, 2) . ' minutes.<br>';
 
 
