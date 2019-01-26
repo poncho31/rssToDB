@@ -122,7 +122,9 @@ function rssToDB($feeds, $db)
 
 		
 		$difference_ms = $timestamp_fin - $timestamp_debut;
-		echo "<span class='progression' style='float: right; width: 70%;'>" .  highlight($mediaName, $feed ) . " : " . number_format($difference_ms,2) . ' secondes.'."<br></span>";
+		$duration = number_format($difference_ms,2);
+		$color = ($duration > 10) ? "red" : (($duration > 5)? "orange" : "green");
+		echo "<span class='progression' style='float: right; width: 70%;'>" .  highlight($mediaName, $feed ) . " : <span style='color:".$color."'>" . $duration . '</span> secondes'."<br></span>";
 		}
 		$alreadyInDB .='</table>';
 		echo isset($alreadyInDB) ? $alreadyInDB : null;
